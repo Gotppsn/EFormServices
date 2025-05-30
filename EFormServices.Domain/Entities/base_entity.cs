@@ -1,13 +1,14 @@
-// Got code 27/05/2025
+// EFormServices.Domain/Entities/base_entity.cs
+// Got code 30/05/2025
 using EFormServices.Domain.Events;
 
 namespace EFormServices.Domain.Entities;
 
 public abstract class BaseEntity
 {
-    public int Id { get; protected set; }
-    public DateTime CreatedAt { get; protected set; }
-    public DateTime UpdatedAt { get; protected set; }
+    public int Id { get; set; }
+    public DateTime CreatedAt { get; set; }
+    public DateTime UpdatedAt { get; set; }
 
     private readonly List<IDomainEvent> _domainEvents = new();
     public IReadOnlyCollection<IDomainEvent> DomainEvents => _domainEvents.AsReadOnly();

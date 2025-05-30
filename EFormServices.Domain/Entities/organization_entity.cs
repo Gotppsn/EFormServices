@@ -6,26 +6,26 @@ namespace EFormServices.Domain.Entities;
 
 public class Organization : BaseEntity
 {
-    public string Name { get; private set; }
-    public string Subdomain { get; private set; }
-    public string TenantKey { get; private set; }
-    public OrganizationSettings Settings { get; private set; }
-    public bool IsActive { get; private set; }
+    public string Name { get; set; } = string.Empty;
+    public string Subdomain { get; set; } = string.Empty;
+    public string TenantKey { get; set; } = string.Empty;
+    public OrganizationSettings Settings { get; set; }
+    public bool IsActive { get; set; }
 
     private readonly List<Department> _departments = new();
     private readonly List<User> _users = new();
     private readonly List<Form> _forms = new();
+    private readonly List<ApprovalWorkflow> _approvalWorkflows = new();
 
     public IReadOnlyCollection<Department> Departments => _departments.AsReadOnly();
     public IReadOnlyCollection<User> Users => _users.AsReadOnly();
     public IReadOnlyCollection<Form> Forms => _forms.AsReadOnly();
+    public IReadOnlyCollection<ApprovalWorkflow> ApprovalWorkflows => _approvalWorkflows.AsReadOnly();
 
-    private Organization()
+    public Organization()
     {
-        Name = string.Empty;
-        Subdomain = string.Empty;
-        TenantKey = string.Empty;
         Settings = OrganizationSettings.Default();
+        TenantKey = GenerateTenantKey();
     }
 
     public Organization(string name, string subdomain, OrganizationSettings settings)

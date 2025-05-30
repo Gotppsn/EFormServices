@@ -2,9 +2,7 @@
 // Got code 30/05/2025
 using EFormServices.Application.Common.Interfaces;
 using EFormServices.Domain.Entities;
-using EFormServices.Infrastructure.Data.Configurations;
 using Microsoft.EntityFrameworkCore;
-using System.Reflection;
 
 namespace EFormServices.Infrastructure.Data;
 
@@ -33,7 +31,6 @@ public class ApplicationDbContext : DbContext, IApplicationDbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
         base.OnModelCreating(modelBuilder);
     }
 

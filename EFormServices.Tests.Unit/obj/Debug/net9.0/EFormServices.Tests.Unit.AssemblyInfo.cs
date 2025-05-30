@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("EFormServices.Tests.Unit")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+9260b2341aa083be58557881d925b62130c8f487")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+24fba96d9cc9bfe35e157bd9c673f3ecbc0aa495")]
 [assembly: System.Reflection.AssemblyProductAttribute("EFormServices.Tests.Unit")]
 [assembly: System.Reflection.AssemblyTitleAttribute("EFormServices.Tests.Unit")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
