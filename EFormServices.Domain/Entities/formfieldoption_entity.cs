@@ -1,17 +1,22 @@
-// Got code 27/05/2025
+// EFormServices.Domain/Entities/formfieldoption_entity.cs
+// Got code 30/05/2025
 namespace EFormServices.Domain.Entities;
 
 public class FormFieldOption : BaseEntity
 {
     public int FormFieldId { get; private set; }
-    public string Label { get; private set; }
-    public string Value { get; private set; }
+    public string Label { get; private set; } = string.Empty;
+    public string Value { get; private set; } = string.Empty;
     public int SortOrder { get; private set; }
     public bool IsDefault { get; private set; }
 
     public FormField FormField { get; private set; } = null!;
 
-    private FormFieldOption() { }
+    private FormFieldOption() 
+    {
+        Label = string.Empty;
+        Value = string.Empty;
+    }
 
     public FormFieldOption(int formFieldId, string label, string value, int sortOrder, bool isDefault = false)
     {

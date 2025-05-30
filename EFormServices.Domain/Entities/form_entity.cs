@@ -1,4 +1,4 @@
-// EFormServices.Domain/Entities/Form.cs
+// EFormServices.Domain/Entities/form_entity.cs
 // Got code 30/05/2025
 using EFormServices.Domain.ValueObjects;
 using EFormServices.Domain.Enums;
@@ -11,16 +11,16 @@ public class Form : BaseEntity
     public int? DepartmentId { get; private set; }
     public int CreatedByUserId { get; private set; }
     public int? ApprovalWorkflowId { get; private set; }
-    public string Title { get; set; } = string.Empty;
+    public string Title { get; private set; } = string.Empty;
     public string? Description { get; private set; }
     public FormType FormType { get; private set; }
     public bool IsTemplate { get; private set; }
     public bool IsActive { get; private set; }
     public bool IsPublic { get; private set; }
-    public FormSettings Settings { get; private set; } = new();
-    public FormMetadata Metadata { get; private set; } = new();
+    public FormSettings Settings { get; private set; } = FormSettings.Default();
+    public FormMetadata Metadata { get; private set; } = FormMetadata.Default();
     public DateTime? PublishedAt { get; private set; }
-    public string FormKey { get; set; } = string.Empty;
+    public string FormKey { get; private set; } = string.Empty;
 
     public Organization Organization { get; private set; } = null!;
     public Department? Department { get; private set; }
@@ -33,12 +33,12 @@ public class Form : BaseEntity
     public IReadOnlyCollection<FormField> FormFields => _formFields.AsReadOnly();
     public IReadOnlyCollection<FormSubmission> FormSubmissions => _formSubmissions.AsReadOnly();
 
-    public Form() 
+    private Form() 
     { 
+        Title = string.Empty;
+        FormKey = string.Empty;
         Settings = FormSettings.Default();
         Metadata = FormMetadata.Default();
-        FormKey = GenerateFormKey();
-        Title = string.Empty;
     }
 
     public Form(int organizationId, int createdByUserId, string title, FormType formType,

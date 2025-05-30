@@ -1,4 +1,5 @@
-// Got code 27/05/2025
+// EFormServices.Domain/Entities/formfield_entity.cs
+// Got code 30/05/2025
 using EFormServices.Domain.Enums;
 using EFormServices.Domain.ValueObjects;
 
@@ -8,13 +9,13 @@ public class FormField : BaseEntity
 {
     public int FormId { get; private set; }
     public FieldType FieldType { get; private set; }
-    public string Label { get; private set; }
-    public string Name { get; private set; }
+    public string Label { get; private set; } = string.Empty;
+    public string Name { get; private set; } = string.Empty;
     public string? Description { get; private set; }
-    public ValidationRules ValidationRules { get; private set; }
+    public ValidationRules ValidationRules { get; private set; } = ValidationRules.Default();
     public bool IsRequired { get; private set; }
     public int SortOrder { get; private set; }
-    public FieldSettings Settings { get; private set; }
+    public FieldSettings Settings { get; private set; } = FieldSettings.Default();
 
     public Form Form { get; private set; } = null!;
 
@@ -24,7 +25,13 @@ public class FormField : BaseEntity
     public IReadOnlyCollection<FormFieldOption> Options => _options.AsReadOnly();
     public IReadOnlyCollection<ConditionalLogic> ConditionalLogics => _conditionalLogics.AsReadOnly();
 
-    private FormField() { }
+    private FormField() 
+    { 
+        Label = string.Empty;
+        Name = string.Empty;
+        ValidationRules = ValidationRules.Default();
+        Settings = FieldSettings.Default();
+    }
 
     public FormField(int formId, FieldType fieldType, string label, string name,
                      int sortOrder, bool isRequired = false, string? description = null)

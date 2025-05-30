@@ -61,26 +61,19 @@ public class AddFormFieldCommandHandler : IRequestHandler<AddFormFieldCommand, R
         formField.UpdateValidation(validationRules, request.IsRequired);
         formField.UpdateSettings(fieldSettings);
 
-        if (_context is EFormServices.Infrastructure.Data.MockApplicationDbContext mockContext)
-        {
-            var fields = (EFormServices.Infrastructure.Data.MockDbSet<FormField>)mockContext.FormFields;
-            formField.Id = _context.FormFields.Count() + 1;
-            fields.Add(formField);
-
-            if (request.Options != null && request.FieldType.SupportsOptions())
-            {
-                var options = (EFormServices.Infrastructure.Data.MockDbSet<FormFieldOption>)mockContext.FormFieldOptions;
-                foreach (var option in request.Options)
-                {
-                    var fieldOption = new FormFieldOption(formField.Id, option.Label, option.Value, 
-                        options.Count(o => o.FormFieldId == formField.Id) + 1, option.IsDefault);
-                    fieldOption.Id = options.Count() + 1;
-                    options.Add(fieldOption);
-                }
-            }
-        }
-
+        _context.FormFields.Add(formField);
         await _context.SaveChangesAsync(cancellationToken);
+
+        if (request.Options != null && request.FieldType.SupportsOptions())
+        {
+            foreach (var option in request.Options)
+            {
+                var fieldOption = new FormFieldOption(formField.Id, option.Label, option.Value, 
+                    _context.FormFieldOptions.Count(o => o.FormFieldId == formField.Id) + 1, option.IsDefault);
+                _context.FormFieldOptions.Add(fieldOption);
+            }
+            await _context.SaveChangesAsync(cancellationToken);
+        }
 
         return Result<int>.Success(formField.Id);
     }
