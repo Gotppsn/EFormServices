@@ -1,0 +1,52 @@
+// EFormServices.Application/Organizations/Commands/CreateOrganization/CreateOrganizationCommandHandler.cs
+// Got code 30/05/2025
+using AutoMapper;
+using EFormServices.Application.Common.DTOs;
+using EFormServices.Application.Common.Interfaces;
+using EFormServices.Application.Common.Models;
+using EFormServices.Domain.Entities;
+using EFormServices.Domain.ValueObjects;
+using MediatR;
+using Microsoft.EntityFrameworkCore;
+
+namespace EFormServices.Application.Organizations.Commands.CreateOrganization;
+
+public class CreateOrganizationCommandHandler : IRequestHandler<CreateOrganizationCommand, Result<OrganizationDto>>
+{
+    private readonly IApplicationDbContext _context;
+    private readonly IMapper _mapper;
+
+    public CreateOrganizationCommandHandler(IApplicationDbContext context, IMapper mapper)
+    {
+        _context = context;
+        _mapper = mapper;
+    }
+
+    public async Task<Result<OrganizationDto>> Handle(CreateOrganizationCommand request, CancellationToken cancellationToken)
+    {
+        var existingOrg = await _context.Organizations
+            .FirstOrDefaultAsync(o => o.Subdomain == request.Subdomain.ToLowerInvariant(), cancellationToken);
+
+        if (existingOrg != null)
+            return Result<OrganizationDto>.Failure("Subdomain already exists");
+
+        var settings = request.Settings != null 
+            ? new OrganizationSettings(
+                request.Settings.TimeZone,
+                request.Settings.DateFormat,
+                request.Settings.Currency,
+                request.Settings.AllowPublicForms,
+                request.Settings.MaxFileUploadSizeMB,
+                request.Settings.FormRetentionDays,
+                request.Settings.RequireApprovalForPublish)
+            : OrganizationSettings.Default();
+
+        var organization = new Organization(request.Name, request.Subdomain, settings);
+
+        _context.Organizations.Add(organization);
+        await _context.SaveChangesAsync(cancellationToken);
+
+        var organizationDto = _mapper.Map<OrganizationDto>(organization);
+        return Result<OrganizationDto>.Success(organizationDto);
+    }
+}
