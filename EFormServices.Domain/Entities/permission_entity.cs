@@ -1,11 +1,12 @@
-// Got code 27/05/2025
+// EFormServices.Domain/Entities/permission_entity.cs
+// Got code 30/05/2025
 namespace EFormServices.Domain.Entities;
 
 public class Permission : BaseEntity
 {
-    public string Name { get; private set; }
+    public string Name { get; private set; } = string.Empty;
     public string? Description { get; private set; }
-    public string Category { get; private set; }
+    public string Category { get; private set; } = string.Empty;
     public bool IsSystemPermission { get; private set; }
 
     private readonly List<RolePermission> _rolePermissions = new();

@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("EFormServices.Infrastructure")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+0bf7193ba4cb2f13e04b5982a3938e4d1cf91447")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+a85d67fd743e0c31380b527e24b14af266cc7245")]
 [assembly: System.Reflection.AssemblyProductAttribute("EFormServices.Infrastructure")]
 [assembly: System.Reflection.AssemblyTitleAttribute("EFormServices.Infrastructure")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

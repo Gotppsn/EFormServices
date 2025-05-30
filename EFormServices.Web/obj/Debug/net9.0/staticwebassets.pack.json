@@ -9,8 +9,40 @@
       "PackagePath": "staticwebassets\\css\\site.css"
     },
     {
+      "Id": "C:\\Users\\panupol\\Desktop\\EFormServices\\EFormServices.Web\\wwwroot\\css\\submission.css",
+      "PackagePath": "staticwebassets\\css\\submission.css"
+    },
+    {
       "Id": "C:\\Users\\panupol\\Desktop\\EFormServices\\EFormServices.Web\\wwwroot\\favicon.ico",
       "PackagePath": "staticwebassets\\favicon.ico"
+    },
+    {
+      "Id": "C:\\Users\\panupol\\Desktop\\EFormServices\\EFormServices.Web\\wwwroot\\js\\admin-users.js",
+      "PackagePath": "staticwebassets\\js\\admin-users.js"
+    },
+    {
+      "Id": "C:\\Users\\panupol\\Desktop\\EFormServices\\EFormServices.Web\\wwwroot\\js\\approvals.js",
+      "PackagePath": "staticwebassets\\js\\approvals.js"
+    },
+    {
+      "Id": "C:\\Users\\panupol\\Desktop\\EFormServices\\EFormServices.Web\\wwwroot\\js\\dashboard.js",
+      "PackagePath": "staticwebassets\\js\\dashboard.js"
+    },
+    {
+      "Id": "C:\\Users\\panupol\\Desktop\\EFormServices\\EFormServices.Web\\wwwroot\\js\\form-builder.js",
+      "PackagePath": "staticwebassets\\js\\form-builder.js"
+    },
+    {
+      "Id": "C:\\Users\\panupol\\Desktop\\EFormServices\\EFormServices.Web\\wwwroot\\js\\form-submission.js",
+      "PackagePath": "staticwebassets\\js\\form-submission.js"
+    },
+    {
+      "Id": "C:\\Users\\panupol\\Desktop\\EFormServices\\EFormServices.Web\\wwwroot\\js\\forms-list.js",
+      "PackagePath": "staticwebassets\\js\\forms-list.js"
+    },
+    {
+      "Id": "C:\\Users\\panupol\\Desktop\\EFormServices\\EFormServices.Web\\wwwroot\\js\\navigation.js",
+      "PackagePath": "staticwebassets\\js\\navigation.js"
     },
     {
       "Id": "C:\\Users\\panupol\\Desktop\\EFormServices\\EFormServices.Web\\wwwroot\\js\\site.js",

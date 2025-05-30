@@ -1,3 +1,5 @@
+// EFormServices.Web/Pages/Index.cshtml.cs
+// Got code 30/05/2025
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
@@ -12,8 +14,13 @@ public class IndexModel : PageModel
         _logger = logger;
     }
 
-    public void OnGet()
+    public IActionResult OnGet()
     {
+        if (User.Identity?.IsAuthenticated == true)
+        {
+            return RedirectToPage("/Dashboard/Index");
+        }
 
+        return Page();
     }
 }

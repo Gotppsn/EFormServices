@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "fDPCTNYnRB0cdO2gHfXEkrsptCuCSM3oH8UuUWOH+2k=",
+  "Hash": "mxVoO19ensXUFVu1l3TTnvnajz2D2GCWHvc4tzXcZvQ=",
   "Source": "EFormServices.Web",
   "BasePath": "_content/EFormServices.Web",
   "Mode": "Default",
@@ -16,6 +16,69 @@
     }
   ],
   "Assets": [
+    {
+      "Identity": "C:\\Users\\panupol\\Desktop\\EFormServices\\EFormServices.Web\\obj\\Debug\\net9.0\\compressed\\139gdkzhox-83u8fz4g53.gz",
+      "SourceId": "EFormServices.Web",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\panupol\\Desktop\\EFormServices\\EFormServices.Web\\obj\\Debug\\net9.0\\compressed\\",
+      "BasePath": "_content/EFormServices.Web",
+      "RelativePath": "js/form-builder#[.{fingerprint=83u8fz4g53}]?.js.gz",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Alternative",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "C:\\Users\\panupol\\Desktop\\EFormServices\\EFormServices.Web\\wwwroot\\js\\form-builder.js",
+      "AssetTraitName": "Content-Encoding",
+      "AssetTraitValue": "gzip",
+      "Fingerprint": "e5050jymxw",
+      "Integrity": "/qMH1uXFxPix9kKeaI//k4GgaaX5vQJrmFHfjMhMTM4=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "C:\\Users\\panupol\\Desktop\\EFormServices\\EFormServices.Web\\wwwroot\\js\\form-builder.js"
+    },
+    {
+      "Identity": "C:\\Users\\panupol\\Desktop\\EFormServices\\EFormServices.Web\\obj\\Debug\\net9.0\\compressed\\14mvma6gsh-lhh7bkpi8o.gz",
+      "SourceId": "EFormServices.Web",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\panupol\\Desktop\\EFormServices\\EFormServices.Web\\obj\\Debug\\net9.0\\compressed\\",
+      "BasePath": "_content/EFormServices.Web",
+      "RelativePath": "js/navigation#[.{fingerprint=lhh7bkpi8o}]?.js.gz",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Alternative",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "C:\\Users\\panupol\\Desktop\\EFormServices\\EFormServices.Web\\wwwroot\\js\\navigation.js",
+      "AssetTraitName": "Content-Encoding",
+      "AssetTraitValue": "gzip",
+      "Fingerprint": "fzqagvlszd",
+      "Integrity": "G+NNntKmm/sE7YV/OzolKq48LSepm+rPAwG7EhpiYjk=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "C:\\Users\\panupol\\Desktop\\EFormServices\\EFormServices.Web\\wwwroot\\js\\navigation.js"
+    },
+    {
+      "Identity": "C:\\Users\\panupol\\Desktop\\EFormServices\\EFormServices.Web\\obj\\Debug\\net9.0\\compressed\\1pkovq0ts6-zfi2f7ivbn.gz",
+      "SourceId": "EFormServices.Web",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\panupol\\Desktop\\EFormServices\\EFormServices.Web\\obj\\Debug\\net9.0\\compressed\\",
+      "BasePath": "_content/EFormServices.Web",
+      "RelativePath": "js/approvals#[.{fingerprint=zfi2f7ivbn}]?.js.gz",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Alternative",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "C:\\Users\\panupol\\Desktop\\EFormServices\\EFormServices.Web\\wwwroot\\js\\approvals.js",
+      "AssetTraitName": "Content-Encoding",
+      "AssetTraitValue": "gzip",
+      "Fingerprint": "h6owtaan2g",
+      "Integrity": "aUdZkcdbbP4aAmJDFyP60L7zT1DsBERcMoBYLPuZios=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "C:\\Users\\panupol\\Desktop\\EFormServices\\EFormServices.Web\\wwwroot\\js\\approvals.js"
+    },
     {
       "Identity": "C:\\Users\\panupol\\Desktop\\EFormServices\\EFormServices.Web\\obj\\Debug\\net9.0\\compressed\\2tr5723zsh-ag7o75518u.gz",
       "SourceId": "EFormServices.Web",
@@ -101,6 +164,27 @@
       "OriginalItemSpec": "C:\\Users\\panupol\\Desktop\\EFormServices\\EFormServices.Web\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.rtl.min.css.map"
     },
     {
+      "Identity": "C:\\Users\\panupol\\Desktop\\EFormServices\\EFormServices.Web\\obj\\Debug\\net9.0\\compressed\\42u8d2ddd4-sz1o33xll7.gz",
+      "SourceId": "EFormServices.Web",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\panupol\\Desktop\\EFormServices\\EFormServices.Web\\obj\\Debug\\net9.0\\compressed\\",
+      "BasePath": "_content/EFormServices.Web",
+      "RelativePath": "js/dashboard#[.{fingerprint=sz1o33xll7}]?.js.gz",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Alternative",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "C:\\Users\\panupol\\Desktop\\EFormServices\\EFormServices.Web\\wwwroot\\js\\dashboard.js",
+      "AssetTraitName": "Content-Encoding",
+      "AssetTraitValue": "gzip",
+      "Fingerprint": "mufu35tdt8",
+      "Integrity": "vtLit2VwQC4esmaBz4LYSi3GRLYZ6BoEwRy5b5C1O8M=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "C:\\Users\\panupol\\Desktop\\EFormServices\\EFormServices.Web\\wwwroot\\js\\dashboard.js"
+    },
+    {
       "Identity": "C:\\Users\\panupol\\Desktop\\EFormServices\\EFormServices.Web\\obj\\Debug\\net9.0\\compressed\\4cuk3t14yn-ft3s53vfgj.gz",
       "SourceId": "EFormServices.Web",
       "SourceType": "Discovered",
@@ -183,6 +267,27 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "C:\\Users\\panupol\\Desktop\\EFormServices\\EFormServices.Web\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.bundle.min.js.map"
+    },
+    {
+      "Identity": "C:\\Users\\panupol\\Desktop\\EFormServices\\EFormServices.Web\\obj\\Debug\\net9.0\\compressed\\664slkbk5m-x9eh4ve3nd.gz",
+      "SourceId": "EFormServices.Web",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\panupol\\Desktop\\EFormServices\\EFormServices.Web\\obj\\Debug\\net9.0\\compressed\\",
+      "BasePath": "_content/EFormServices.Web",
+      "RelativePath": "js/forms-list#[.{fingerprint=x9eh4ve3nd}]?.js.gz",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Alternative",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "C:\\Users\\panupol\\Desktop\\EFormServices\\EFormServices.Web\\wwwroot\\js\\forms-list.js",
+      "AssetTraitName": "Content-Encoding",
+      "AssetTraitValue": "gzip",
+      "Fingerprint": "zqh1esopjp",
+      "Integrity": "5XG5O4uPoOW/GISw5uiVh+4zL3+gBp/zhhm5/si23eI=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "C:\\Users\\panupol\\Desktop\\EFormServices\\EFormServices.Web\\wwwroot\\js\\forms-list.js"
     },
     {
       "Identity": "C:\\Users\\panupol\\Desktop\\EFormServices\\EFormServices.Web\\obj\\Debug\\net9.0\\compressed\\7d1rpkpvy7-c2jlpeoesf.gz",
@@ -395,6 +500,27 @@
       "OriginalItemSpec": "C:\\Users\\panupol\\Desktop\\EFormServices\\EFormServices.Web\\wwwroot\\lib\\jquery\\dist\\jquery.slim.js"
     },
     {
+      "Identity": "C:\\Users\\panupol\\Desktop\\EFormServices\\EFormServices.Web\\obj\\Debug\\net9.0\\compressed\\cb5lc4389d-9eknl83k14.gz",
+      "SourceId": "EFormServices.Web",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\panupol\\Desktop\\EFormServices\\EFormServices.Web\\obj\\Debug\\net9.0\\compressed\\",
+      "BasePath": "_content/EFormServices.Web",
+      "RelativePath": "js/admin-users#[.{fingerprint=9eknl83k14}]?.js.gz",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Alternative",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "C:\\Users\\panupol\\Desktop\\EFormServices\\EFormServices.Web\\wwwroot\\js\\admin-users.js",
+      "AssetTraitName": "Content-Encoding",
+      "AssetTraitValue": "gzip",
+      "Fingerprint": "94048jhrdw",
+      "Integrity": "ZyJYTBcFIzy9Iytzf9+Nf2D2NYX0m9nwxaNUvEtd8k4=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "C:\\Users\\panupol\\Desktop\\EFormServices\\EFormServices.Web\\wwwroot\\js\\admin-users.js"
+    },
+    {
       "Identity": "C:\\Users\\panupol\\Desktop\\EFormServices\\EFormServices.Web\\obj\\Debug\\net9.0\\compressed\\csz8uo538w-pj5nd1wqec.gz",
       "SourceId": "EFormServices.Web",
       "SourceType": "Discovered",
@@ -437,12 +563,12 @@
       "OriginalItemSpec": "C:\\Users\\panupol\\Desktop\\EFormServices\\EFormServices.Web\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.rtl.min.css"
     },
     {
-      "Identity": "C:\\Users\\panupol\\Desktop\\EFormServices\\EFormServices.Web\\obj\\Debug\\net9.0\\compressed\\d9c22bdfas-xtxxf3hu2r.gz",
+      "Identity": "C:\\Users\\panupol\\Desktop\\EFormServices\\EFormServices.Web\\obj\\Debug\\net9.0\\compressed\\d9c22bdfas-zaltbcw051.gz",
       "SourceId": "EFormServices.Web",
       "SourceType": "Discovered",
       "ContentRoot": "C:\\Users\\panupol\\Desktop\\EFormServices\\EFormServices.Web\\obj\\Debug\\net9.0\\compressed\\",
       "BasePath": "_content/EFormServices.Web",
-      "RelativePath": "js/site#[.{fingerprint=xtxxf3hu2r}]?.js.gz",
+      "RelativePath": "js/site#[.{fingerprint=zaltbcw051}]?.js.gz",
       "AssetKind": "All",
       "AssetMode": "All",
       "AssetRole": "Alternative",
@@ -451,8 +577,8 @@
       "RelatedAsset": "C:\\Users\\panupol\\Desktop\\EFormServices\\EFormServices.Web\\wwwroot\\js\\site.js",
       "AssetTraitName": "Content-Encoding",
       "AssetTraitValue": "gzip",
-      "Fingerprint": "rl5dcbfpcw",
-      "Integrity": "Ydq7YvQUzhbo68waLZeQvZnPOvmTeQ+HyDqjkA1whsA=",
+      "Fingerprint": "o215r9jx6p",
+      "Integrity": "UDza317+tcTYxybgOW+kzMxANXI7Q7Lwglj3RsS//Is=",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "C:\\Users\\panupol\\Desktop\\EFormServices\\EFormServices.Web\\wwwroot\\js\\site.js"
@@ -752,6 +878,27 @@
       "OriginalItemSpec": "C:\\Users\\panupol\\Desktop\\EFormServices\\EFormServices.Web\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.rtl.css"
     },
     {
+      "Identity": "C:\\Users\\panupol\\Desktop\\EFormServices\\EFormServices.Web\\obj\\Debug\\net9.0\\compressed\\kcnkb82fjp-13xswsbqaf.gz",
+      "SourceId": "EFormServices.Web",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\panupol\\Desktop\\EFormServices\\EFormServices.Web\\obj\\Debug\\net9.0\\compressed\\",
+      "BasePath": "_content/EFormServices.Web",
+      "RelativePath": "css/submission#[.{fingerprint=13xswsbqaf}]?.css.gz",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Alternative",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "C:\\Users\\panupol\\Desktop\\EFormServices\\EFormServices.Web\\wwwroot\\css\\submission.css",
+      "AssetTraitName": "Content-Encoding",
+      "AssetTraitValue": "gzip",
+      "Fingerprint": "7olpk5pg1z",
+      "Integrity": "95HRT437hRg1WefA0fxRE9JBmWDYJZQ64K5LHQYzkkA=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "C:\\Users\\panupol\\Desktop\\EFormServices\\EFormServices.Web\\wwwroot\\css\\submission.css"
+    },
+    {
       "Identity": "C:\\Users\\panupol\\Desktop\\EFormServices\\EFormServices.Web\\obj\\Debug\\net9.0\\compressed\\kmwe417t4i-s35ty4nyc5.gz",
       "SourceId": "EFormServices.Web",
       "SourceType": "Discovered",
@@ -1023,6 +1170,27 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "C:\\Users\\panupol\\Desktop\\EFormServices\\EFormServices.Web\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.rtl.css.map"
+    },
+    {
+      "Identity": "C:\\Users\\panupol\\Desktop\\EFormServices\\EFormServices.Web\\obj\\Debug\\net9.0\\compressed\\q441ht6xrv-5ipweew5fc.gz",
+      "SourceId": "EFormServices.Web",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\panupol\\Desktop\\EFormServices\\EFormServices.Web\\obj\\Debug\\net9.0\\compressed\\",
+      "BasePath": "_content/EFormServices.Web",
+      "RelativePath": "js/form-submission#[.{fingerprint=5ipweew5fc}]?.js.gz",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Alternative",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "C:\\Users\\panupol\\Desktop\\EFormServices\\EFormServices.Web\\wwwroot\\js\\form-submission.js",
+      "AssetTraitName": "Content-Encoding",
+      "AssetTraitValue": "gzip",
+      "Fingerprint": "5ipweew5fc",
+      "Integrity": "47DEQpj8HBSa+/TImW+5JCeuQeRkm5NMpJWZG3hSuFU=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "C:\\Users\\panupol\\Desktop\\EFormServices\\EFormServices.Web\\wwwroot\\js\\form-submission.js"
     },
     {
       "Identity": "C:\\Users\\panupol\\Desktop\\EFormServices\\EFormServices.Web\\obj\\Debug\\net9.0\\compressed\\qfvvobhnt7-4v8eqarkd7.gz",
@@ -1424,6 +1592,27 @@
       "OriginalItemSpec": "wwwroot\\css\\site.css"
     },
     {
+      "Identity": "C:\\Users\\panupol\\Desktop\\EFormServices\\EFormServices.Web\\wwwroot\\css\\submission.css",
+      "SourceId": "EFormServices.Web",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\panupol\\Desktop\\EFormServices\\EFormServices.Web\\wwwroot\\",
+      "BasePath": "_content/EFormServices.Web",
+      "RelativePath": "css/submission#[.{fingerprint}]?.css",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "Fingerprint": "13xswsbqaf",
+      "Integrity": "gymvYrHMOSnShysdHQMYVT0ESmkOerqrdrG41fT/BSU=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\css\\submission.css"
+    },
+    {
       "Identity": "C:\\Users\\panupol\\Desktop\\EFormServices\\EFormServices.Web\\wwwroot\\favicon.ico",
       "SourceId": "EFormServices.Web",
       "SourceType": "Discovered",
@@ -1445,6 +1634,153 @@
       "OriginalItemSpec": "wwwroot\\favicon.ico"
     },
     {
+      "Identity": "C:\\Users\\panupol\\Desktop\\EFormServices\\EFormServices.Web\\wwwroot\\js\\admin-users.js",
+      "SourceId": "EFormServices.Web",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\panupol\\Desktop\\EFormServices\\EFormServices.Web\\wwwroot\\",
+      "BasePath": "_content/EFormServices.Web",
+      "RelativePath": "js/admin-users#[.{fingerprint}]?.js",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "Fingerprint": "9eknl83k14",
+      "Integrity": "/7ME6RxOT1uVDjEy0FpOAzNSQQ0aJsTxn3jJsXAVuiA=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\js\\admin-users.js"
+    },
+    {
+      "Identity": "C:\\Users\\panupol\\Desktop\\EFormServices\\EFormServices.Web\\wwwroot\\js\\approvals.js",
+      "SourceId": "EFormServices.Web",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\panupol\\Desktop\\EFormServices\\EFormServices.Web\\wwwroot\\",
+      "BasePath": "_content/EFormServices.Web",
+      "RelativePath": "js/approvals#[.{fingerprint}]?.js",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "Fingerprint": "zfi2f7ivbn",
+      "Integrity": "35Qc19bJHOpel7jBkOapamTk9hWIVQlUpmUHoaxK5Jc=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\js\\approvals.js"
+    },
+    {
+      "Identity": "C:\\Users\\panupol\\Desktop\\EFormServices\\EFormServices.Web\\wwwroot\\js\\dashboard.js",
+      "SourceId": "EFormServices.Web",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\panupol\\Desktop\\EFormServices\\EFormServices.Web\\wwwroot\\",
+      "BasePath": "_content/EFormServices.Web",
+      "RelativePath": "js/dashboard#[.{fingerprint}]?.js",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "Fingerprint": "sz1o33xll7",
+      "Integrity": "6MDkW1qdewD5C3HQNKZsddFyq+k3sxKesMGtp7AfWpE=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\js\\dashboard.js"
+    },
+    {
+      "Identity": "C:\\Users\\panupol\\Desktop\\EFormServices\\EFormServices.Web\\wwwroot\\js\\form-builder.js",
+      "SourceId": "EFormServices.Web",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\panupol\\Desktop\\EFormServices\\EFormServices.Web\\wwwroot\\",
+      "BasePath": "_content/EFormServices.Web",
+      "RelativePath": "js/form-builder#[.{fingerprint}]?.js",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "Fingerprint": "83u8fz4g53",
+      "Integrity": "rJozZK5X6yCA07qopftyMNkoaRtj7ScnPW8tVOwp+U4=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\js\\form-builder.js"
+    },
+    {
+      "Identity": "C:\\Users\\panupol\\Desktop\\EFormServices\\EFormServices.Web\\wwwroot\\js\\form-submission.js",
+      "SourceId": "EFormServices.Web",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\panupol\\Desktop\\EFormServices\\EFormServices.Web\\wwwroot\\",
+      "BasePath": "_content/EFormServices.Web",
+      "RelativePath": "js/form-submission#[.{fingerprint}]?.js",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "Fingerprint": "5ipweew5fc",
+      "Integrity": "47DEQpj8HBSa+/TImW+5JCeuQeRkm5NMpJWZG3hSuFU=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\js\\form-submission.js"
+    },
+    {
+      "Identity": "C:\\Users\\panupol\\Desktop\\EFormServices\\EFormServices.Web\\wwwroot\\js\\forms-list.js",
+      "SourceId": "EFormServices.Web",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\panupol\\Desktop\\EFormServices\\EFormServices.Web\\wwwroot\\",
+      "BasePath": "_content/EFormServices.Web",
+      "RelativePath": "js/forms-list#[.{fingerprint}]?.js",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "Fingerprint": "x9eh4ve3nd",
+      "Integrity": "e52K21Nv1rCLBZqAJtJSW0+zn0DFEWVEoUd8SQeTs4k=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\js\\forms-list.js"
+    },
+    {
+      "Identity": "C:\\Users\\panupol\\Desktop\\EFormServices\\EFormServices.Web\\wwwroot\\js\\navigation.js",
+      "SourceId": "EFormServices.Web",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\panupol\\Desktop\\EFormServices\\EFormServices.Web\\wwwroot\\",
+      "BasePath": "_content/EFormServices.Web",
+      "RelativePath": "js/navigation#[.{fingerprint}]?.js",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "Fingerprint": "lhh7bkpi8o",
+      "Integrity": "SR8lVHdfwFwMSaqRCTHp4R/5AOiajtNchN0fAudNbtA=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\js\\navigation.js"
+    },
+    {
       "Identity": "C:\\Users\\panupol\\Desktop\\EFormServices\\EFormServices.Web\\wwwroot\\js\\site.js",
       "SourceId": "EFormServices.Web",
       "SourceType": "Discovered",
@@ -1459,8 +1795,8 @@
       "RelatedAsset": "",
       "AssetTraitName": "",
       "AssetTraitValue": "",
-      "Fingerprint": "xtxxf3hu2r",
-      "Integrity": "hRQyftXiu1lLX2P9Ly9xa4gHJgLeR1uGN5qegUobtGo=",
+      "Fingerprint": "zaltbcw051",
+      "Integrity": "5VPm1On9YXv56DAMVv9FYd1NSFiJIC6hGkpvG0V0hMQ=",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\js\\site.js"
@@ -3026,6 +3362,304 @@
       ]
     },
     {
+      "Route": "css/submission.13xswsbqaf.css",
+      "AssetFile": "C:\\Users\\panupol\\Desktop\\EFormServices\\EFormServices.Web\\obj\\Debug\\net9.0\\compressed\\kcnkb82fjp-13xswsbqaf.gz",
+      "Selectors": [
+        {
+          "Name": "Content-Encoding",
+          "Value": "gzip",
+          "Quality": "0.000774593338"
+        }
+      ],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "1290"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"95HRT437hRg1WefA0fxRE9JBmWDYJZQ64K5LHQYzkkA=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Fri, 30 May 2025 08:07:01 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        },
+        {
+          "Name": "Content-Encoding",
+          "Value": "gzip"
+        },
+        {
+          "Name": "Vary",
+          "Value": "Content-Encoding"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/css"
+        },
+        {
+          "Name": "ETag",
+          "Value": "W/\"gymvYrHMOSnShysdHQMYVT0ESmkOerqrdrG41fT/BSU=\""
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "13xswsbqaf"
+        },
+        {
+          "Name": "label",
+          "Value": "css/submission.css"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-gymvYrHMOSnShysdHQMYVT0ESmkOerqrdrG41fT/BSU="
+        }
+      ]
+    },
+    {
+      "Route": "css/submission.13xswsbqaf.css",
+      "AssetFile": "C:\\Users\\panupol\\Desktop\\EFormServices\\EFormServices.Web\\wwwroot\\css\\submission.css",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "4452"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/css"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"gymvYrHMOSnShysdHQMYVT0ESmkOerqrdrG41fT/BSU=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Fri, 30 May 2025 08:07:01 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "13xswsbqaf"
+        },
+        {
+          "Name": "label",
+          "Value": "css/submission.css"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-gymvYrHMOSnShysdHQMYVT0ESmkOerqrdrG41fT/BSU="
+        }
+      ]
+    },
+    {
+      "Route": "css/submission.13xswsbqaf.css.gz",
+      "AssetFile": "C:\\Users\\panupol\\Desktop\\EFormServices\\EFormServices.Web\\obj\\Debug\\net9.0\\compressed\\kcnkb82fjp-13xswsbqaf.gz",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "1290"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/css"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"95HRT437hRg1WefA0fxRE9JBmWDYJZQ64K5LHQYzkkA=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Fri, 30 May 2025 08:07:01 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        },
+        {
+          "Name": "Content-Encoding",
+          "Value": "gzip"
+        },
+        {
+          "Name": "Vary",
+          "Value": "Content-Encoding"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "13xswsbqaf"
+        },
+        {
+          "Name": "label",
+          "Value": "css/submission.css.gz"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-95HRT437hRg1WefA0fxRE9JBmWDYJZQ64K5LHQYzkkA="
+        }
+      ]
+    },
+    {
+      "Route": "css/submission.css",
+      "AssetFile": "C:\\Users\\panupol\\Desktop\\EFormServices\\EFormServices.Web\\obj\\Debug\\net9.0\\compressed\\kcnkb82fjp-13xswsbqaf.gz",
+      "Selectors": [
+        {
+          "Name": "Content-Encoding",
+          "Value": "gzip",
+          "Quality": "0.000774593338"
+        }
+      ],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "1290"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"95HRT437hRg1WefA0fxRE9JBmWDYJZQ64K5LHQYzkkA=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Fri, 30 May 2025 08:07:01 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "no-cache"
+        },
+        {
+          "Name": "Content-Encoding",
+          "Value": "gzip"
+        },
+        {
+          "Name": "Vary",
+          "Value": "Content-Encoding"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/css"
+        },
+        {
+          "Name": "ETag",
+          "Value": "W/\"gymvYrHMOSnShysdHQMYVT0ESmkOerqrdrG41fT/BSU=\""
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-gymvYrHMOSnShysdHQMYVT0ESmkOerqrdrG41fT/BSU="
+        }
+      ]
+    },
+    {
+      "Route": "css/submission.css",
+      "AssetFile": "C:\\Users\\panupol\\Desktop\\EFormServices\\EFormServices.Web\\wwwroot\\css\\submission.css",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "4452"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/css"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"gymvYrHMOSnShysdHQMYVT0ESmkOerqrdrG41fT/BSU=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Fri, 30 May 2025 08:07:01 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "no-cache"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-gymvYrHMOSnShysdHQMYVT0ESmkOerqrdrG41fT/BSU="
+        }
+      ]
+    },
+    {
+      "Route": "css/submission.css.gz",
+      "AssetFile": "C:\\Users\\panupol\\Desktop\\EFormServices\\EFormServices.Web\\obj\\Debug\\net9.0\\compressed\\kcnkb82fjp-13xswsbqaf.gz",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "1290"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/css"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"95HRT437hRg1WefA0fxRE9JBmWDYJZQ64K5LHQYzkkA=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Fri, 30 May 2025 08:07:01 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "no-cache"
+        },
+        {
+          "Name": "Content-Encoding",
+          "Value": "gzip"
+        },
+        {
+          "Name": "Vary",
+          "Value": "Content-Encoding"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-95HRT437hRg1WefA0fxRE9JBmWDYJZQ64K5LHQYzkkA="
+        }
+      ]
+    },
+    {
       "Route": "EFormServices.Web.bundle.scp.css",
       "AssetFile": "C:\\Users\\panupol\\Desktop\\EFormServices\\EFormServices.Web\\obj\\Debug\\net9.0\\compressed\\ib1rvit9e1-nb4trpd4fw.gz",
       "Selectors": [
@@ -3920,13 +4554,13 @@
       ]
     },
     {
-      "Route": "js/site.js",
-      "AssetFile": "C:\\Users\\panupol\\Desktop\\EFormServices\\EFormServices.Web\\obj\\Debug\\net9.0\\compressed\\d9c22bdfas-xtxxf3hu2r.gz",
+      "Route": "js/admin-users.9eknl83k14.js",
+      "AssetFile": "C:\\Users\\panupol\\Desktop\\EFormServices\\EFormServices.Web\\obj\\Debug\\net9.0\\compressed\\cb5lc4389d-9eknl83k14.gz",
       "Selectors": [
         {
           "Name": "Content-Encoding",
           "Value": "gzip",
-          "Quality": "0.005263157895"
+          "Quality": "0.000214822771"
         }
       ],
       "ResponseHeaders": [
@@ -3936,15 +4570,176 @@
         },
         {
           "Name": "Content-Length",
-          "Value": "189"
+          "Value": "4654"
         },
         {
           "Name": "ETag",
-          "Value": "\"Ydq7YvQUzhbo68waLZeQvZnPOvmTeQ+HyDqjkA1whsA=\""
+          "Value": "\"ZyJYTBcFIzy9Iytzf9+Nf2D2NYX0m9nwxaNUvEtd8k4=\""
         },
         {
           "Name": "Last-Modified",
-          "Value": "Tue, 27 May 2025 09:34:46 GMT"
+          "Value": "Fri, 30 May 2025 08:08:13 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        },
+        {
+          "Name": "Content-Encoding",
+          "Value": "gzip"
+        },
+        {
+          "Name": "Vary",
+          "Value": "Content-Encoding"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/javascript"
+        },
+        {
+          "Name": "ETag",
+          "Value": "W/\"/7ME6RxOT1uVDjEy0FpOAzNSQQ0aJsTxn3jJsXAVuiA=\""
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "9eknl83k14"
+        },
+        {
+          "Name": "label",
+          "Value": "js/admin-users.js"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-/7ME6RxOT1uVDjEy0FpOAzNSQQ0aJsTxn3jJsXAVuiA="
+        }
+      ]
+    },
+    {
+      "Route": "js/admin-users.9eknl83k14.js",
+      "AssetFile": "C:\\Users\\panupol\\Desktop\\EFormServices\\EFormServices.Web\\wwwroot\\js\\admin-users.js",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "21816"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/javascript"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"/7ME6RxOT1uVDjEy0FpOAzNSQQ0aJsTxn3jJsXAVuiA=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Fri, 30 May 2025 08:08:13 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "9eknl83k14"
+        },
+        {
+          "Name": "label",
+          "Value": "js/admin-users.js"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-/7ME6RxOT1uVDjEy0FpOAzNSQQ0aJsTxn3jJsXAVuiA="
+        }
+      ]
+    },
+    {
+      "Route": "js/admin-users.9eknl83k14.js.gz",
+      "AssetFile": "C:\\Users\\panupol\\Desktop\\EFormServices\\EFormServices.Web\\obj\\Debug\\net9.0\\compressed\\cb5lc4389d-9eknl83k14.gz",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "4654"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/javascript"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"ZyJYTBcFIzy9Iytzf9+Nf2D2NYX0m9nwxaNUvEtd8k4=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Fri, 30 May 2025 08:08:13 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        },
+        {
+          "Name": "Content-Encoding",
+          "Value": "gzip"
+        },
+        {
+          "Name": "Vary",
+          "Value": "Content-Encoding"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "9eknl83k14"
+        },
+        {
+          "Name": "label",
+          "Value": "js/admin-users.js.gz"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-ZyJYTBcFIzy9Iytzf9+Nf2D2NYX0m9nwxaNUvEtd8k4="
+        }
+      ]
+    },
+    {
+      "Route": "js/admin-users.js",
+      "AssetFile": "C:\\Users\\panupol\\Desktop\\EFormServices\\EFormServices.Web\\obj\\Debug\\net9.0\\compressed\\cb5lc4389d-9eknl83k14.gz",
+      "Selectors": [
+        {
+          "Name": "Content-Encoding",
+          "Value": "gzip",
+          "Quality": "0.000214822771"
+        }
+      ],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "4654"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"ZyJYTBcFIzy9Iytzf9+Nf2D2NYX0m9nwxaNUvEtd8k4=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Fri, 30 May 2025 08:08:13 GMT"
         },
         {
           "Name": "Cache-Control",
@@ -3964,13 +4759,1938 @@
         },
         {
           "Name": "ETag",
-          "Value": "W/\"hRQyftXiu1lLX2P9Ly9xa4gHJgLeR1uGN5qegUobtGo=\""
+          "Value": "W/\"/7ME6RxOT1uVDjEy0FpOAzNSQQ0aJsTxn3jJsXAVuiA=\""
         }
       ],
       "EndpointProperties": [
         {
           "Name": "integrity",
-          "Value": "sha256-hRQyftXiu1lLX2P9Ly9xa4gHJgLeR1uGN5qegUobtGo="
+          "Value": "sha256-/7ME6RxOT1uVDjEy0FpOAzNSQQ0aJsTxn3jJsXAVuiA="
+        }
+      ]
+    },
+    {
+      "Route": "js/admin-users.js",
+      "AssetFile": "C:\\Users\\panupol\\Desktop\\EFormServices\\EFormServices.Web\\wwwroot\\js\\admin-users.js",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "21816"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/javascript"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"/7ME6RxOT1uVDjEy0FpOAzNSQQ0aJsTxn3jJsXAVuiA=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Fri, 30 May 2025 08:08:13 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "no-cache"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-/7ME6RxOT1uVDjEy0FpOAzNSQQ0aJsTxn3jJsXAVuiA="
+        }
+      ]
+    },
+    {
+      "Route": "js/admin-users.js.gz",
+      "AssetFile": "C:\\Users\\panupol\\Desktop\\EFormServices\\EFormServices.Web\\obj\\Debug\\net9.0\\compressed\\cb5lc4389d-9eknl83k14.gz",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "4654"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/javascript"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"ZyJYTBcFIzy9Iytzf9+Nf2D2NYX0m9nwxaNUvEtd8k4=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Fri, 30 May 2025 08:08:13 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "no-cache"
+        },
+        {
+          "Name": "Content-Encoding",
+          "Value": "gzip"
+        },
+        {
+          "Name": "Vary",
+          "Value": "Content-Encoding"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-ZyJYTBcFIzy9Iytzf9+Nf2D2NYX0m9nwxaNUvEtd8k4="
+        }
+      ]
+    },
+    {
+      "Route": "js/approvals.js",
+      "AssetFile": "C:\\Users\\panupol\\Desktop\\EFormServices\\EFormServices.Web\\obj\\Debug\\net9.0\\compressed\\1pkovq0ts6-zfi2f7ivbn.gz",
+      "Selectors": [
+        {
+          "Name": "Content-Encoding",
+          "Value": "gzip",
+          "Quality": "0.000210881485"
+        }
+      ],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "4741"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"aUdZkcdbbP4aAmJDFyP60L7zT1DsBERcMoBYLPuZios=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Fri, 30 May 2025 08:10:46 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "no-cache"
+        },
+        {
+          "Name": "Content-Encoding",
+          "Value": "gzip"
+        },
+        {
+          "Name": "Vary",
+          "Value": "Content-Encoding"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/javascript"
+        },
+        {
+          "Name": "ETag",
+          "Value": "W/\"35Qc19bJHOpel7jBkOapamTk9hWIVQlUpmUHoaxK5Jc=\""
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-35Qc19bJHOpel7jBkOapamTk9hWIVQlUpmUHoaxK5Jc="
+        }
+      ]
+    },
+    {
+      "Route": "js/approvals.js",
+      "AssetFile": "C:\\Users\\panupol\\Desktop\\EFormServices\\EFormServices.Web\\wwwroot\\js\\approvals.js",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "23360"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/javascript"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"35Qc19bJHOpel7jBkOapamTk9hWIVQlUpmUHoaxK5Jc=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Fri, 30 May 2025 08:10:46 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "no-cache"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-35Qc19bJHOpel7jBkOapamTk9hWIVQlUpmUHoaxK5Jc="
+        }
+      ]
+    },
+    {
+      "Route": "js/approvals.js.gz",
+      "AssetFile": "C:\\Users\\panupol\\Desktop\\EFormServices\\EFormServices.Web\\obj\\Debug\\net9.0\\compressed\\1pkovq0ts6-zfi2f7ivbn.gz",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "4741"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/javascript"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"aUdZkcdbbP4aAmJDFyP60L7zT1DsBERcMoBYLPuZios=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Fri, 30 May 2025 08:10:46 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "no-cache"
+        },
+        {
+          "Name": "Content-Encoding",
+          "Value": "gzip"
+        },
+        {
+          "Name": "Vary",
+          "Value": "Content-Encoding"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-aUdZkcdbbP4aAmJDFyP60L7zT1DsBERcMoBYLPuZios="
+        }
+      ]
+    },
+    {
+      "Route": "js/approvals.zfi2f7ivbn.js",
+      "AssetFile": "C:\\Users\\panupol\\Desktop\\EFormServices\\EFormServices.Web\\obj\\Debug\\net9.0\\compressed\\1pkovq0ts6-zfi2f7ivbn.gz",
+      "Selectors": [
+        {
+          "Name": "Content-Encoding",
+          "Value": "gzip",
+          "Quality": "0.000210881485"
+        }
+      ],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "4741"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"aUdZkcdbbP4aAmJDFyP60L7zT1DsBERcMoBYLPuZios=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Fri, 30 May 2025 08:10:46 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        },
+        {
+          "Name": "Content-Encoding",
+          "Value": "gzip"
+        },
+        {
+          "Name": "Vary",
+          "Value": "Content-Encoding"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/javascript"
+        },
+        {
+          "Name": "ETag",
+          "Value": "W/\"35Qc19bJHOpel7jBkOapamTk9hWIVQlUpmUHoaxK5Jc=\""
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "zfi2f7ivbn"
+        },
+        {
+          "Name": "label",
+          "Value": "js/approvals.js"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-35Qc19bJHOpel7jBkOapamTk9hWIVQlUpmUHoaxK5Jc="
+        }
+      ]
+    },
+    {
+      "Route": "js/approvals.zfi2f7ivbn.js",
+      "AssetFile": "C:\\Users\\panupol\\Desktop\\EFormServices\\EFormServices.Web\\wwwroot\\js\\approvals.js",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "23360"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/javascript"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"35Qc19bJHOpel7jBkOapamTk9hWIVQlUpmUHoaxK5Jc=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Fri, 30 May 2025 08:10:46 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "zfi2f7ivbn"
+        },
+        {
+          "Name": "label",
+          "Value": "js/approvals.js"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-35Qc19bJHOpel7jBkOapamTk9hWIVQlUpmUHoaxK5Jc="
+        }
+      ]
+    },
+    {
+      "Route": "js/approvals.zfi2f7ivbn.js.gz",
+      "AssetFile": "C:\\Users\\panupol\\Desktop\\EFormServices\\EFormServices.Web\\obj\\Debug\\net9.0\\compressed\\1pkovq0ts6-zfi2f7ivbn.gz",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "4741"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/javascript"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"aUdZkcdbbP4aAmJDFyP60L7zT1DsBERcMoBYLPuZios=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Fri, 30 May 2025 08:10:46 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        },
+        {
+          "Name": "Content-Encoding",
+          "Value": "gzip"
+        },
+        {
+          "Name": "Vary",
+          "Value": "Content-Encoding"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "zfi2f7ivbn"
+        },
+        {
+          "Name": "label",
+          "Value": "js/approvals.js.gz"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-aUdZkcdbbP4aAmJDFyP60L7zT1DsBERcMoBYLPuZios="
+        }
+      ]
+    },
+    {
+      "Route": "js/dashboard.js",
+      "AssetFile": "C:\\Users\\panupol\\Desktop\\EFormServices\\EFormServices.Web\\obj\\Debug\\net9.0\\compressed\\42u8d2ddd4-sz1o33xll7.gz",
+      "Selectors": [
+        {
+          "Name": "Content-Encoding",
+          "Value": "gzip",
+          "Quality": "0.000520833333"
+        }
+      ],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "1919"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"vtLit2VwQC4esmaBz4LYSi3GRLYZ6BoEwRy5b5C1O8M=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Fri, 30 May 2025 07:58:46 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "no-cache"
+        },
+        {
+          "Name": "Content-Encoding",
+          "Value": "gzip"
+        },
+        {
+          "Name": "Vary",
+          "Value": "Content-Encoding"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/javascript"
+        },
+        {
+          "Name": "ETag",
+          "Value": "W/\"6MDkW1qdewD5C3HQNKZsddFyq+k3sxKesMGtp7AfWpE=\""
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-6MDkW1qdewD5C3HQNKZsddFyq+k3sxKesMGtp7AfWpE="
+        }
+      ]
+    },
+    {
+      "Route": "js/dashboard.js",
+      "AssetFile": "C:\\Users\\panupol\\Desktop\\EFormServices\\EFormServices.Web\\wwwroot\\js\\dashboard.js",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "6804"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/javascript"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"6MDkW1qdewD5C3HQNKZsddFyq+k3sxKesMGtp7AfWpE=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Fri, 30 May 2025 07:58:46 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "no-cache"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-6MDkW1qdewD5C3HQNKZsddFyq+k3sxKesMGtp7AfWpE="
+        }
+      ]
+    },
+    {
+      "Route": "js/dashboard.js.gz",
+      "AssetFile": "C:\\Users\\panupol\\Desktop\\EFormServices\\EFormServices.Web\\obj\\Debug\\net9.0\\compressed\\42u8d2ddd4-sz1o33xll7.gz",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "1919"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/javascript"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"vtLit2VwQC4esmaBz4LYSi3GRLYZ6BoEwRy5b5C1O8M=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Fri, 30 May 2025 07:58:46 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "no-cache"
+        },
+        {
+          "Name": "Content-Encoding",
+          "Value": "gzip"
+        },
+        {
+          "Name": "Vary",
+          "Value": "Content-Encoding"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-vtLit2VwQC4esmaBz4LYSi3GRLYZ6BoEwRy5b5C1O8M="
+        }
+      ]
+    },
+    {
+      "Route": "js/dashboard.sz1o33xll7.js",
+      "AssetFile": "C:\\Users\\panupol\\Desktop\\EFormServices\\EFormServices.Web\\obj\\Debug\\net9.0\\compressed\\42u8d2ddd4-sz1o33xll7.gz",
+      "Selectors": [
+        {
+          "Name": "Content-Encoding",
+          "Value": "gzip",
+          "Quality": "0.000520833333"
+        }
+      ],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "1919"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"vtLit2VwQC4esmaBz4LYSi3GRLYZ6BoEwRy5b5C1O8M=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Fri, 30 May 2025 07:58:46 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        },
+        {
+          "Name": "Content-Encoding",
+          "Value": "gzip"
+        },
+        {
+          "Name": "Vary",
+          "Value": "Content-Encoding"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/javascript"
+        },
+        {
+          "Name": "ETag",
+          "Value": "W/\"6MDkW1qdewD5C3HQNKZsddFyq+k3sxKesMGtp7AfWpE=\""
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "sz1o33xll7"
+        },
+        {
+          "Name": "label",
+          "Value": "js/dashboard.js"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-6MDkW1qdewD5C3HQNKZsddFyq+k3sxKesMGtp7AfWpE="
+        }
+      ]
+    },
+    {
+      "Route": "js/dashboard.sz1o33xll7.js",
+      "AssetFile": "C:\\Users\\panupol\\Desktop\\EFormServices\\EFormServices.Web\\wwwroot\\js\\dashboard.js",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "6804"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/javascript"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"6MDkW1qdewD5C3HQNKZsddFyq+k3sxKesMGtp7AfWpE=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Fri, 30 May 2025 07:58:46 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "sz1o33xll7"
+        },
+        {
+          "Name": "label",
+          "Value": "js/dashboard.js"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-6MDkW1qdewD5C3HQNKZsddFyq+k3sxKesMGtp7AfWpE="
+        }
+      ]
+    },
+    {
+      "Route": "js/dashboard.sz1o33xll7.js.gz",
+      "AssetFile": "C:\\Users\\panupol\\Desktop\\EFormServices\\EFormServices.Web\\obj\\Debug\\net9.0\\compressed\\42u8d2ddd4-sz1o33xll7.gz",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "1919"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/javascript"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"vtLit2VwQC4esmaBz4LYSi3GRLYZ6BoEwRy5b5C1O8M=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Fri, 30 May 2025 07:58:46 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        },
+        {
+          "Name": "Content-Encoding",
+          "Value": "gzip"
+        },
+        {
+          "Name": "Vary",
+          "Value": "Content-Encoding"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "sz1o33xll7"
+        },
+        {
+          "Name": "label",
+          "Value": "js/dashboard.js.gz"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-vtLit2VwQC4esmaBz4LYSi3GRLYZ6BoEwRy5b5C1O8M="
+        }
+      ]
+    },
+    {
+      "Route": "js/form-builder.83u8fz4g53.js",
+      "AssetFile": "C:\\Users\\panupol\\Desktop\\EFormServices\\EFormServices.Web\\obj\\Debug\\net9.0\\compressed\\139gdkzhox-83u8fz4g53.gz",
+      "Selectors": [
+        {
+          "Name": "Content-Encoding",
+          "Value": "gzip",
+          "Quality": "0.000228623685"
+        }
+      ],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "4373"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"/qMH1uXFxPix9kKeaI//k4GgaaX5vQJrmFHfjMhMTM4=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Fri, 30 May 2025 07:59:49 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        },
+        {
+          "Name": "Content-Encoding",
+          "Value": "gzip"
+        },
+        {
+          "Name": "Vary",
+          "Value": "Content-Encoding"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/javascript"
+        },
+        {
+          "Name": "ETag",
+          "Value": "W/\"rJozZK5X6yCA07qopftyMNkoaRtj7ScnPW8tVOwp+U4=\""
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "83u8fz4g53"
+        },
+        {
+          "Name": "label",
+          "Value": "js/form-builder.js"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-rJozZK5X6yCA07qopftyMNkoaRtj7ScnPW8tVOwp+U4="
+        }
+      ]
+    },
+    {
+      "Route": "js/form-builder.83u8fz4g53.js",
+      "AssetFile": "C:\\Users\\panupol\\Desktop\\EFormServices\\EFormServices.Web\\wwwroot\\js\\form-builder.js",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "20325"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/javascript"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"rJozZK5X6yCA07qopftyMNkoaRtj7ScnPW8tVOwp+U4=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Fri, 30 May 2025 07:59:49 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "83u8fz4g53"
+        },
+        {
+          "Name": "label",
+          "Value": "js/form-builder.js"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-rJozZK5X6yCA07qopftyMNkoaRtj7ScnPW8tVOwp+U4="
+        }
+      ]
+    },
+    {
+      "Route": "js/form-builder.83u8fz4g53.js.gz",
+      "AssetFile": "C:\\Users\\panupol\\Desktop\\EFormServices\\EFormServices.Web\\obj\\Debug\\net9.0\\compressed\\139gdkzhox-83u8fz4g53.gz",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "4373"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/javascript"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"/qMH1uXFxPix9kKeaI//k4GgaaX5vQJrmFHfjMhMTM4=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Fri, 30 May 2025 07:59:49 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        },
+        {
+          "Name": "Content-Encoding",
+          "Value": "gzip"
+        },
+        {
+          "Name": "Vary",
+          "Value": "Content-Encoding"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "83u8fz4g53"
+        },
+        {
+          "Name": "label",
+          "Value": "js/form-builder.js.gz"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-/qMH1uXFxPix9kKeaI//k4GgaaX5vQJrmFHfjMhMTM4="
+        }
+      ]
+    },
+    {
+      "Route": "js/form-builder.js",
+      "AssetFile": "C:\\Users\\panupol\\Desktop\\EFormServices\\EFormServices.Web\\obj\\Debug\\net9.0\\compressed\\139gdkzhox-83u8fz4g53.gz",
+      "Selectors": [
+        {
+          "Name": "Content-Encoding",
+          "Value": "gzip",
+          "Quality": "0.000228623685"
+        }
+      ],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "4373"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"/qMH1uXFxPix9kKeaI//k4GgaaX5vQJrmFHfjMhMTM4=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Fri, 30 May 2025 07:59:49 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "no-cache"
+        },
+        {
+          "Name": "Content-Encoding",
+          "Value": "gzip"
+        },
+        {
+          "Name": "Vary",
+          "Value": "Content-Encoding"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/javascript"
+        },
+        {
+          "Name": "ETag",
+          "Value": "W/\"rJozZK5X6yCA07qopftyMNkoaRtj7ScnPW8tVOwp+U4=\""
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-rJozZK5X6yCA07qopftyMNkoaRtj7ScnPW8tVOwp+U4="
+        }
+      ]
+    },
+    {
+      "Route": "js/form-builder.js",
+      "AssetFile": "C:\\Users\\panupol\\Desktop\\EFormServices\\EFormServices.Web\\wwwroot\\js\\form-builder.js",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "20325"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/javascript"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"rJozZK5X6yCA07qopftyMNkoaRtj7ScnPW8tVOwp+U4=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Fri, 30 May 2025 07:59:49 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "no-cache"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-rJozZK5X6yCA07qopftyMNkoaRtj7ScnPW8tVOwp+U4="
+        }
+      ]
+    },
+    {
+      "Route": "js/form-builder.js.gz",
+      "AssetFile": "C:\\Users\\panupol\\Desktop\\EFormServices\\EFormServices.Web\\obj\\Debug\\net9.0\\compressed\\139gdkzhox-83u8fz4g53.gz",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "4373"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/javascript"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"/qMH1uXFxPix9kKeaI//k4GgaaX5vQJrmFHfjMhMTM4=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Fri, 30 May 2025 07:59:49 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "no-cache"
+        },
+        {
+          "Name": "Content-Encoding",
+          "Value": "gzip"
+        },
+        {
+          "Name": "Vary",
+          "Value": "Content-Encoding"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-/qMH1uXFxPix9kKeaI//k4GgaaX5vQJrmFHfjMhMTM4="
+        }
+      ]
+    },
+    {
+      "Route": "js/form-submission.5ipweew5fc.js",
+      "AssetFile": "C:\\Users\\panupol\\Desktop\\EFormServices\\EFormServices.Web\\obj\\Debug\\net9.0\\compressed\\q441ht6xrv-5ipweew5fc.gz",
+      "Selectors": [
+        {
+          "Name": "Content-Encoding",
+          "Value": "gzip",
+          "Quality": "1.000000000000"
+        }
+      ],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "0"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"47DEQpj8HBSa+/TImW+5JCeuQeRkm5NMpJWZG3hSuFU=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Fri, 30 May 2025 08:03:21 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        },
+        {
+          "Name": "Content-Encoding",
+          "Value": "gzip"
+        },
+        {
+          "Name": "Vary",
+          "Value": "Content-Encoding"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/javascript"
+        },
+        {
+          "Name": "ETag",
+          "Value": "W/\"47DEQpj8HBSa+/TImW+5JCeuQeRkm5NMpJWZG3hSuFU=\""
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "5ipweew5fc"
+        },
+        {
+          "Name": "label",
+          "Value": "js/form-submission.js"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-47DEQpj8HBSa+/TImW+5JCeuQeRkm5NMpJWZG3hSuFU="
+        }
+      ]
+    },
+    {
+      "Route": "js/form-submission.5ipweew5fc.js",
+      "AssetFile": "C:\\Users\\panupol\\Desktop\\EFormServices\\EFormServices.Web\\wwwroot\\js\\form-submission.js",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "0"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/javascript"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"47DEQpj8HBSa+/TImW+5JCeuQeRkm5NMpJWZG3hSuFU=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Fri, 30 May 2025 08:03:21 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "5ipweew5fc"
+        },
+        {
+          "Name": "label",
+          "Value": "js/form-submission.js"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-47DEQpj8HBSa+/TImW+5JCeuQeRkm5NMpJWZG3hSuFU="
+        }
+      ]
+    },
+    {
+      "Route": "js/form-submission.5ipweew5fc.js.gz",
+      "AssetFile": "C:\\Users\\panupol\\Desktop\\EFormServices\\EFormServices.Web\\obj\\Debug\\net9.0\\compressed\\q441ht6xrv-5ipweew5fc.gz",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "0"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/javascript"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"47DEQpj8HBSa+/TImW+5JCeuQeRkm5NMpJWZG3hSuFU=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Fri, 30 May 2025 08:03:21 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        },
+        {
+          "Name": "Content-Encoding",
+          "Value": "gzip"
+        },
+        {
+          "Name": "Vary",
+          "Value": "Content-Encoding"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "5ipweew5fc"
+        },
+        {
+          "Name": "label",
+          "Value": "js/form-submission.js.gz"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-47DEQpj8HBSa+/TImW+5JCeuQeRkm5NMpJWZG3hSuFU="
+        }
+      ]
+    },
+    {
+      "Route": "js/form-submission.js",
+      "AssetFile": "C:\\Users\\panupol\\Desktop\\EFormServices\\EFormServices.Web\\obj\\Debug\\net9.0\\compressed\\q441ht6xrv-5ipweew5fc.gz",
+      "Selectors": [
+        {
+          "Name": "Content-Encoding",
+          "Value": "gzip",
+          "Quality": "1.000000000000"
+        }
+      ],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "0"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"47DEQpj8HBSa+/TImW+5JCeuQeRkm5NMpJWZG3hSuFU=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Fri, 30 May 2025 08:03:21 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "no-cache"
+        },
+        {
+          "Name": "Content-Encoding",
+          "Value": "gzip"
+        },
+        {
+          "Name": "Vary",
+          "Value": "Content-Encoding"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/javascript"
+        },
+        {
+          "Name": "ETag",
+          "Value": "W/\"47DEQpj8HBSa+/TImW+5JCeuQeRkm5NMpJWZG3hSuFU=\""
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-47DEQpj8HBSa+/TImW+5JCeuQeRkm5NMpJWZG3hSuFU="
+        }
+      ]
+    },
+    {
+      "Route": "js/form-submission.js",
+      "AssetFile": "C:\\Users\\panupol\\Desktop\\EFormServices\\EFormServices.Web\\wwwroot\\js\\form-submission.js",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "0"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/javascript"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"47DEQpj8HBSa+/TImW+5JCeuQeRkm5NMpJWZG3hSuFU=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Fri, 30 May 2025 08:03:21 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "no-cache"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-47DEQpj8HBSa+/TImW+5JCeuQeRkm5NMpJWZG3hSuFU="
+        }
+      ]
+    },
+    {
+      "Route": "js/form-submission.js.gz",
+      "AssetFile": "C:\\Users\\panupol\\Desktop\\EFormServices\\EFormServices.Web\\obj\\Debug\\net9.0\\compressed\\q441ht6xrv-5ipweew5fc.gz",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "0"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/javascript"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"47DEQpj8HBSa+/TImW+5JCeuQeRkm5NMpJWZG3hSuFU=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Fri, 30 May 2025 08:03:21 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "no-cache"
+        },
+        {
+          "Name": "Content-Encoding",
+          "Value": "gzip"
+        },
+        {
+          "Name": "Vary",
+          "Value": "Content-Encoding"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-47DEQpj8HBSa+/TImW+5JCeuQeRkm5NMpJWZG3hSuFU="
+        }
+      ]
+    },
+    {
+      "Route": "js/forms-list.js",
+      "AssetFile": "C:\\Users\\panupol\\Desktop\\EFormServices\\EFormServices.Web\\obj\\Debug\\net9.0\\compressed\\664slkbk5m-x9eh4ve3nd.gz",
+      "Selectors": [
+        {
+          "Name": "Content-Encoding",
+          "Value": "gzip",
+          "Quality": "0.000315556958"
+        }
+      ],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "3168"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"5XG5O4uPoOW/GISw5uiVh+4zL3+gBp/zhhm5/si23eI=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Fri, 30 May 2025 08:00:45 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "no-cache"
+        },
+        {
+          "Name": "Content-Encoding",
+          "Value": "gzip"
+        },
+        {
+          "Name": "Vary",
+          "Value": "Content-Encoding"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/javascript"
+        },
+        {
+          "Name": "ETag",
+          "Value": "W/\"e52K21Nv1rCLBZqAJtJSW0+zn0DFEWVEoUd8SQeTs4k=\""
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-e52K21Nv1rCLBZqAJtJSW0+zn0DFEWVEoUd8SQeTs4k="
+        }
+      ]
+    },
+    {
+      "Route": "js/forms-list.js",
+      "AssetFile": "C:\\Users\\panupol\\Desktop\\EFormServices\\EFormServices.Web\\wwwroot\\js\\forms-list.js",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "12997"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/javascript"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"e52K21Nv1rCLBZqAJtJSW0+zn0DFEWVEoUd8SQeTs4k=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Fri, 30 May 2025 08:00:45 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "no-cache"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-e52K21Nv1rCLBZqAJtJSW0+zn0DFEWVEoUd8SQeTs4k="
+        }
+      ]
+    },
+    {
+      "Route": "js/forms-list.js.gz",
+      "AssetFile": "C:\\Users\\panupol\\Desktop\\EFormServices\\EFormServices.Web\\obj\\Debug\\net9.0\\compressed\\664slkbk5m-x9eh4ve3nd.gz",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "3168"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/javascript"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"5XG5O4uPoOW/GISw5uiVh+4zL3+gBp/zhhm5/si23eI=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Fri, 30 May 2025 08:00:45 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "no-cache"
+        },
+        {
+          "Name": "Content-Encoding",
+          "Value": "gzip"
+        },
+        {
+          "Name": "Vary",
+          "Value": "Content-Encoding"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-5XG5O4uPoOW/GISw5uiVh+4zL3+gBp/zhhm5/si23eI="
+        }
+      ]
+    },
+    {
+      "Route": "js/forms-list.x9eh4ve3nd.js",
+      "AssetFile": "C:\\Users\\panupol\\Desktop\\EFormServices\\EFormServices.Web\\obj\\Debug\\net9.0\\compressed\\664slkbk5m-x9eh4ve3nd.gz",
+      "Selectors": [
+        {
+          "Name": "Content-Encoding",
+          "Value": "gzip",
+          "Quality": "0.000315556958"
+        }
+      ],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "3168"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"5XG5O4uPoOW/GISw5uiVh+4zL3+gBp/zhhm5/si23eI=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Fri, 30 May 2025 08:00:45 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        },
+        {
+          "Name": "Content-Encoding",
+          "Value": "gzip"
+        },
+        {
+          "Name": "Vary",
+          "Value": "Content-Encoding"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/javascript"
+        },
+        {
+          "Name": "ETag",
+          "Value": "W/\"e52K21Nv1rCLBZqAJtJSW0+zn0DFEWVEoUd8SQeTs4k=\""
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "x9eh4ve3nd"
+        },
+        {
+          "Name": "label",
+          "Value": "js/forms-list.js"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-e52K21Nv1rCLBZqAJtJSW0+zn0DFEWVEoUd8SQeTs4k="
+        }
+      ]
+    },
+    {
+      "Route": "js/forms-list.x9eh4ve3nd.js",
+      "AssetFile": "C:\\Users\\panupol\\Desktop\\EFormServices\\EFormServices.Web\\wwwroot\\js\\forms-list.js",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "12997"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/javascript"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"e52K21Nv1rCLBZqAJtJSW0+zn0DFEWVEoUd8SQeTs4k=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Fri, 30 May 2025 08:00:45 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "x9eh4ve3nd"
+        },
+        {
+          "Name": "label",
+          "Value": "js/forms-list.js"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-e52K21Nv1rCLBZqAJtJSW0+zn0DFEWVEoUd8SQeTs4k="
+        }
+      ]
+    },
+    {
+      "Route": "js/forms-list.x9eh4ve3nd.js.gz",
+      "AssetFile": "C:\\Users\\panupol\\Desktop\\EFormServices\\EFormServices.Web\\obj\\Debug\\net9.0\\compressed\\664slkbk5m-x9eh4ve3nd.gz",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "3168"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/javascript"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"5XG5O4uPoOW/GISw5uiVh+4zL3+gBp/zhhm5/si23eI=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Fri, 30 May 2025 08:00:45 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        },
+        {
+          "Name": "Content-Encoding",
+          "Value": "gzip"
+        },
+        {
+          "Name": "Vary",
+          "Value": "Content-Encoding"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "x9eh4ve3nd"
+        },
+        {
+          "Name": "label",
+          "Value": "js/forms-list.js.gz"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-5XG5O4uPoOW/GISw5uiVh+4zL3+gBp/zhhm5/si23eI="
+        }
+      ]
+    },
+    {
+      "Route": "js/navigation.js",
+      "AssetFile": "C:\\Users\\panupol\\Desktop\\EFormServices\\EFormServices.Web\\obj\\Debug\\net9.0\\compressed\\14mvma6gsh-lhh7bkpi8o.gz",
+      "Selectors": [
+        {
+          "Name": "Content-Encoding",
+          "Value": "gzip",
+          "Quality": "0.000415973378"
+        }
+      ],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "2403"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"G+NNntKmm/sE7YV/OzolKq48LSepm+rPAwG7EhpiYjk=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Fri, 30 May 2025 08:06:10 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "no-cache"
+        },
+        {
+          "Name": "Content-Encoding",
+          "Value": "gzip"
+        },
+        {
+          "Name": "Vary",
+          "Value": "Content-Encoding"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/javascript"
+        },
+        {
+          "Name": "ETag",
+          "Value": "W/\"SR8lVHdfwFwMSaqRCTHp4R/5AOiajtNchN0fAudNbtA=\""
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-SR8lVHdfwFwMSaqRCTHp4R/5AOiajtNchN0fAudNbtA="
+        }
+      ]
+    },
+    {
+      "Route": "js/navigation.js",
+      "AssetFile": "C:\\Users\\panupol\\Desktop\\EFormServices\\EFormServices.Web\\wwwroot\\js\\navigation.js",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "9584"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/javascript"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"SR8lVHdfwFwMSaqRCTHp4R/5AOiajtNchN0fAudNbtA=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Fri, 30 May 2025 08:06:10 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "no-cache"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-SR8lVHdfwFwMSaqRCTHp4R/5AOiajtNchN0fAudNbtA="
+        }
+      ]
+    },
+    {
+      "Route": "js/navigation.js.gz",
+      "AssetFile": "C:\\Users\\panupol\\Desktop\\EFormServices\\EFormServices.Web\\obj\\Debug\\net9.0\\compressed\\14mvma6gsh-lhh7bkpi8o.gz",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "2403"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/javascript"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"G+NNntKmm/sE7YV/OzolKq48LSepm+rPAwG7EhpiYjk=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Fri, 30 May 2025 08:06:10 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "no-cache"
+        },
+        {
+          "Name": "Content-Encoding",
+          "Value": "gzip"
+        },
+        {
+          "Name": "Vary",
+          "Value": "Content-Encoding"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-G+NNntKmm/sE7YV/OzolKq48LSepm+rPAwG7EhpiYjk="
+        }
+      ]
+    },
+    {
+      "Route": "js/navigation.lhh7bkpi8o.js",
+      "AssetFile": "C:\\Users\\panupol\\Desktop\\EFormServices\\EFormServices.Web\\obj\\Debug\\net9.0\\compressed\\14mvma6gsh-lhh7bkpi8o.gz",
+      "Selectors": [
+        {
+          "Name": "Content-Encoding",
+          "Value": "gzip",
+          "Quality": "0.000415973378"
+        }
+      ],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "2403"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"G+NNntKmm/sE7YV/OzolKq48LSepm+rPAwG7EhpiYjk=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Fri, 30 May 2025 08:06:10 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        },
+        {
+          "Name": "Content-Encoding",
+          "Value": "gzip"
+        },
+        {
+          "Name": "Vary",
+          "Value": "Content-Encoding"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/javascript"
+        },
+        {
+          "Name": "ETag",
+          "Value": "W/\"SR8lVHdfwFwMSaqRCTHp4R/5AOiajtNchN0fAudNbtA=\""
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "lhh7bkpi8o"
+        },
+        {
+          "Name": "label",
+          "Value": "js/navigation.js"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-SR8lVHdfwFwMSaqRCTHp4R/5AOiajtNchN0fAudNbtA="
+        }
+      ]
+    },
+    {
+      "Route": "js/navigation.lhh7bkpi8o.js",
+      "AssetFile": "C:\\Users\\panupol\\Desktop\\EFormServices\\EFormServices.Web\\wwwroot\\js\\navigation.js",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "9584"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/javascript"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"SR8lVHdfwFwMSaqRCTHp4R/5AOiajtNchN0fAudNbtA=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Fri, 30 May 2025 08:06:10 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "lhh7bkpi8o"
+        },
+        {
+          "Name": "label",
+          "Value": "js/navigation.js"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-SR8lVHdfwFwMSaqRCTHp4R/5AOiajtNchN0fAudNbtA="
+        }
+      ]
+    },
+    {
+      "Route": "js/navigation.lhh7bkpi8o.js.gz",
+      "AssetFile": "C:\\Users\\panupol\\Desktop\\EFormServices\\EFormServices.Web\\obj\\Debug\\net9.0\\compressed\\14mvma6gsh-lhh7bkpi8o.gz",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "2403"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/javascript"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"G+NNntKmm/sE7YV/OzolKq48LSepm+rPAwG7EhpiYjk=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Fri, 30 May 2025 08:06:10 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        },
+        {
+          "Name": "Content-Encoding",
+          "Value": "gzip"
+        },
+        {
+          "Name": "Vary",
+          "Value": "Content-Encoding"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "lhh7bkpi8o"
+        },
+        {
+          "Name": "label",
+          "Value": "js/navigation.js.gz"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-G+NNntKmm/sE7YV/OzolKq48LSepm+rPAwG7EhpiYjk="
+        }
+      ]
+    },
+    {
+      "Route": "js/site.js",
+      "AssetFile": "C:\\Users\\panupol\\Desktop\\EFormServices\\EFormServices.Web\\obj\\Debug\\net9.0\\compressed\\d9c22bdfas-zaltbcw051.gz",
+      "Selectors": [
+        {
+          "Name": "Content-Encoding",
+          "Value": "gzip",
+          "Quality": "0.000238891543"
+        }
+      ],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "4185"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"UDza317+tcTYxybgOW+kzMxANXI7Q7Lwglj3RsS//Is=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Fri, 30 May 2025 08:09:31 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "no-cache"
+        },
+        {
+          "Name": "Content-Encoding",
+          "Value": "gzip"
+        },
+        {
+          "Name": "Vary",
+          "Value": "Content-Encoding"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/javascript"
+        },
+        {
+          "Name": "ETag",
+          "Value": "W/\"5VPm1On9YXv56DAMVv9FYd1NSFiJIC6hGkpvG0V0hMQ=\""
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-5VPm1On9YXv56DAMVv9FYd1NSFiJIC6hGkpvG0V0hMQ="
         }
       ]
     },
@@ -3985,7 +6705,7 @@
         },
         {
           "Name": "Content-Length",
-          "Value": "231"
+          "Value": "17837"
         },
         {
           "Name": "Content-Type",
@@ -3993,11 +6713,11 @@
         },
         {
           "Name": "ETag",
-          "Value": "\"hRQyftXiu1lLX2P9Ly9xa4gHJgLeR1uGN5qegUobtGo=\""
+          "Value": "\"5VPm1On9YXv56DAMVv9FYd1NSFiJIC6hGkpvG0V0hMQ=\""
         },
         {
           "Name": "Last-Modified",
-          "Value": "Tue, 27 May 2025 09:34:46 GMT"
+          "Value": "Fri, 30 May 2025 08:09:31 GMT"
         },
         {
           "Name": "Cache-Control",
@@ -4007,13 +6727,13 @@
       "EndpointProperties": [
         {
           "Name": "integrity",
-          "Value": "sha256-hRQyftXiu1lLX2P9Ly9xa4gHJgLeR1uGN5qegUobtGo="
+          "Value": "sha256-5VPm1On9YXv56DAMVv9FYd1NSFiJIC6hGkpvG0V0hMQ="
         }
       ]
     },
     {
       "Route": "js/site.js.gz",
-      "AssetFile": "C:\\Users\\panupol\\Desktop\\EFormServices\\EFormServices.Web\\obj\\Debug\\net9.0\\compressed\\d9c22bdfas-xtxxf3hu2r.gz",
+      "AssetFile": "C:\\Users\\panupol\\Desktop\\EFormServices\\EFormServices.Web\\obj\\Debug\\net9.0\\compressed\\d9c22bdfas-zaltbcw051.gz",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -4022,7 +6742,7 @@
         },
         {
           "Name": "Content-Length",
-          "Value": "189"
+          "Value": "4185"
         },
         {
           "Name": "Content-Type",
@@ -4030,11 +6750,11 @@
         },
         {
           "Name": "ETag",
-          "Value": "\"Ydq7YvQUzhbo68waLZeQvZnPOvmTeQ+HyDqjkA1whsA=\""
+          "Value": "\"UDza317+tcTYxybgOW+kzMxANXI7Q7Lwglj3RsS//Is=\""
         },
         {
           "Name": "Last-Modified",
-          "Value": "Tue, 27 May 2025 09:34:46 GMT"
+          "Value": "Fri, 30 May 2025 08:09:31 GMT"
         },
         {
           "Name": "Cache-Control",
@@ -4052,18 +6772,18 @@
       "EndpointProperties": [
         {
           "Name": "integrity",
-          "Value": "sha256-Ydq7YvQUzhbo68waLZeQvZnPOvmTeQ+HyDqjkA1whsA="
+          "Value": "sha256-UDza317+tcTYxybgOW+kzMxANXI7Q7Lwglj3RsS//Is="
         }
       ]
     },
     {
-      "Route": "js/site.xtxxf3hu2r.js",
-      "AssetFile": "C:\\Users\\panupol\\Desktop\\EFormServices\\EFormServices.Web\\obj\\Debug\\net9.0\\compressed\\d9c22bdfas-xtxxf3hu2r.gz",
+      "Route": "js/site.zaltbcw051.js",
+      "AssetFile": "C:\\Users\\panupol\\Desktop\\EFormServices\\EFormServices.Web\\obj\\Debug\\net9.0\\compressed\\d9c22bdfas-zaltbcw051.gz",
       "Selectors": [
         {
           "Name": "Content-Encoding",
           "Value": "gzip",
-          "Quality": "0.005263157895"
+          "Quality": "0.000238891543"
         }
       ],
       "ResponseHeaders": [
@@ -4073,15 +6793,15 @@
         },
         {
           "Name": "Content-Length",
-          "Value": "189"
+          "Value": "4185"
         },
         {
           "Name": "ETag",
-          "Value": "\"Ydq7YvQUzhbo68waLZeQvZnPOvmTeQ+HyDqjkA1whsA=\""
+          "Value": "\"UDza317+tcTYxybgOW+kzMxANXI7Q7Lwglj3RsS//Is=\""
         },
         {
           "Name": "Last-Modified",
-          "Value": "Tue, 27 May 2025 09:34:46 GMT"
+          "Value": "Fri, 30 May 2025 08:09:31 GMT"
         },
         {
           "Name": "Cache-Control",
@@ -4101,13 +6821,13 @@
         },
         {
           "Name": "ETag",
-          "Value": "W/\"hRQyftXiu1lLX2P9Ly9xa4gHJgLeR1uGN5qegUobtGo=\""
+          "Value": "W/\"5VPm1On9YXv56DAMVv9FYd1NSFiJIC6hGkpvG0V0hMQ=\""
         }
       ],
       "EndpointProperties": [
         {
           "Name": "fingerprint",
-          "Value": "xtxxf3hu2r"
+          "Value": "zaltbcw051"
         },
         {
           "Name": "label",
@@ -4115,12 +6835,12 @@
         },
         {
           "Name": "integrity",
-          "Value": "sha256-hRQyftXiu1lLX2P9Ly9xa4gHJgLeR1uGN5qegUobtGo="
+          "Value": "sha256-5VPm1On9YXv56DAMVv9FYd1NSFiJIC6hGkpvG0V0hMQ="
         }
       ]
     },
     {
-      "Route": "js/site.xtxxf3hu2r.js",
+      "Route": "js/site.zaltbcw051.js",
       "AssetFile": "C:\\Users\\panupol\\Desktop\\EFormServices\\EFormServices.Web\\wwwroot\\js\\site.js",
       "Selectors": [],
       "ResponseHeaders": [
@@ -4130,7 +6850,7 @@
         },
         {
           "Name": "Content-Length",
-          "Value": "231"
+          "Value": "17837"
         },
         {
           "Name": "Content-Type",
@@ -4138,11 +6858,11 @@
         },
         {
           "Name": "ETag",
-          "Value": "\"hRQyftXiu1lLX2P9Ly9xa4gHJgLeR1uGN5qegUobtGo=\""
+          "Value": "\"5VPm1On9YXv56DAMVv9FYd1NSFiJIC6hGkpvG0V0hMQ=\""
         },
         {
           "Name": "Last-Modified",
-          "Value": "Tue, 27 May 2025 09:34:46 GMT"
+          "Value": "Fri, 30 May 2025 08:09:31 GMT"
         },
         {
           "Name": "Cache-Control",
@@ -4152,7 +6872,7 @@
       "EndpointProperties": [
         {
           "Name": "fingerprint",
-          "Value": "xtxxf3hu2r"
+          "Value": "zaltbcw051"
         },
         {
           "Name": "label",
@@ -4160,13 +6880,13 @@
         },
         {
           "Name": "integrity",
-          "Value": "sha256-hRQyftXiu1lLX2P9Ly9xa4gHJgLeR1uGN5qegUobtGo="
+          "Value": "sha256-5VPm1On9YXv56DAMVv9FYd1NSFiJIC6hGkpvG0V0hMQ="
         }
       ]
     },
     {
-      "Route": "js/site.xtxxf3hu2r.js.gz",
-      "AssetFile": "C:\\Users\\panupol\\Desktop\\EFormServices\\EFormServices.Web\\obj\\Debug\\net9.0\\compressed\\d9c22bdfas-xtxxf3hu2r.gz",
+      "Route": "js/site.zaltbcw051.js.gz",
+      "AssetFile": "C:\\Users\\panupol\\Desktop\\EFormServices\\EFormServices.Web\\obj\\Debug\\net9.0\\compressed\\d9c22bdfas-zaltbcw051.gz",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -4175,7 +6895,7 @@
         },
         {
           "Name": "Content-Length",
-          "Value": "189"
+          "Value": "4185"
         },
         {
           "Name": "Content-Type",
@@ -4183,11 +6903,11 @@
         },
         {
           "Name": "ETag",
-          "Value": "\"Ydq7YvQUzhbo68waLZeQvZnPOvmTeQ+HyDqjkA1whsA=\""
+          "Value": "\"UDza317+tcTYxybgOW+kzMxANXI7Q7Lwglj3RsS//Is=\""
         },
         {
           "Name": "Last-Modified",
-          "Value": "Tue, 27 May 2025 09:34:46 GMT"
+          "Value": "Fri, 30 May 2025 08:09:31 GMT"
         },
         {
           "Name": "Cache-Control",
@@ -4205,7 +6925,7 @@
       "EndpointProperties": [
         {
           "Name": "fingerprint",
-          "Value": "xtxxf3hu2r"
+          "Value": "zaltbcw051"
         },
         {
           "Name": "label",
@@ -4213,7 +6933,7 @@
         },
         {
           "Name": "integrity",
-          "Value": "sha256-Ydq7YvQUzhbo68waLZeQvZnPOvmTeQ+HyDqjkA1whsA="
+          "Value": "sha256-UDza317+tcTYxybgOW+kzMxANXI7Q7Lwglj3RsS//Is="
         }
       ]
     },
