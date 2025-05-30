@@ -3,6 +3,7 @@
 using EFormServices.Application.Common.Interfaces;
 using EFormServices.Domain.Entities;
 using EFormServices.Infrastructure.Services;
+using Microsoft.EntityFrameworkCore;
 
 namespace EFormServices.Infrastructure.Data;
 
@@ -27,24 +28,24 @@ public class MockApplicationDbContext : IApplicationDbContext
     private readonly MockDbSet<ApprovalProcess> _approvalProcesses;
     private readonly MockDbSet<ApprovalAction> _approvalActions;
 
-    public IQueryable<Organization> Organizations => _organizations;
-    public IQueryable<Department> Departments => _departments;
-    public IQueryable<User> Users => _users;
-    public IQueryable<Role> Roles => _roles;
-    public IQueryable<Permission> Permissions => _permissions;
-    public IQueryable<UserRole> UserRoles => _userRoles;
-    public IQueryable<RolePermission> RolePermissions => _rolePermissions;
-    public IQueryable<Form> Forms => _forms;
-    public IQueryable<FormField> FormFields => _formFields;
-    public IQueryable<FormFieldOption> FormFieldOptions => _formFieldOptions;
-    public IQueryable<ConditionalLogic> ConditionalLogics => _conditionalLogics;
-    public IQueryable<FormSubmission> FormSubmissions => _formSubmissions;
-    public IQueryable<SubmissionValue> SubmissionValues => _submissionValues;
-    public IQueryable<FileAttachment> FileAttachments => _fileAttachments;
-    public IQueryable<ApprovalWorkflow> ApprovalWorkflows => _approvalWorkflows;
-    public IQueryable<ApprovalStep> ApprovalSteps => _approvalSteps;
-    public IQueryable<ApprovalProcess> ApprovalProcesses => _approvalProcesses;
-    public IQueryable<ApprovalAction> ApprovalActions => _approvalActions;
+    public DbSet<Organization> Organizations => _organizations;
+    public DbSet<Department> Departments => _departments;
+    public DbSet<User> Users => _users;
+    public DbSet<Role> Roles => _roles;
+    public DbSet<Permission> Permissions => _permissions;
+    public DbSet<UserRole> UserRoles => _userRoles;
+    public DbSet<RolePermission> RolePermissions => _rolePermissions;
+    public DbSet<Form> Forms => _forms;
+    public DbSet<FormField> FormFields => _formFields;
+    public DbSet<FormFieldOption> FormFieldOptions => _formFieldOptions;
+    public DbSet<ConditionalLogic> ConditionalLogics => _conditionalLogics;
+    public DbSet<FormSubmission> FormSubmissions => _formSubmissions;
+    public DbSet<SubmissionValue> SubmissionValues => _submissionValues;
+    public DbSet<FileAttachment> FileAttachments => _fileAttachments;
+    public DbSet<ApprovalWorkflow> ApprovalWorkflows => _approvalWorkflows;
+    public DbSet<ApprovalStep> ApprovalSteps => _approvalSteps;
+    public DbSet<ApprovalProcess> ApprovalProcesses => _approvalProcesses;
+    public DbSet<ApprovalAction> ApprovalActions => _approvalActions;
 
     public MockApplicationDbContext()
     {
@@ -71,32 +72,5 @@ public class MockApplicationDbContext : IApplicationDbContext
     public Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
     {
         return Task.FromResult(1);
-    }
-
-    public void AddEntity<T>(T entity) where T : class
-    {
-        switch (entity)
-        {
-            case Organization org:
-                org.Id = _organizations.Count() + 1;
-                _organizations.Add(org);
-                break;
-            case User user:
-                user.Id = _users.Count() + 1;
-                _users.Add(user);
-                break;
-            case Form form:
-                form.Id = _forms.Count() + 1;
-                _forms.Add(form);
-                break;
-            case FormField field:
-                field.Id = _formFields.Count() + 1;
-                _formFields.Add(field);
-                break;
-            case UserRole userRole:
-                userRole.Id = _userRoles.Count() + 1;
-                _userRoles.Add(userRole);
-                break;
-        }
     }
 }

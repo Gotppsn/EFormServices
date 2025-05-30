@@ -1,11 +1,13 @@
 // EFormServices.Infrastructure/Data/MockDbSet.cs
 // Got code 30/05/2025
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
 using System.Collections;
 using System.Linq.Expressions;
 
 namespace EFormServices.Infrastructure.Data;
 
-public class MockDbSet<T> : IQueryable<T>, IEnumerable<T> where T : class
+public class MockDbSet<T> : DbSet<T> where T : class
 {
     private readonly List<T> _data;
     private readonly IQueryable<T> _query;
@@ -22,17 +24,19 @@ public class MockDbSet<T> : IQueryable<T>, IEnumerable<T> where T : class
         _query = _data.AsQueryable();
     }
 
-    public void Add(T entity)
+    public override EntityEntry<T> Add(T entity)
     {
         _data.Add(entity);
+        return null!;
     }
 
-    public void Remove(T entity)
+    public override EntityEntry<T> Remove(T entity)
     {
         _data.Remove(entity);
+        return null!;
     }
 
-    public void Update(T entity)
+    public override EntityEntry<T> Update(T entity)
     {
         var existing = _data.FirstOrDefault(e => e.Equals(entity));
         if (existing != null)
@@ -40,17 +44,52 @@ public class MockDbSet<T> : IQueryable<T>, IEnumerable<T> where T : class
             var index = _data.IndexOf(existing);
             _data[index] = entity;
         }
+        return null!;
     }
 
-    public T? Find(params object?[]? keyValues)
+    public override T? Find(params object?[]? keyValues)
     {
         return _data.FirstOrDefault();
     }
 
-    public Type ElementType => _query.ElementType;
-    public Expression Expression => _query.Expression;
-    public IQueryProvider Provider => _query.Provider;
+    public override EntityEntry<T> Entry(T entity)
+    {
+        return null!;
+    }
 
-    public IEnumerator<T> GetEnumerator() => _data.GetEnumerator();
+    public override void AddRange(params T[] entities)
+    {
+        _data.AddRange(entities);
+    }
+
+    public override void AddRange(IEnumerable<T> entities)
+    {
+        _data.AddRange(entities);
+    }
+
+    public override void RemoveRange(params T[] entities)
+    {
+        foreach (var entity in entities)
+            _data.Remove(entity);
+    }
+
+    public override void RemoveRange(IEnumerable<T> entities)
+    {
+        foreach (var entity in entities)
+            _data.Remove(entity);
+    }
+
+    public override EntityEntry<T> Attach(T entity)
+    {
+        if (!_data.Contains(entity))
+            _data.Add(entity);
+        return null!;
+    }
+
+    public override Type ElementType => _query.ElementType;
+    public override Expression Expression => _query.Expression;
+    public override IQueryProvider Provider => _query.Provider;
+
+    public override IEnumerator<T> GetEnumerator() => _data.GetEnumerator();
     IEnumerator IEnumerable.GetEnumerator() => _data.GetEnumerator();
 }

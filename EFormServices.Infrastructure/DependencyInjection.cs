@@ -17,7 +17,12 @@ public static class DependencyInjection
         
         if (useInMemoryDb)
         {
-            services.AddScoped<IApplicationDbContext, MockApplicationDbContext>();
+            services.AddDbContext<InMemoryApplicationDbContext>(options =>
+                options.UseInMemoryDatabase("EFormServicesTestDb"));
+            
+            services.AddScoped<IApplicationDbContext>(provider => 
+                provider.GetRequiredService<InMemoryApplicationDbContext>());
+            
             services.AddScoped<ICurrentUserService, MockCurrentUserService>();
         }
         else
@@ -26,7 +31,9 @@ public static class DependencyInjection
                 options.UseSqlServer(configuration.GetConnectionString("DefaultConnection"),
                     b => b.MigrationsAssembly(typeof(ApplicationDbContext).Assembly.FullName)));
 
-            services.AddScoped<IApplicationDbContext>(provider => provider.GetRequiredService<ApplicationDbContext>());
+            services.AddScoped<IApplicationDbContext>(provider => 
+                provider.GetRequiredService<ApplicationDbContext>());
+            
             services.AddHttpContextAccessor();
             services.AddScoped<ICurrentUserService, CurrentUserService>();
         }

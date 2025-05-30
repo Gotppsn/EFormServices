@@ -633,6 +633,24 @@
           "build/net8.0/Microsoft.EntityFrameworkCore.Design.props": {}
         }
       },
+      "Microsoft.EntityFrameworkCore.InMemory/9.0.5": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.EntityFrameworkCore": "9.0.5",
+          "Microsoft.Extensions.Caching.Memory": "9.0.5",
+          "Microsoft.Extensions.Logging": "9.0.5"
+        },
+        "compile": {
+          "lib/net8.0/Microsoft.EntityFrameworkCore.InMemory.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net8.0/Microsoft.EntityFrameworkCore.InMemory.dll": {
+            "related": ".xml"
+          }
+        }
+      },
       "Microsoft.EntityFrameworkCore.Relational/9.0.5": {
         "type": "package",
         "dependencies": {
@@ -3340,6 +3358,21 @@
         "microsoft.entityframeworkcore.design.nuspec"
       ]
     },
+    "Microsoft.EntityFrameworkCore.InMemory/9.0.5": {
+      "sha512": "+nC0uyM5ztN3rV7yUraTlQhXZMV98MP1ZEn4OLlz4c0l5bOGbvHIcvsHA5RitzJTsP5UX/rwfpc3aOsTBS02jA==",
+      "type": "package",
+      "path": "microsoft.entityframeworkcore.inmemory/9.0.5",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "Icon.png",
+        "PACKAGE.md",
+        "lib/net8.0/Microsoft.EntityFrameworkCore.InMemory.dll",
+        "lib/net8.0/Microsoft.EntityFrameworkCore.InMemory.xml",
+        "microsoft.entityframeworkcore.inmemory.9.0.5.nupkg.sha512",
+        "microsoft.entityframeworkcore.inmemory.nuspec"
+      ]
+    },
     "Microsoft.EntityFrameworkCore.Relational/9.0.5": {
       "sha512": "6eErbrZFd9yNnncemtDdmHZ3KC792OQCIYITuMsjK2oh4CLzlYo8mzNsozgUzQ+utHnne11/3eV8zMWbYF5Puw==",
       "type": "package",
@@ -5589,6 +5622,7 @@
     "net9.0": [
       "EFormServices.Application >= 1.0.0",
       "Microsoft.EntityFrameworkCore.Design >= 9.0.5",
+      "Microsoft.EntityFrameworkCore.InMemory >= 9.0.5",
       "Microsoft.EntityFrameworkCore.SqlServer >= 9.0.5",
       "Microsoft.EntityFrameworkCore.Tools >= 9.0.5",
       "Microsoft.Extensions.Configuration.Abstractions >= 9.0.5",
@@ -5655,6 +5689,10 @@
           "Microsoft.EntityFrameworkCore.Design": {
             "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
             "suppressParent": "All",
+            "target": "Package",
+            "version": "[9.0.5, )"
+          },
+          "Microsoft.EntityFrameworkCore.InMemory": {
             "target": "Package",
             "version": "[9.0.5, )"
           },
