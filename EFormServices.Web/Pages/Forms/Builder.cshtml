@@ -1,0 +1,176 @@
+@* EFormServices.Web/Pages/Forms/Builder.cshtml *@
+@* Got code 30/05/2025 *@
+@page "/forms/builder/{id:int?}"
+@model EFormServices.Web.Pages.Forms.BuilderModel
+@{
+    ViewData["Title"] = Model.FormId.HasValue ? "Edit Form" : "Create Form";
+}
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-3 bg-light border-end">
+            <div class="p-3">
+                <h5>Form Properties</h5>
+                <form id="form-properties">
+                    <div class="mb-3">
+                        <label class="form-label">Form Title</label>
+                        <input type="text" class="form-control" id="form-title" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Description</label>
+                        <textarea class="form-control" id="form-description" rows="3"></textarea>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Form Type</label>
+                        <select class="form-select" id="form-type">
+                            <option value="1">Survey</option>
+                            <option value="2">Application</option>
+                            <option value="3">Request</option>
+                            <option value="4">Feedback</option>
+                            <option value="5">Registration</option>
+                            <option value="6">Assessment</option>
+                            <option value="7">Report</option>
+                            <option value="8">Custom</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Department</label>
+                        <select class="form-select" id="form-department">
+                            <option value="">All Departments</option>
+                        </select>
+                    </div>
+                </form>
+
+                <hr>
+
+                <h6>Field Types</h6>
+                <div class="field-types">
+                    <div class="field-type mb-2" data-type="1">
+                        <div class="d-flex align-items-center p-2 border rounded cursor-pointer">
+                            <i class="fas fa-font me-2"></i>
+                            <span>Text</span>
+                        </div>
+                    </div>
+                    <div class="field-type mb-2" data-type="2">
+                        <div class="d-flex align-items-center p-2 border rounded cursor-pointer">
+                            <i class="fas fa-envelope me-2"></i>
+                            <span>Email</span>
+                        </div>
+                    </div>
+                    <div class="field-type mb-2" data-type="3">
+                        <div class="d-flex align-items-center p-2 border rounded cursor-pointer">
+                            <i class="fas fa-hashtag me-2"></i>
+                            <span>Number</span>
+                        </div>
+                    </div>
+                    <div class="field-type mb-2" data-type="5">
+                        <div class="d-flex align-items-center p-2 border rounded cursor-pointer">
+                            <i class="fas fa-align-left me-2"></i>
+                            <span>Text Area</span>
+                        </div>
+                    </div>
+                    <div class="field-type mb-2" data-type="6">
+                        <div class="d-flex align-items-center p-2 border rounded cursor-pointer">
+                            <i class="fas fa-caret-down me-2"></i>
+                            <span>Dropdown</span>
+                        </div>
+                    </div>
+                    <div class="field-type mb-2" data-type="7">
+                        <div class="d-flex align-items-center p-2 border rounded cursor-pointer">
+                            <i class="fas fa-dot-circle me-2"></i>
+                            <span>Radio Button</span>
+                        </div>
+                    </div>
+                    <div class="field-type mb-2" data-type="8">
+                        <div class="d-flex align-items-center p-2 border rounded cursor-pointer">
+                            <i class="fas fa-check-square me-2"></i>
+                            <span>Checkbox</span>
+                        </div>
+                    </div>
+                    <div class="field-type mb-2" data-type="9">
+                        <div class="d-flex align-items-center p-2 border rounded cursor-pointer">
+                            <i class="fas fa-calendar me-2"></i>
+                            <span>Date</span>
+                        </div>
+                    </div>
+                    <div class="field-type mb-2" data-type="12">
+                        <div class="d-flex align-items-center p-2 border rounded cursor-pointer">
+                            <i class="fas fa-file-upload me-2"></i>
+                            <span>File Upload</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="p-3">
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <h5>Form Builder</h5>
+                    <div>
+                        <button type="button" class="btn btn-outline-primary" id="preview-btn">
+                            <i class="fas fa-eye"></i> Preview
+                        </button>
+                        <button type="button" class="btn btn-success" id="save-btn">
+                            <i class="fas fa-save"></i> Save
+                        </button>
+                        <button type="button" class="btn btn-primary" id="publish-btn" style="display: none;">
+                            <i class="fas fa-paper-plane"></i> Publish
+                        </button>
+                    </div>
+                </div>
+
+                <div id="form-canvas" class="border rounded p-3 min-height-500 drop-zone">
+                    <div class="text-center text-muted py-5" id="empty-message">
+                        <i class="fas fa-plus-circle fa-3x mb-3"></i>
+                        <h6>Start Building Your Form</h6>
+                        <p>Drag field types from the left panel to add them to your form</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-3 bg-light border-start">
+            <div class="p-3">
+                <h5>Field Properties</h5>
+                <div id="field-properties">
+                    <p class="text-muted">Select a field to edit its properties</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="preview-modal" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Form Preview</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <div id="form-preview"></div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="~/js/form-builder.js"></script>
+}
+
+<style>
+    .min-height-500 { min-height: 500px; }
+    .cursor-pointer { cursor: pointer; }
+    .field-type:hover .border { border-color: #0d6efd !important; }
+    .drop-zone.drag-over { background-color: #f8f9fa; border: 2px dashed #0d6efd; }
+    .form-field { border: 1px solid #dee2e6; margin-bottom: 1rem; padding: 1rem; border-radius: 0.375rem; position: relative; }
+    .form-field.selected { border-color: #0d6efd; box-shadow: 0 0 0 0.2rem rgba(13, 110, 253, 0.25); }
+    .field-controls { position: absolute; top: 5px; right: 5px; opacity: 0; transition: opacity 0.2s; }
+    .form-field:hover .field-controls { opacity: 1; }
+    .sortable-ghost { opacity: 0.5; }
+    .sortable-chosen { background-color: #f8f9fa; }
+</style>

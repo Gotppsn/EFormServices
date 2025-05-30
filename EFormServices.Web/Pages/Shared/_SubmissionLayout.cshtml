@@ -1,0 +1,48 @@
+@* EFormServices.Web/Pages/Shared/_SubmissionLayout.cshtml *@
+@* Got code 30/05/2025 *@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Form Submission</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+    <link rel="stylesheet" href="~/css/submission.css" asp-append-version="true" />
+    <meta name="robots" content="noindex, nofollow" />
+</head>
+<body class="bg-light">
+    <nav class="navbar navbar-light bg-white shadow-sm">
+        <div class="container">
+            <div class="navbar-brand d-flex align-items-center">
+                <i class="fas fa-file-alt text-primary me-2"></i>
+                <span class="fw-bold text-primary">Form Submission</span>
+            </div>
+            <div class="navbar-text text-muted">
+                <i class="fas fa-shield-alt me-1"></i>
+                Secure & Encrypted
+            </div>
+        </div>
+    </nav>
+
+    <main class="py-4">
+        @RenderBody()
+    </main>
+
+    <footer class="mt-auto py-3 text-center text-muted">
+        <div class="container">
+            <small>
+                <i class="fas fa-lock me-1"></i>
+                Your data is protected and encrypted
+                <span class="mx-2">|</span>
+                <a href="/privacy" class="text-muted">Privacy Policy</a>
+            </small>
+        </div>
+    </footer>
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>
