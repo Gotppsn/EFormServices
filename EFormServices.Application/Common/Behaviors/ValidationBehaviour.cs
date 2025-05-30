@@ -6,7 +6,7 @@ using MediatR;
 namespace EFormServices.Application.Common.Behaviors;
 
 public class ValidationBehaviour<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse>
-    where TRequest : notnull
+    where TRequest : class, IRequest<TResponse>
 {
     private readonly IEnumerable<IValidator<TRequest>> _validators;
 
@@ -30,7 +30,7 @@ public class ValidationBehaviour<TRequest, TResponse> : IPipelineBehavior<TReque
                 .ToArray();
 
             if (failures.Length != 0)
-                throw new ValidationException(failures);
+                throw new EFormServices.Application.Common.Exceptions.ValidationException(failures);
         }
 
         return await next();

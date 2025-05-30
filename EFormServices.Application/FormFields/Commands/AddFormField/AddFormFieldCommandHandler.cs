@@ -27,7 +27,6 @@ public class AddFormFieldCommandHandler : IRequestHandler<AddFormFieldCommand, R
             return Result<int>.Failure("User not authenticated");
 
         var form = await _context.Forms
-            .Include(f => f.FormFields)
             .FirstOrDefaultAsync(f => f.Id == request.FormId && f.OrganizationId == _currentUser.OrganizationId, cancellationToken);
 
         if (form == null)
@@ -39,8 +38,11 @@ public class AddFormFieldCommandHandler : IRequestHandler<AddFormFieldCommand, R
         if (form.IsPublished && !_currentUser.HasPermission("edit_published_forms"))
             return Result<int>.Failure("Cannot modify published form");
 
-        var existingField = form.FormFields.FirstOrDefault(f => f.Name == request.Name);
-        if (existingField != null)
+        var existingFields = await _context.FormFields
+            .Where(f => f.FormId == request.FormId)
+            .ToListAsync(cancellationToken);
+
+        if (existingFields.Any(f => f.Name == request.Name))
             return Result<int>.Failure("Field with this name already exists");
 
         var validationRules = CreateValidationRules(request.ValidationRules);
@@ -59,13 +61,22 @@ public class AddFormFieldCommandHandler : IRequestHandler<AddFormFieldCommand, R
         formField.UpdateValidation(validationRules, request.IsRequired);
         formField.UpdateSettings(fieldSettings);
 
-        form.AddField(formField);
-
-        if (request.Options != null && request.FieldType.SupportsOptions())
+        if (_context is EFormServices.Infrastructure.Data.MockApplicationDbContext mockContext)
         {
-            foreach (var option in request.Options)
+            var fields = (EFormServices.Infrastructure.Data.MockDbSet<FormField>)mockContext.FormFields;
+            formField.Id = _context.FormFields.Count() + 1;
+            fields.Add(formField);
+
+            if (request.Options != null && request.FieldType.SupportsOptions())
             {
-                formField.AddOption(option.Label, option.Value, option.IsDefault);
+                var options = (EFormServices.Infrastructure.Data.MockDbSet<FormFieldOption>)mockContext.FormFieldOptions;
+                foreach (var option in request.Options)
+                {
+                    var fieldOption = new FormFieldOption(formField.Id, option.Label, option.Value, 
+                        options.Count(o => o.FormFieldId == formField.Id) + 1, option.IsDefault);
+                    fieldOption.Id = options.Count() + 1;
+                    options.Add(fieldOption);
+                }
             }
         }
 

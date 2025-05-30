@@ -24,7 +24,7 @@ public class GetUsersQueryHandler : IRequestHandler<GetUsersQuery, Result<PagedR
         if (!_currentUser.IsAuthenticated || !_currentUser.OrganizationId.HasValue)
             return Result<PagedResult<UserDto>>.Failure("User not authenticated");
 
-        if (!_currentUser.HasPermission("view_users"))
+        if (!_currentUser.HasPermission("manage_users") && !_currentUser.HasPermission("view_forms"))
             return Result<PagedResult<UserDto>>.Failure("Insufficient permissions to view users");
 
         var query = _context.Users
@@ -32,9 +32,10 @@ public class GetUsersQueryHandler : IRequestHandler<GetUsersQuery, Result<PagedR
 
         if (!string.IsNullOrWhiteSpace(request.SearchTerm))
         {
-            query = query.Where(u => u.FirstName.Contains(request.SearchTerm) ||
-                                   u.LastName.Contains(request.SearchTerm) ||
-                                   u.Email.Contains(request.SearchTerm));
+            var searchTerm = request.SearchTerm.ToLowerInvariant();
+            query = query.Where(u => u.FirstName.ToLower().Contains(searchTerm) ||
+                                   u.LastName.ToLower().Contains(searchTerm) ||
+                                   u.Email.ToLower().Contains(searchTerm));
         }
 
         if (request.DepartmentId.HasValue)

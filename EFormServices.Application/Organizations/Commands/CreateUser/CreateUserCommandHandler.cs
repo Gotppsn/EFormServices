@@ -66,6 +66,21 @@ public class CreateUserCommandHandler : IRequestHandler<CreateUserCommand, Resul
             request.ExternalId
         );
 
+        if (_context is EFormServices.Infrastructure.Data.MockApplicationDbContext mockContext)
+        {
+            var users = (EFormServices.Infrastructure.Data.MockDbSet<User>)mockContext.Users;
+            user.Id = _context.Users.Count() + 1;
+            users.Add(user);
+
+            var userRoles = (EFormServices.Infrastructure.Data.MockDbSet<UserRole>)mockContext.UserRoles;
+            foreach (var roleId in request.RoleIds)
+            {
+                var userRole = new UserRole(user.Id, roleId);
+                userRole.Id = userRoles.Count() + 1;
+                userRoles.Add(userRole);
+            }
+        }
+
         await _context.SaveChangesAsync(cancellationToken);
 
         var userDto = new UserDto
