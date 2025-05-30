@@ -72,4 +72,31 @@ public class MockApplicationDbContext : IApplicationDbContext
     {
         return Task.FromResult(1);
     }
+
+    public void AddEntity<T>(T entity) where T : class
+    {
+        switch (entity)
+        {
+            case Organization org:
+                org.Id = _organizations.Count() + 1;
+                _organizations.Add(org);
+                break;
+            case User user:
+                user.Id = _users.Count() + 1;
+                _users.Add(user);
+                break;
+            case Form form:
+                form.Id = _forms.Count() + 1;
+                _forms.Add(form);
+                break;
+            case FormField field:
+                field.Id = _formFields.Count() + 1;
+                _formFields.Add(field);
+                break;
+            case UserRole userRole:
+                userRole.Id = _userRoles.Count() + 1;
+                _userRoles.Add(userRole);
+                break;
+        }
+    }
 }

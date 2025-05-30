@@ -8,14 +8,14 @@ namespace EFormServices.Infrastructure.Services;
 
 public class MockDataService
 {
-    private static List<Organization> _organizations = new();
-    private static List<User> _users = new();
-    private static List<Role> _roles = new();
-    private static List<Permission> _permissions = new();
-    private static List<Department> _departments = new();
-    private static List<Form> _forms = new();
-    private static List<FormSubmission> _submissions = new();
-    private static List<ApprovalWorkflow> _workflows = new();
+    private static readonly List<Organization> _organizations = new();
+    private static readonly List<User> _users = new();
+    private static readonly List<Role> _roles = new();
+    private static readonly List<Permission> _permissions = new();
+    private static readonly List<Department> _departments = new();
+    private static readonly List<Form> _forms = new();
+    private static readonly List<FormSubmission> _submissions = new();
+    private static readonly List<ApprovalWorkflow> _workflows = new();
 
     static MockDataService()
     {
@@ -24,73 +24,91 @@ public class MockDataService
 
     private static void InitializeMockData()
     {
-        // Create permissions
         var permissions = new[]
         {
-            new Permission("manage_organization", "Organization", "Manage organization settings", true) { Id = 1 },
-            new Permission("manage_users", "Users", "Create and manage users", true) { Id = 2 },
-            new Permission("manage_roles", "Users", "Create and manage roles", true) { Id = 3 },
-            new Permission("create_forms", "Forms", "Create new forms", true) { Id = 4 },
-            new Permission("edit_forms", "Forms", "Edit existing forms", true) { Id = 5 },
-            new Permission("delete_forms", "Forms", "Delete forms", true) { Id = 6 },
-            new Permission("view_forms", "Forms", "View forms", true) { Id = 7 },
-            new Permission("submit_forms", "Forms", "Submit form responses", true) { Id = 8 },
-            new Permission("approve_forms", "Approvals", "Approve form submissions", true) { Id = 9 },
-            new Permission("view_reports", "Reports", "View form reports and analytics", true) { Id = 10 }
+            CreatePermission(1, "manage_organization", "Organization", "Manage organization settings"),
+            CreatePermission(2, "manage_users", "Users", "Create and manage users"),
+            CreatePermission(3, "create_forms", "Forms", "Create new forms"),
+            CreatePermission(4, "edit_forms", "Forms", "Edit existing forms"),
+            CreatePermission(5, "view_forms", "Forms", "View forms"),
+            CreatePermission(6, "approve_forms", "Approvals", "Approve form submissions"),
+            CreatePermission(7, "view_reports", "Reports", "View reports"),
+            CreatePermission(8, "publish_forms", "Forms", "Publish forms"),
+            CreatePermission(9, "edit_published_forms", "Forms", "Edit published forms"),
+            CreatePermission(10, "approve_form_publishing", "Forms", "Approve form publishing")
         };
         _permissions.AddRange(permissions);
 
-        // Create organization
-        var organization = new Organization("Demo Corporation", "demo", OrganizationSettings.Default()) { Id = 1 };
+        var organization = CreateOrganization(1, "Demo Corporation", "demo");
         _organizations.Add(organization);
 
-        // Create departments
         var departments = new[]
         {
-            new Department(1, "Human Resources", "HR", "Human Resources Department") { Id = 1 },
-            new Department(1, "Information Technology", "IT", "IT Department") { Id = 2 },
-            new Department(1, "Finance", "FIN", "Finance Department") { Id = 3 }
+            CreateDepartment(1, 1, "Human Resources", "HR"),
+            CreateDepartment(2, 1, "Information Technology", "IT"),
+            CreateDepartment(3, 1, "Finance", "FIN")
         };
         _departments.AddRange(departments);
 
-        // Create roles
-        var adminRole = new Role(1, "Administrator", "System administrator with full access", true) { Id = 1 };
-        var managerRole = new Role(1, "Manager", "Department manager with approval rights", false) { Id = 2 };
-        var userRole = new Role(1, "User", "Standard user with basic access", false) { Id = 3 };
-        _roles.AddRange(new[] { adminRole, managerRole, userRole });
+        var roles = new[]
+        {
+            CreateRole(1, 1, "Administrator", "System administrator"),
+            CreateRole(2, 1, "Manager", "Department manager"),
+            CreateRole(3, 1, "User", "Standard user")
+        };
+        _roles.AddRange(roles);
 
-        // Create users
-        var adminUser = new User(1, "admin@demo.com", "John", "Admin", "hashedpassword", "salt123") { Id = 1 };
-        var managerUser = new User(1, "manager@demo.com", "Jane", "Manager", "hashedpassword", "salt123", 1) { Id = 2 };
-        var regularUser = new User(1, "user@demo.com", "Bob", "User", "hashedpassword", "salt123", 2) { Id = 3 };
-        _users.AddRange(new[] { adminUser, managerUser, regularUser });
+        var users = new[]
+        {
+            CreateUser(1, 1, "admin@demo.com", "John", "Admin"),
+            CreateUser(2, 1, "manager@demo.com", "Jane", "Manager", 1),
+            CreateUser(3, 1, "user@demo.com", "Bob", "User", 2)
+        };
+        _users.AddRange(users);
 
-        // Create workflows
-        var approvalWorkflow = new ApprovalWorkflow(1, "Standard Approval", WorkflowType.Sequential, "Standard approval process") { Id = 1 };
-        _workflows.Add(approvalWorkflow);
+        var workflow = CreateWorkflow(1, 1, "Standard Approval");
+        _workflows.Add(workflow);
 
-        // Create sample forms
-        var leaveForm = new Form(1, 1, "Leave Request Form", FormType.Request, "Submit your leave requests through this form", 1, 1) { Id = 1 };
-        var feedbackForm = new Form(1, 1, "Employee Feedback", FormType.Feedback, "Share your feedback about the organization", null, null) { Id = 2 };
-        var expenseForm = new Form(1, 2, "Expense Report", FormType.Report, "Submit your expense reports", 3, 1) { Id = 3 };
-        
-        leaveForm.Publish();
-        feedbackForm.Publish();
-        expenseForm.Publish();
-        
-        _forms.AddRange(new[] { leaveForm, feedbackForm, expenseForm });
+        var forms = new[]
+        {
+            CreateForm(1, 1, 1, "Leave Request Form", FormType.Request),
+            CreateForm(2, 1, 2, "Employee Feedback", FormType.Feedback),
+            CreateForm(3, 1, 3, "Expense Report", FormType.Report)
+        };
+        _forms.AddRange(forms);
 
-        // Create sample submissions
-        var submission1 = new FormSubmission(1, 3, "192.168.1.100", "Mozilla/5.0...") { Id = 1 };
-        var submission2 = new FormSubmission(2, 2, "192.168.1.101", "Mozilla/5.0...") { Id = 2 };
-        var submission3 = new FormSubmission(3, 3, "192.168.1.102", "Mozilla/5.0...") { Id = 3 };
-        
-        submission1.UpdateStatus(SubmissionStatus.PendingApproval);
-        submission2.UpdateStatus(SubmissionStatus.Approved);
-        submission3.UpdateStatus(SubmissionStatus.Submitted);
-        
-        _submissions.AddRange(new[] { submission1, submission2, submission3 });
+        var submissions = new[]
+        {
+            CreateSubmission(1, 1, 3),
+            CreateSubmission(2, 2, 2),
+            CreateSubmission(3, 3, 3)
+        };
+        _submissions.AddRange(submissions);
     }
+
+    private static Permission CreatePermission(int id, string name, string category, string description) => 
+        new(name, category, description, true) { Id = id };
+
+    private static Organization CreateOrganization(int id, string name, string subdomain) => 
+        new(name, subdomain, OrganizationSettings.Default()) { Id = id };
+
+    private static Department CreateDepartment(int id, int orgId, string name, string code) => 
+        new(orgId, name, code) { Id = id };
+
+    private static Role CreateRole(int id, int orgId, string name, string description) => 
+        new(orgId, name, description) { Id = id };
+
+    private static User CreateUser(int id, int orgId, string email, string firstName, string lastName, int? deptId = null) => 
+        new(orgId, email, firstName, lastName, "hashedpassword", "salt123", deptId) { Id = id };
+
+    private static ApprovalWorkflow CreateWorkflow(int id, int orgId, string name) => 
+        new(orgId, name, WorkflowType.Sequential) { Id = id };
+
+    private static Form CreateForm(int id, int orgId, int userId, string title, FormType type) => 
+        new(orgId, userId, title, type) { Id = id };
+
+    private static FormSubmission CreateSubmission(int id, int formId, int userId) => 
+        new(formId, userId) { Id = id };
 
     public static List<Organization> GetOrganizations() => _organizations;
     public static List<User> GetUsers() => _users;
@@ -101,12 +119,12 @@ public class MockDataService
     public static List<FormSubmission> GetSubmissions() => _submissions;
     public static List<ApprovalWorkflow> GetWorkflows() => _workflows;
 
-    public static Organization? GetOrganizationBySubdomain(string subdomain)
-        => _organizations.FirstOrDefault(o => o.Subdomain == subdomain);
+    public static Organization? GetOrganizationBySubdomain(string subdomain) =>
+        _organizations.FirstOrDefault(o => o.Subdomain == subdomain);
 
-    public static User? GetUserByEmail(string email)
-        => _users.FirstOrDefault(u => u.Email == email.ToLowerInvariant());
+    public static User? GetUserByEmail(string email) =>
+        _users.FirstOrDefault(u => u.Email == email.ToLowerInvariant());
 
-    public static User? GetUserById(int id)
-        => _users.FirstOrDefault(u => u.Id == id);
+    public static User? GetUserById(int id) =>
+        _users.FirstOrDefault(u => u.Id == id);
 }
