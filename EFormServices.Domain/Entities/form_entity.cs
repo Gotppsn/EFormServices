@@ -1,4 +1,5 @@
-// Got code 27/05/2025
+// EFormServices.Domain/Entities/form_entity.cs
+// Got code 30/05/2025
 using EFormServices.Domain.ValueObjects;
 using EFormServices.Domain.Enums;
 
@@ -10,16 +11,16 @@ public class Form : BaseEntity
     public int? DepartmentId { get; private set; }
     public int CreatedByUserId { get; private set; }
     public int? ApprovalWorkflowId { get; private set; }
-    public string Title { get; private set; }
+    public required string Title { get; private set; }
     public string? Description { get; private set; }
     public FormType FormType { get; private set; }
     public bool IsTemplate { get; private set; }
     public bool IsActive { get; private set; }
     public bool IsPublic { get; private set; }
-    public FormSettings Settings { get; private set; }
-    public FormMetadata Metadata { get; private set; }
+    public FormSettings Settings { get; private set; } = FormSettings.Default();
+    public FormMetadata Metadata { get; private set; } = FormMetadata.Default();
     public DateTime? PublishedAt { get; private set; }
-    public string FormKey { get; private set; }
+    public required string FormKey { get; private set; }
 
     public Organization Organization { get; private set; } = null!;
     public Department? Department { get; private set; }
@@ -32,7 +33,11 @@ public class Form : BaseEntity
     public IReadOnlyCollection<FormField> FormFields => _formFields.AsReadOnly();
     public IReadOnlyCollection<FormSubmission> FormSubmissions => _formSubmissions.AsReadOnly();
 
-    private Form() { }
+    private Form() 
+    {
+        Title = string.Empty;
+        FormKey = string.Empty;
+    }
 
     public Form(int organizationId, int createdByUserId, string title, FormType formType,
                 string? description = null, int? departmentId = null, int? approvalWorkflowId = null)
