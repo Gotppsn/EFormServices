@@ -1,7 +1,5 @@
 // EFormServices.Application/Forms/Queries/GetForms/GetFormsQueryHandler.cs
 // Got code 30/05/2025
-using AutoMapper;
-using AutoMapper.QueryableExtensions;
 using EFormServices.Application.Common.DTOs;
 using EFormServices.Application.Common.Interfaces;
 using EFormServices.Application.Common.Models;
@@ -14,16 +12,13 @@ public class GetFormsQueryHandler : IRequestHandler<GetFormsQuery, Result<PagedR
 {
     private readonly IApplicationDbContext _context;
     private readonly ICurrentUserService _currentUser;
-    private readonly IMapper _mapper;
 
     public GetFormsQueryHandler(
         IApplicationDbContext context,
-        ICurrentUserService currentUser,
-        IMapper mapper)
+        ICurrentUserService currentUser)
     {
         _context = context;
         _currentUser = currentUser;
-        _mapper = mapper;
     }
 
     public async Task<Result<PagedResult<FormDto>>> Handle(GetFormsQuery request, CancellationToken cancellationToken)
@@ -36,10 +31,7 @@ public class GetFormsQueryHandler : IRequestHandler<GetFormsQuery, Result<PagedR
 
         if (!_currentUser.HasPermission("view_all_forms"))
         {
-            query = query.Where(f => f.CreatedByUserId == _currentUser.UserId || 
-                                   f.IsPublic ||
-                                   (f.DepartmentId == null) ||
-                                   (f.Department!.Users.Any(u => u.Id == _currentUser.UserId)));
+            query = query.Where(f => f.CreatedByUserId == _currentUser.UserId || f.IsPublic);
         }
 
         if (!string.IsNullOrWhiteSpace(request.SearchTerm))
@@ -77,7 +69,48 @@ public class GetFormsQueryHandler : IRequestHandler<GetFormsQuery, Result<PagedR
         var forms = await query
             .Skip((request.Page - 1) * request.PageSize)
             .Take(request.PageSize)
-            .ProjectTo<FormDto>(_mapper.ConfigurationProvider)
+            .Select(f => new FormDto
+            {
+                Id = f.Id,
+                OrganizationId = f.OrganizationId,
+                DepartmentId = f.DepartmentId,
+                CreatedByUserId = f.CreatedByUserId,
+                Title = f.Title,
+                Description = f.Description,
+                FormType = f.FormType,
+                IsTemplate = f.IsTemplate,
+                IsActive = f.IsActive,
+                IsPublic = f.IsPublic,
+                IsPublished = f.IsPublished,
+                PublishedAt = f.PublishedAt,
+                FormKey = f.FormKey,
+                CreatedAt = f.CreatedAt,
+                UpdatedAt = f.UpdatedAt,
+                CreatedByUserName = "User",
+                DepartmentName = null,
+                SubmissionCount = f.SubmissionCount,
+                Settings = new FormSettingsDto
+                {
+                    AllowMultipleSubmissions = f.Settings.AllowMultipleSubmissions,
+                    RequireAuthentication = f.Settings.RequireAuthentication,
+                    ShowProgressBar = f.Settings.ShowProgressBar,
+                    AllowSaveAndContinue = f.Settings.AllowSaveAndContinue,
+                    ShowSubmissionNumber = f.Settings.ShowSubmissionNumber,
+                    MaxSubmissions = f.Settings.MaxSubmissions,
+                    SubmissionStartDate = f.Settings.SubmissionStartDate,
+                    SubmissionEndDate = f.Settings.SubmissionEndDate,
+                    RedirectUrl = f.Settings.RedirectUrl,
+                    SuccessMessage = f.Settings.SuccessMessage
+                },
+                Metadata = new FormMetadataDto
+                {
+                    Version = f.Metadata.Version,
+                    Category = f.Metadata.Category,
+                    Tags = f.Metadata.Tags.ToList(),
+                    Language = f.Metadata.Language,
+                    EstimatedCompletionMinutes = f.Metadata.EstimatedCompletionMinutes
+                }
+            })
             .ToListAsync(cancellationToken);
 
         var pagedResult = new PagedResult<FormDto>(forms, totalCount, request.Page, request.PageSize);

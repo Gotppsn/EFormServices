@@ -1,4 +1,4 @@
-// EFormServices.Domain/Entities/form_entity.cs
+// EFormServices.Domain/Entities/Form.cs
 // Got code 30/05/2025
 using EFormServices.Domain.ValueObjects;
 using EFormServices.Domain.Enums;
@@ -17,8 +17,8 @@ public class Form : BaseEntity
     public bool IsTemplate { get; private set; }
     public bool IsActive { get; private set; }
     public bool IsPublic { get; private set; }
-    public FormSettings Settings { get; private set; }
-    public FormMetadata Metadata { get; private set; }
+    public FormSettings Settings { get; private set; } = new();
+    public FormMetadata Metadata { get; private set; } = new();
     public DateTime? PublishedAt { get; private set; }
     public string FormKey { get; set; } = string.Empty;
 
@@ -38,6 +38,7 @@ public class Form : BaseEntity
         Settings = FormSettings.Default();
         Metadata = FormMetadata.Default();
         FormKey = GenerateFormKey();
+        Title = string.Empty;
     }
 
     public Form(int organizationId, int createdByUserId, string title, FormType formType,

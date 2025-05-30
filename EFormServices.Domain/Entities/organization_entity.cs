@@ -1,4 +1,4 @@
-// EFormServices.Domain/Entities/organization_entity.cs
+// EFormServices.Domain/Entities/Organization.cs
 // Got code 30/05/2025
 using EFormServices.Domain.ValueObjects;
 
@@ -9,7 +9,7 @@ public class Organization : BaseEntity
     public string Name { get; set; } = string.Empty;
     public string Subdomain { get; set; } = string.Empty;
     public string TenantKey { get; set; } = string.Empty;
-    public OrganizationSettings Settings { get; set; }
+    public OrganizationSettings Settings { get; set; } = new();
     public bool IsActive { get; set; }
 
     private readonly List<Department> _departments = new();
@@ -26,6 +26,8 @@ public class Organization : BaseEntity
     {
         Settings = OrganizationSettings.Default();
         TenantKey = GenerateTenantKey();
+        Name = string.Empty;
+        Subdomain = string.Empty;
     }
 
     public Organization(string name, string subdomain, OrganizationSettings settings)

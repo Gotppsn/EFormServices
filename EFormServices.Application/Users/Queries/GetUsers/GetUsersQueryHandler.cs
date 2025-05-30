@@ -1,7 +1,5 @@
 // EFormServices.Application/Users/Queries/GetUsers/GetUsersQueryHandler.cs
 // Got code 30/05/2025
-using AutoMapper;
-using AutoMapper.QueryableExtensions;
 using EFormServices.Application.Common.DTOs;
 using EFormServices.Application.Common.Interfaces;
 using EFormServices.Application.Common.Models;
@@ -14,16 +12,11 @@ public class GetUsersQueryHandler : IRequestHandler<GetUsersQuery, Result<PagedR
 {
     private readonly IApplicationDbContext _context;
     private readonly ICurrentUserService _currentUser;
-    private readonly IMapper _mapper;
 
-    public GetUsersQueryHandler(
-        IApplicationDbContext context,
-        ICurrentUserService currentUser,
-        IMapper mapper)
+    public GetUsersQueryHandler(IApplicationDbContext context, ICurrentUserService currentUser)
     {
         _context = context;
         _currentUser = currentUser;
-        _mapper = mapper;
     }
 
     public async Task<Result<PagedResult<UserDto>>> Handle(GetUsersQuery request, CancellationToken cancellationToken)
@@ -64,7 +57,23 @@ public class GetUsersQueryHandler : IRequestHandler<GetUsersQuery, Result<PagedR
         var users = await query
             .Skip((request.Page - 1) * request.PageSize)
             .Take(request.PageSize)
-            .ProjectTo<UserDto>(_mapper.ConfigurationProvider)
+            .Select(u => new UserDto
+            {
+                Id = u.Id,
+                OrganizationId = u.OrganizationId,
+                DepartmentId = u.DepartmentId,
+                Email = u.Email,
+                FirstName = u.FirstName,
+                LastName = u.LastName,
+                FullName = u.FullName,
+                IsActive = u.IsActive,
+                EmailConfirmed = u.EmailConfirmed,
+                LastLoginAt = u.LastLoginAt,
+                CreatedAt = u.CreatedAt,
+                UpdatedAt = u.UpdatedAt,
+                DepartmentName = null,
+                Roles = new List<string>()
+            })
             .ToListAsync(cancellationToken);
 
         var pagedResult = new PagedResult<UserDto>(users, totalCount, request.Page, request.PageSize);

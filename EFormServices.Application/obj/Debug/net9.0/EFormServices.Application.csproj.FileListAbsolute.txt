@@ -1,16 +1,6 @@
-C:\Users\panupol\Desktop\EFormServices\EFormServices.Application\bin\Debug\net9.0\EFormServices.Application.deps.json
-C:\Users\panupol\Desktop\EFormServices\EFormServices.Application\bin\Debug\net9.0\EFormServices.Application.dll
-C:\Users\panupol\Desktop\EFormServices\EFormServices.Application\bin\Debug\net9.0\EFormServices.Application.pdb
-C:\Users\panupol\Desktop\EFormServices\EFormServices.Application\bin\Debug\net9.0\EFormServices.Domain.dll
-C:\Users\panupol\Desktop\EFormServices\EFormServices.Application\bin\Debug\net9.0\EFormServices.Domain.pdb
 C:\Users\panupol\Desktop\EFormServices\EFormServices.Application\obj\Debug\net9.0\EFormServices.Application.csproj.AssemblyReference.cache
 C:\Users\panupol\Desktop\EFormServices\EFormServices.Application\obj\Debug\net9.0\EFormServices.Application.GeneratedMSBuildEditorConfig.editorconfig
 C:\Users\panupol\Desktop\EFormServices\EFormServices.Application\obj\Debug\net9.0\EFormServices.Application.AssemblyInfoInputs.cache
 C:\Users\panupol\Desktop\EFormServices\EFormServices.Application\obj\Debug\net9.0\EFormServices.Application.AssemblyInfo.cs
 C:\Users\panupol\Desktop\EFormServices\EFormServices.Application\obj\Debug\net9.0\EFormServices.Application.csproj.CoreCompileInputs.cache
 C:\Users\panupol\Desktop\EFormServices\EFormServices.Application\obj\Debug\net9.0\EFormServices.Application.sourcelink.json
-C:\Users\panupol\Desktop\EFormServices\EFormServices.Application\obj\Debug\net9.0\EFormSer.5E23EB06.Up2Date
-C:\Users\panupol\Desktop\EFormServices\EFormServices.Application\obj\Debug\net9.0\EFormServices.Application.dll
-C:\Users\panupol\Desktop\EFormServices\EFormServices.Application\obj\Debug\net9.0\refint\EFormServices.Application.dll
-C:\Users\panupol\Desktop\EFormServices\EFormServices.Application\obj\Debug\net9.0\EFormServices.Application.pdb
-C:\Users\panupol\Desktop\EFormServices\EFormServices.Application\obj\Debug\net9.0\ref\EFormServices.Application.dll

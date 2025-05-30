@@ -1,6 +1,5 @@
 // EFormServices.Application/Organizations/Commands/CreateOrganization/CreateOrganizationCommandHandler.cs
 // Got code 30/05/2025
-using AutoMapper;
 using EFormServices.Application.Common.DTOs;
 using EFormServices.Application.Common.Interfaces;
 using EFormServices.Application.Common.Models;
@@ -14,12 +13,10 @@ namespace EFormServices.Application.Organizations.Commands.CreateOrganization;
 public class CreateOrganizationCommandHandler : IRequestHandler<CreateOrganizationCommand, Result<OrganizationDto>>
 {
     private readonly IApplicationDbContext _context;
-    private readonly IMapper _mapper;
 
-    public CreateOrganizationCommandHandler(IApplicationDbContext context, IMapper mapper)
+    public CreateOrganizationCommandHandler(IApplicationDbContext context)
     {
         _context = context;
-        _mapper = mapper;
     }
 
     public async Task<Result<OrganizationDto>> Handle(CreateOrganizationCommand request, CancellationToken cancellationToken)
@@ -43,10 +40,29 @@ public class CreateOrganizationCommandHandler : IRequestHandler<CreateOrganizati
 
         var organization = new Organization(request.Name, request.Subdomain, settings);
 
-        _context.Organizations.Add(organization);
         await _context.SaveChangesAsync(cancellationToken);
 
-        var organizationDto = _mapper.Map<OrganizationDto>(organization);
+        var organizationDto = new OrganizationDto
+        {
+            Id = organization.Id,
+            Name = organization.Name,
+            Subdomain = organization.Subdomain,
+            TenantKey = organization.TenantKey,
+            IsActive = organization.IsActive,
+            CreatedAt = organization.CreatedAt,
+            UpdatedAt = organization.UpdatedAt,
+            Settings = new OrganizationSettingsDto
+            {
+                TimeZone = settings.TimeZone,
+                DateFormat = settings.DateFormat,
+                Currency = settings.Currency,
+                AllowPublicForms = settings.AllowPublicForms,
+                MaxFileUploadSizeMB = settings.MaxFileUploadSizeMB,
+                FormRetentionDays = settings.FormRetentionDays,
+                RequireApprovalForPublish = settings.RequireApprovalForPublish
+            }
+        };
+        
         return Result<OrganizationDto>.Success(organizationDto);
     }
 }

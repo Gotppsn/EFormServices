@@ -10,24 +10,43 @@ public class ApplicationDbContext : DbContext, IApplicationDbContext
 {
     public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options) { }
 
-    public DbSet<Organization> Organizations => Set<Organization>();
-    public DbSet<Department> Departments => Set<Department>();
-    public DbSet<User> Users => Set<User>();
-    public DbSet<Role> Roles => Set<Role>();
-    public DbSet<Permission> Permissions => Set<Permission>();
-    public DbSet<UserRole> UserRoles => Set<UserRole>();
-    public DbSet<RolePermission> RolePermissions => Set<RolePermission>();
-    public DbSet<Form> Forms => Set<Form>();
-    public DbSet<FormField> FormFields => Set<FormField>();
-    public DbSet<FormFieldOption> FormFieldOptions => Set<FormFieldOption>();
-    public DbSet<ConditionalLogic> ConditionalLogics => Set<ConditionalLogic>();
-    public DbSet<FormSubmission> FormSubmissions => Set<FormSubmission>();
-    public DbSet<SubmissionValue> SubmissionValues => Set<SubmissionValue>();
-    public DbSet<FileAttachment> FileAttachments => Set<FileAttachment>();
-    public DbSet<ApprovalWorkflow> ApprovalWorkflows => Set<ApprovalWorkflow>();
-    public DbSet<ApprovalStep> ApprovalSteps => Set<ApprovalStep>();
-    public DbSet<ApprovalProcess> ApprovalProcesses => Set<ApprovalProcess>();
-    public DbSet<ApprovalAction> ApprovalActions => Set<ApprovalAction>();
+    public DbSet<Organization> OrganizationSet => Set<Organization>();
+    public DbSet<Department> DepartmentSet => Set<Department>();
+    public DbSet<User> UserSet => Set<User>();
+    public DbSet<Role> RoleSet => Set<Role>();
+    public DbSet<Permission> PermissionSet => Set<Permission>();
+    public DbSet<UserRole> UserRoleSet => Set<UserRole>();
+    public DbSet<RolePermission> RolePermissionSet => Set<RolePermission>();
+    public DbSet<Form> FormSet => Set<Form>();
+    public DbSet<FormField> FormFieldSet => Set<FormField>();
+    public DbSet<FormFieldOption> FormFieldOptionSet => Set<FormFieldOption>();
+    public DbSet<ConditionalLogic> ConditionalLogicSet => Set<ConditionalLogic>();
+    public DbSet<FormSubmission> FormSubmissionSet => Set<FormSubmission>();
+    public DbSet<SubmissionValue> SubmissionValueSet => Set<SubmissionValue>();
+    public DbSet<FileAttachment> FileAttachmentSet => Set<FileAttachment>();
+    public DbSet<ApprovalWorkflow> ApprovalWorkflowSet => Set<ApprovalWorkflow>();
+    public DbSet<ApprovalStep> ApprovalStepSet => Set<ApprovalStep>();
+    public DbSet<ApprovalProcess> ApprovalProcessSet => Set<ApprovalProcess>();
+    public DbSet<ApprovalAction> ApprovalActionSet => Set<ApprovalAction>();
+
+    public IQueryable<Organization> Organizations => OrganizationSet;
+    public IQueryable<Department> Departments => DepartmentSet;
+    public IQueryable<User> Users => UserSet;
+    public IQueryable<Role> Roles => RoleSet;
+    public IQueryable<Permission> Permissions => PermissionSet;
+    public IQueryable<UserRole> UserRoles => UserRoleSet;
+    public IQueryable<RolePermission> RolePermissions => RolePermissionSet;
+    public IQueryable<Form> Forms => FormSet;
+    public IQueryable<FormField> FormFields => FormFieldSet;
+    public IQueryable<FormFieldOption> FormFieldOptions => FormFieldOptionSet;
+    public IQueryable<ConditionalLogic> ConditionalLogics => ConditionalLogicSet;
+    public IQueryable<FormSubmission> FormSubmissions => FormSubmissionSet;
+    public IQueryable<SubmissionValue> SubmissionValues => SubmissionValueSet;
+    public IQueryable<FileAttachment> FileAttachments => FileAttachmentSet;
+    public IQueryable<ApprovalWorkflow> ApprovalWorkflows => ApprovalWorkflowSet;
+    public IQueryable<ApprovalStep> ApprovalSteps => ApprovalStepSet;
+    public IQueryable<ApprovalProcess> ApprovalProcesses => ApprovalProcessSet;
+    public IQueryable<ApprovalAction> ApprovalActions => ApprovalActionSet;
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

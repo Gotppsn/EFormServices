@@ -1,60 +1,61 @@
-// EFormServices.Application/Forms/Queries/GetFormById/GetFormByIdQueryHandler.cs
+// EFormServices.Application/Users/Queries/GetUserById/GetUserByIdQueryHandler.cs
 // Got code 30/05/2025
-using AutoMapper;
-using AutoMapper.QueryableExtensions;
 using EFormServices.Application.Common.DTOs;
 using EFormServices.Application.Common.Interfaces;
 using EFormServices.Application.Common.Models;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
-namespace EFormServices.Application.Forms.Queries.GetFormById;
+namespace EFormServices.Application.Users.Queries.GetUserById;
 
-public class GetFormByIdQueryHandler : IRequestHandler<GetFormByIdQuery, Result<FormDto>>
+public class GetUserByIdQueryHandler : IRequestHandler<GetUserByIdQuery, Result<UserDto>>
 {
     private readonly IApplicationDbContext _context;
     private readonly ICurrentUserService _currentUser;
-    private readonly IMapper _mapper;
 
-    public GetFormByIdQueryHandler(
+    public GetUserByIdQueryHandler(
         IApplicationDbContext context,
-        ICurrentUserService currentUser,
-        IMapper mapper)
+        ICurrentUserService currentUser)
     {
         _context = context;
         _currentUser = currentUser;
-        _mapper = mapper;
     }
 
-    public async Task<Result<FormDto>> Handle(GetFormByIdQuery request, CancellationToken cancellationToken)
+    public async Task<Result<UserDto>> Handle(GetUserByIdQuery request, CancellationToken cancellationToken)
     {
-        var query = _context.Forms.AsQueryable();
+        if (!_currentUser.IsAuthenticated || !_currentUser.OrganizationId.HasValue)
+            return Result<UserDto>.Failure("User not authenticated");
 
-        if (_currentUser.IsAuthenticated && _currentUser.OrganizationId.HasValue)
-        {
-            query = query.Where(f => f.OrganizationId == _currentUser.OrganizationId);
+        var canViewAllUsers = _currentUser.HasPermission("view_users");
+        var canViewOwnProfile = request.Id == _currentUser.UserId;
 
-            if (!_currentUser.HasPermission("view_all_forms"))
+        if (!canViewAllUsers && !canViewOwnProfile)
+            return Result<UserDto>.Failure("Insufficient permissions to view this user");
+
+        var user = await _context.Users
+            .Where(u => u.Id == request.Id && u.OrganizationId == _currentUser.OrganizationId)
+            .Select(u => new UserDto
             {
-                query = query.Where(f => f.CreatedByUserId == _currentUser.UserId || 
-                                       f.IsPublic ||
-                                       (f.DepartmentId == null) ||
-                                       (f.Department!.Users.Any(u => u.Id == _currentUser.UserId)));
-            }
-        }
-        else
-        {
-            query = query.Where(f => f.IsPublic);
-        }
-
-        var form = await query
-            .Where(f => f.Id == request.Id)
-            .ProjectTo<FormDto>(_mapper.ConfigurationProvider)
+                Id = u.Id,
+                OrganizationId = u.OrganizationId,
+                DepartmentId = u.DepartmentId,
+                Email = u.Email,
+                FirstName = u.FirstName,
+                LastName = u.LastName,
+                FullName = u.FullName,
+                IsActive = u.IsActive,
+                EmailConfirmed = u.EmailConfirmed,
+                LastLoginAt = u.LastLoginAt,
+                CreatedAt = u.CreatedAt,
+                UpdatedAt = u.UpdatedAt,
+                DepartmentName = null,
+                Roles = new List<string>()
+            })
             .FirstOrDefaultAsync(cancellationToken);
 
-        if (form == null)
-            return Result<FormDto>.Failure("Form not found");
+        if (user == null)
+            return Result<UserDto>.Failure("User not found");
 
-        return Result<FormDto>.Success(form);
+        return Result<UserDto>.Success(user);
     }
 }

@@ -1,6 +1,5 @@
 // EFormServices.Application/Users/Commands/CreateUser/CreateUserCommandHandler.cs
 // Got code 30/05/2025
-using AutoMapper;
 using EFormServices.Application.Common.DTOs;
 using EFormServices.Application.Common.Interfaces;
 using EFormServices.Application.Common.Models;
@@ -8,7 +7,6 @@ using EFormServices.Domain.Entities;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using System.Security.Cryptography;
-using System.Text;
 
 namespace EFormServices.Application.Users.Commands.CreateUser;
 
@@ -16,16 +14,13 @@ public class CreateUserCommandHandler : IRequestHandler<CreateUserCommand, Resul
 {
     private readonly IApplicationDbContext _context;
     private readonly ICurrentUserService _currentUser;
-    private readonly IMapper _mapper;
 
     public CreateUserCommandHandler(
         IApplicationDbContext context,
-        ICurrentUserService currentUser,
-        IMapper mapper)
+        ICurrentUserService currentUser)
     {
         _context = context;
         _currentUser = currentUser;
-        _mapper = mapper;
     }
 
     public async Task<Result<UserDto>> Handle(CreateUserCommand request, CancellationToken cancellationToken)
@@ -71,18 +66,26 @@ public class CreateUserCommandHandler : IRequestHandler<CreateUserCommand, Resul
             request.ExternalId
         );
 
-        _context.Users.Add(user);
         await _context.SaveChangesAsync(cancellationToken);
 
-        foreach (var role in validRoles)
+        var userDto = new UserDto
         {
-            var userRole = new UserRole(user.Id, role.Id);
-            _context.UserRoles.Add(userRole);
-        }
+            Id = user.Id,
+            OrganizationId = user.OrganizationId,
+            DepartmentId = user.DepartmentId,
+            Email = user.Email,
+            FirstName = user.FirstName,
+            LastName = user.LastName,
+            FullName = user.FullName,
+            IsActive = user.IsActive,
+            EmailConfirmed = user.EmailConfirmed,
+            LastLoginAt = user.LastLoginAt,
+            CreatedAt = user.CreatedAt,
+            UpdatedAt = user.UpdatedAt,
+            DepartmentName = null,
+            Roles = validRoles.Select(r => r.Name).ToList()
+        };
 
-        await _context.SaveChangesAsync(cancellationToken);
-
-        var userDto = _mapper.Map<UserDto>(user);
         return Result<UserDto>.Success(userDto);
     }
 

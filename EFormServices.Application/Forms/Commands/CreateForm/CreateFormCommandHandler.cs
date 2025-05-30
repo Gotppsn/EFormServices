@@ -1,6 +1,5 @@
 // EFormServices.Application/Forms/Commands/CreateForm/CreateFormCommandHandler.cs
 // Got code 30/05/2025
-using AutoMapper;
 using EFormServices.Application.Common.DTOs;
 using EFormServices.Application.Common.Interfaces;
 using EFormServices.Application.Common.Models;
@@ -15,16 +14,13 @@ public class CreateFormCommandHandler : IRequestHandler<CreateFormCommand, Resul
 {
     private readonly IApplicationDbContext _context;
     private readonly ICurrentUserService _currentUser;
-    private readonly IMapper _mapper;
 
     public CreateFormCommandHandler(
         IApplicationDbContext context,
-        ICurrentUserService currentUser,
-        IMapper mapper)
+        ICurrentUserService currentUser)
     {
         _context = context;
         _currentUser = currentUser;
-        _mapper = mapper;
     }
 
     public async Task<Result<FormDto>> Handle(CreateFormCommand request, CancellationToken cancellationToken)
@@ -88,10 +84,51 @@ public class CreateFormCommandHandler : IRequestHandler<CreateFormCommand, Resul
 
         form.UpdateSettings(settings);
 
-        _context.Forms.Add(form);
         await _context.SaveChangesAsync(cancellationToken);
 
-        var formDto = _mapper.Map<FormDto>(form);
+        var formDto = new FormDto
+        {
+            Id = form.Id,
+            OrganizationId = form.OrganizationId,
+            DepartmentId = form.DepartmentId,
+            CreatedByUserId = form.CreatedByUserId,
+            Title = form.Title,
+            Description = form.Description,
+            FormType = form.FormType,
+            IsTemplate = form.IsTemplate,
+            IsActive = form.IsActive,
+            IsPublic = form.IsPublic,
+            IsPublished = form.IsPublished,
+            PublishedAt = form.PublishedAt,
+            FormKey = form.FormKey,
+            CreatedAt = form.CreatedAt,
+            UpdatedAt = form.UpdatedAt,
+            CreatedByUserName = "Current User",
+            DepartmentName = null,
+            SubmissionCount = 0,
+            Settings = new FormSettingsDto
+            {
+                AllowMultipleSubmissions = settings.AllowMultipleSubmissions,
+                RequireAuthentication = settings.RequireAuthentication,
+                ShowProgressBar = settings.ShowProgressBar,
+                AllowSaveAndContinue = settings.AllowSaveAndContinue,
+                ShowSubmissionNumber = settings.ShowSubmissionNumber,
+                MaxSubmissions = settings.MaxSubmissions,
+                SubmissionStartDate = settings.SubmissionStartDate,
+                SubmissionEndDate = settings.SubmissionEndDate,
+                RedirectUrl = settings.RedirectUrl,
+                SuccessMessage = settings.SuccessMessage
+            },
+            Metadata = new FormMetadataDto
+            {
+                Version = metadata.Version,
+                Category = metadata.Category,
+                Tags = metadata.Tags.ToList(),
+                Language = metadata.Language,
+                EstimatedCompletionMinutes = metadata.EstimatedCompletionMinutes
+            }
+        };
+        
         return Result<FormDto>.Success(formDto);
     }
 }

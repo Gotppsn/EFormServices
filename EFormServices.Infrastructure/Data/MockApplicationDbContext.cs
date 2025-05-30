@@ -3,7 +3,6 @@
 using EFormServices.Application.Common.Interfaces;
 using EFormServices.Domain.Entities;
 using EFormServices.Infrastructure.Services;
-using Microsoft.EntityFrameworkCore;
 
 namespace EFormServices.Infrastructure.Data;
 
@@ -28,6 +27,25 @@ public class MockApplicationDbContext : IApplicationDbContext
     private readonly MockDbSet<ApprovalProcess> _approvalProcesses;
     private readonly MockDbSet<ApprovalAction> _approvalActions;
 
+    public IQueryable<Organization> Organizations => _organizations;
+    public IQueryable<Department> Departments => _departments;
+    public IQueryable<User> Users => _users;
+    public IQueryable<Role> Roles => _roles;
+    public IQueryable<Permission> Permissions => _permissions;
+    public IQueryable<UserRole> UserRoles => _userRoles;
+    public IQueryable<RolePermission> RolePermissions => _rolePermissions;
+    public IQueryable<Form> Forms => _forms;
+    public IQueryable<FormField> FormFields => _formFields;
+    public IQueryable<FormFieldOption> FormFieldOptions => _formFieldOptions;
+    public IQueryable<ConditionalLogic> ConditionalLogics => _conditionalLogics;
+    public IQueryable<FormSubmission> FormSubmissions => _formSubmissions;
+    public IQueryable<SubmissionValue> SubmissionValues => _submissionValues;
+    public IQueryable<FileAttachment> FileAttachments => _fileAttachments;
+    public IQueryable<ApprovalWorkflow> ApprovalWorkflows => _approvalWorkflows;
+    public IQueryable<ApprovalStep> ApprovalSteps => _approvalSteps;
+    public IQueryable<ApprovalProcess> ApprovalProcesses => _approvalProcesses;
+    public IQueryable<ApprovalAction> ApprovalActions => _approvalActions;
+
     public MockApplicationDbContext()
     {
         _organizations = new MockDbSet<Organization>(MockDataService.GetOrganizations());
@@ -49,25 +67,6 @@ public class MockApplicationDbContext : IApplicationDbContext
         _approvalProcesses = new MockDbSet<ApprovalProcess>();
         _approvalActions = new MockDbSet<ApprovalAction>();
     }
-
-    public DbSet<Organization> Organizations => _organizations;
-    public DbSet<Department> Departments => _departments;
-    public DbSet<User> Users => _users;
-    public DbSet<Role> Roles => _roles;
-    public DbSet<Permission> Permissions => _permissions;
-    public DbSet<UserRole> UserRoles => _userRoles;
-    public DbSet<RolePermission> RolePermissions => _rolePermissions;
-    public DbSet<Form> Forms => _forms;
-    public DbSet<FormField> FormFields => _formFields;
-    public DbSet<FormFieldOption> FormFieldOptions => _formFieldOptions;
-    public DbSet<ConditionalLogic> ConditionalLogics => _conditionalLogics;
-    public DbSet<FormSubmission> FormSubmissions => _formSubmissions;
-    public DbSet<SubmissionValue> SubmissionValues => _submissionValues;
-    public DbSet<FileAttachment> FileAttachments => _fileAttachments;
-    public DbSet<ApprovalWorkflow> ApprovalWorkflows => _approvalWorkflows;
-    public DbSet<ApprovalStep> ApprovalSteps => _approvalSteps;
-    public DbSet<ApprovalProcess> ApprovalProcesses => _approvalProcesses;
-    public DbSet<ApprovalAction> ApprovalActions => _approvalActions;
 
     public Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
     {
