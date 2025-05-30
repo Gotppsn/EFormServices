@@ -1,4 +1,5 @@
-// Got code 27/05/2025
+// EFormServices.Domain/Entities/user_entity.cs
+// Got code 30/05/2025
 using EFormServices.Domain.ValueObjects;
 
 namespace EFormServices.Domain.Entities;
@@ -7,11 +8,11 @@ public class User : BaseEntity
 {
     public int OrganizationId { get; private set; }
     public int? DepartmentId { get; private set; }
-    public string Email { get; private set; }
-    public string FirstName { get; private set; }
-    public string LastName { get; private set; }
-    public string PasswordHash { get; private set; }
-    public string Salt { get; private set; }
+    public string Email { get; private set; } = string.Empty;
+    public string FirstName { get; private set; } = string.Empty;
+    public string LastName { get; private set; } = string.Empty;
+    public string PasswordHash { get; private set; } = string.Empty;
+    public string Salt { get; private set; } = string.Empty;
     public bool IsActive { get; private set; }
     public bool EmailConfirmed { get; private set; }
     public DateTime? LastLoginAt { get; private set; }

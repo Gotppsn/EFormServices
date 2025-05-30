@@ -4,6 +4,7 @@ using EFormServices.Application.Common.Interfaces;
 using EFormServices.Application.Common.Models;
 using EFormServices.Domain.Entities;
 using EFormServices.Domain.ValueObjects;
+using EFormServices.Domain.Enums;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
@@ -42,31 +43,8 @@ public class AddFormFieldCommandHandler : IRequestHandler<AddFormFieldCommand, R
         if (existingField != null)
             return Result<int>.Failure("Field with this name already exists");
 
-        var validationRules = ValidationRules.Default();
-        if (request.ValidationRules != null)
-        {
-            validationRules = new ValidationRules(
-                request.ValidationRules.ContainsKey("MinLength") ? (int?)request.ValidationRules["MinLength"] : null,
-                request.ValidationRules.ContainsKey("MaxLength") ? (int?)request.ValidationRules["MaxLength"] : null,
-                request.ValidationRules.ContainsKey("MinValue") ? (decimal?)request.ValidationRules["MinValue"] : null,
-                request.ValidationRules.ContainsKey("MaxValue") ? (decimal?)request.ValidationRules["MaxValue"] : null,
-                request.ValidationRules.ContainsKey("Pattern") ? request.ValidationRules["Pattern"]?.ToString() : null
-            );
-        }
-
-        var fieldSettings = FieldSettings.Default(request.FieldType);
-        if (request.Settings != null)
-        {
-            fieldSettings = new FieldSettings(
-                request.Settings.ContainsKey("Placeholder") ? request.Settings["Placeholder"]?.ToString() : null,
-                request.Settings.ContainsKey("DefaultValue") ? request.Settings["DefaultValue"]?.ToString() : null,
-                request.Settings.ContainsKey("IsReadOnly") && (bool)request.Settings["IsReadOnly"],
-                !request.Settings.ContainsKey("IsVisible") || (bool)request.Settings["IsVisible"],
-                request.Settings.ContainsKey("Rows") ? (int?)request.Settings["Rows"] : null,
-                request.Settings.ContainsKey("Columns") ? (int?)request.Settings["Columns"] : null,
-                request.Settings.ContainsKey("AllowMultiple") && (bool)request.Settings["AllowMultiple"]
-            );
-        }
+        var validationRules = CreateValidationRules(request.ValidationRules);
+        var fieldSettings = CreateFieldSettings(request.FieldType, request.Settings);
 
         var formField = new FormField(
             request.FormId,
@@ -85,16 +63,42 @@ public class AddFormFieldCommandHandler : IRequestHandler<AddFormFieldCommand, R
 
         if (request.Options != null && request.FieldType.SupportsOptions())
         {
-            var sortOrder = 1;
             foreach (var option in request.Options)
             {
                 formField.AddOption(option.Label, option.Value, option.IsDefault);
-                sortOrder++;
             }
         }
 
         await _context.SaveChangesAsync(cancellationToken);
 
         return Result<int>.Success(formField.Id);
+    }
+
+    private static ValidationRules CreateValidationRules(Dictionary<string, object>? validationRules)
+    {
+        if (validationRules == null) return ValidationRules.Default();
+
+        return new ValidationRules(
+            validationRules.TryGetValue("MinLength", out var minLength) ? Convert.ToInt32(minLength) : null,
+            validationRules.TryGetValue("MaxLength", out var maxLength) ? Convert.ToInt32(maxLength) : null,
+            validationRules.TryGetValue("MinValue", out var minValue) ? Convert.ToDecimal(minValue) : null,
+            validationRules.TryGetValue("MaxValue", out var maxValue) ? Convert.ToDecimal(maxValue) : null,
+            validationRules.TryGetValue("Pattern", out var pattern) ? pattern.ToString() : null
+        );
+    }
+
+    private static FieldSettings CreateFieldSettings(FieldType fieldType, Dictionary<string, object>? settings)
+    {
+        if (settings == null) return FieldSettings.Default(fieldType);
+
+        return new FieldSettings(
+            settings.TryGetValue("Placeholder", out var placeholder) ? placeholder.ToString() : null,
+            settings.TryGetValue("DefaultValue", out var defaultValue) ? defaultValue.ToString() : null,
+            settings.TryGetValue("IsReadOnly", out var isReadOnly) && Convert.ToBoolean(isReadOnly),
+            !settings.TryGetValue("IsVisible", out var isVisible) || Convert.ToBoolean(isVisible),
+            settings.TryGetValue("Rows", out var rows) ? Convert.ToInt32(rows) : null,
+            settings.TryGetValue("Columns", out var columns) ? Convert.ToInt32(columns) : null,
+            settings.TryGetValue("AllowMultiple", out var allowMultiple) && Convert.ToBoolean(allowMultiple)
+        );
     }
 }

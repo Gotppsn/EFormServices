@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("EFormServices.Tests.Integration")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+b64b219f69a59a2724e919c032faed102979e5bd")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+9260b2341aa083be58557881d925b62130c8f487")]
 [assembly: System.Reflection.AssemblyProductAttribute("EFormServices.Tests.Integration")]
 [assembly: System.Reflection.AssemblyTitleAttribute("EFormServices.Tests.Integration")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
