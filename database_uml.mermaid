@@ -1,0 +1,287 @@
+erDiagram
+    Organization ||--o{ User : "employs"
+    Organization ||--o{ Department : "contains"
+    Organization ||--o{ Form : "owns"
+    Organization ||--o{ ApprovalWorkflow : "defines"
+    
+    Department ||--o{ User : "assigns"
+    Department ||--o{ Form : "manages"
+    Department }|--|| Department : "parent_child"
+    
+    User ||--o{ Form : "creates"
+    User ||--o{ FormSubmission : "submits"
+    User ||--o{ ApprovalAction : "performs"
+    User }|--o{ UserRole : "has"
+    
+    Role ||--o{ UserRole : "assigned"
+    Role ||--o{ RolePermission : "grants"
+    Permission ||--o{ RolePermission : "defines"
+    
+    Form ||--o{ FormField : "contains"
+    Form ||--o{ FormSubmission : "receives"
+    Form ||--|| ApprovalWorkflow : "uses"
+    Form ||--o{ FormTemplate : "creates"
+    
+    FormField ||--o{ FormFieldOption : "has_options"
+    FormField ||--o{ ConditionalLogic : "triggers"
+    
+    FormSubmission ||--o{ SubmissionValue : "contains"
+    FormSubmission ||--o{ ApprovalProcess : "initiates"
+    FormSubmission ||--o{ FileAttachment : "includes"
+    
+    ApprovalWorkflow ||--o{ ApprovalStep : "defines"
+    ApprovalStep ||--o{ ApprovalProcess : "executes"
+    ApprovalProcess ||--o{ ApprovalAction : "records"
+    
+    Organization {
+        int Id PK
+        string Name
+        string Subdomain
+        string Settings
+        bool IsActive
+        datetime CreatedAt
+        datetime UpdatedAt
+        string TenantKey UK
+    }
+    
+    Department {
+        int Id PK
+        int OrganizationId FK
+        int ParentDepartmentId FK
+        string Name
+        string Code
+        string Description
+        bool IsActive
+        datetime CreatedAt
+        datetime UpdatedAt
+    }
+    
+    User {
+        int Id PK
+        int OrganizationId FK
+        int DepartmentId FK
+        string Email UK
+        string FirstName
+        string LastName
+        string PasswordHash
+        string Salt
+        bool IsActive
+        bool EmailConfirmed
+        datetime LastLoginAt
+        datetime CreatedAt
+        datetime UpdatedAt
+        string ExternalId
+    }
+    
+    Role {
+        int Id PK
+        int OrganizationId FK
+        string Name
+        string Description
+        string Permissions
+        bool IsSystemRole
+        datetime CreatedAt
+        datetime UpdatedAt
+    }
+    
+    Permission {
+        int Id PK
+        string Name UK
+        string Description
+        string Category
+        bool IsSystemPermission
+    }
+    
+    UserRole {
+        int Id PK
+        int UserId FK
+        int RoleId FK
+        datetime AssignedAt
+        datetime ExpiresAt
+        bool IsActive UK "UserId,RoleId"
+    }
+    
+    RolePermission {
+        int Id PK
+        int RoleId FK
+        int PermissionId FK
+        datetime CreatedAt UK "RoleId,PermissionId"
+    }
+    
+    Form {
+        int Id PK
+        int OrganizationId FK
+        int DepartmentId FK
+        int CreatedByUserId FK
+        int ApprovalWorkflowId FK
+        string Title
+        string Description
+        string FormType
+        bool IsTemplate
+        bool IsActive
+        bool IsPublic
+        string Settings
+        string Metadata
+        datetime CreatedAt
+        datetime UpdatedAt
+        datetime PublishedAt
+        string FormKey UK
+    }
+    
+    FormField {
+        int Id PK
+        int FormId FK
+        string FieldType
+        string Label
+        string Name
+        string Description
+        string ValidationRules
+        bool IsRequired
+        int SortOrder
+        string Settings
+        datetime CreatedAt
+        datetime UpdatedAt UK "FormId,Name"
+    }
+    
+    FormFieldOption {
+        int Id PK
+        int FormFieldId FK
+        string Label
+        string Value
+        int SortOrder
+        bool IsDefault
+        datetime CreatedAt UK "FormFieldId,Value"
+    }
+    
+    ConditionalLogic {
+        int Id PK
+        int FormId FK
+        int TriggerFieldId FK
+        int TargetFieldId FK
+        string Condition
+        string TriggerValue
+        string Action
+        datetime CreatedAt UK "FormId,TriggerFieldId,TargetFieldId"
+    }
+    
+    FormTemplate {
+        int Id PK
+        int OrganizationId FK
+        int BaseFormId FK
+        string Name
+        string Description
+        string Category
+        bool IsGlobal
+        datetime CreatedAt
+        datetime UpdatedAt
+    }
+    
+    FormSubmission {
+        int Id PK
+        int FormId FK
+        int SubmittedByUserId FK
+        string Status
+        string SubmissionData
+        datetime SubmittedAt
+        datetime UpdatedAt
+        string TrackingNumber UK
+        string IpAddress
+        string UserAgent
+    }
+    
+    SubmissionValue {
+        int Id PK
+        int FormSubmissionId FK
+        int FormFieldId FK
+        string FieldName
+        string Value
+        string ValueType
+        datetime CreatedAt UK "FormSubmissionId,FormFieldId"
+    }
+    
+    FileAttachment {
+        int Id PK
+        int FormSubmissionId FK
+        int FormFieldId FK
+        string FileName
+        string FileSize
+        string ContentType
+        string StoragePath
+        string FileHash
+        datetime UploadedAt UK "FormSubmissionId,FormFieldId,FileName"
+    }
+    
+    ApprovalWorkflow {
+        int Id PK
+        int OrganizationId FK
+        string Name
+        string Description
+        string WorkflowType
+        bool IsActive
+        string Settings
+        datetime CreatedAt
+        datetime UpdatedAt
+    }
+    
+    ApprovalStep {
+        int Id PK
+        int ApprovalWorkflowId FK
+        string StepName
+        string StepType
+        int StepOrder
+        string ApproverCriteria
+        bool RequireAllApprovers
+        int TimeoutHours
+        datetime CreatedAt UK "ApprovalWorkflowId,StepOrder"
+    }
+    
+    ApprovalProcess {
+        int Id PK
+        int FormSubmissionId FK
+        int ApprovalWorkflowId FK
+        int CurrentStepId FK
+        string Status
+        datetime StartedAt
+        datetime CompletedAt
+        string Comments
+        datetime CreatedAt
+        datetime UpdatedAt UK "FormSubmissionId"
+    }
+    
+    ApprovalAction {
+        int Id PK
+        int ApprovalProcessId FK
+        int ApprovalStepId FK
+        int ActionByUserId FK
+        string Action
+        string Comments
+        datetime ActionAt
+        datetime CreatedAt UK "ApprovalProcessId,ApprovalStepId,ActionByUserId"
+    }
+    
+    Notification {
+        int Id PK
+        int OrganizationId FK
+        int UserId FK
+        string Type
+        string Title
+        string Message
+        string Data
+        bool IsRead
+        datetime CreatedAt
+        datetime ReadAt
+    }
+    
+    AuditLog {
+        int Id PK
+        int OrganizationId FK
+        int UserId FK
+        string EntityType
+        int EntityId
+        string Action
+        string OldValues
+        string NewValues
+        string IpAddress
+        string UserAgent
+        datetime CreatedAt UK "OrganizationId,CreatedAt"
+    }
