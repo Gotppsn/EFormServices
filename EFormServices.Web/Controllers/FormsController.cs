@@ -1,205 +1,311 @@
 // EFormServices.Web/Controllers/FormsController.cs
 // Got code 30/05/2025
-using EFormServices.Application.Forms.Commands.CreateForm;
-using EFormServices.Application.Forms.Commands.PublishForm;
-using EFormServices.Application.Forms.Commands.UpdateForm;
-using EFormServices.Application.Forms.Queries.GetForms;
-using EFormServices.Application.Forms.Queries.GetFormById;
-using EFormServices.Application.FormFields.Commands.AddFormField;
-using MediatR;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
+using EFormServices.Infrastructure.Services;
+using EFormServices.Domain.Entities;
+using EFormServices.Domain.Enums;
+using EFormServices.Domain.ValueObjects;
+using System.Security.Claims;
 
 namespace EFormServices.Web.Controllers;
 
 [ApiController]
-[Route("api/[controller]")]
-[Authorize(Policy = "ApiPolicy")]
+[Route("api/forms")]
+[Authorize]
 public class FormsController : ControllerBase
 {
-    private readonly IMediator _mediator;
-    private readonly ILogger<FormsController> _logger;
-
-    public FormsController(IMediator mediator, ILogger<FormsController> logger)
-    {
-        _mediator = mediator;
-        _logger = logger;
-    }
-
     [HttpGet]
-    public async Task<IActionResult> GetForms([FromQuery] GetFormsQuery query)
+    public IActionResult GetForms(
+        int page = 1, 
+        int pageSize = 20, 
+        string? searchTerm = null,
+        FormType? formType = null,
+        bool? isPublished = null,
+        string sortBy = "createdAt",
+        bool sortDescending = true)
     {
-        try
+        var organizationId = GetOrganizationId();
+        var forms = MockDataService.GetForms()
+            .Where(f => f.OrganizationId == organizationId);
+
+        if (!string.IsNullOrEmpty(searchTerm))
         {
-            var result = await _mediator.Send(query);
-            if (result.IsSuccess)
-                return Ok(result.Data);
-            return BadRequest(result.Errors);
+            forms = forms.Where(f => f.Title.Contains(searchTerm, StringComparison.OrdinalIgnoreCase) ||
+                                   (f.Description != null && f.Description.Contains(searchTerm, StringComparison.OrdinalIgnoreCase)));
         }
-        catch (Exception ex)
+
+        if (formType.HasValue)
+            forms = forms.Where(f => f.FormType == formType.Value);
+
+        if (isPublished.HasValue)
+            forms = forms.Where(f => f.IsPublished == isPublished.Value);
+
+        var totalCount = forms.Count();
+        var sortedForms = sortBy.ToLowerInvariant() switch
         {
-            _logger.LogError(ex, "Error retrieving forms");
-            return StatusCode(500, new { message = "Internal server error" });
-        }
+            "title" => sortDescending ? forms.OrderByDescending(f => f.Title) : forms.OrderBy(f => f.Title),
+            "updatedat" => sortDescending ? forms.OrderByDescending(f => f.UpdatedAt) : forms.OrderBy(f => f.UpdatedAt),
+            _ => sortDescending ? forms.OrderByDescending(f => f.CreatedAt) : forms.OrderBy(f => f.CreatedAt)
+        };
+
+        var pagedForms = sortedForms
+            .Skip((page - 1) * pageSize)
+            .Take(pageSize)
+            .Select(f => new
+            {
+                id = f.Id,
+                title = f.Title,
+                description = f.Description,
+                formType = f.FormType,
+                isPublished = f.IsPublished,
+                isActive = f.IsActive,
+                formKey = f.FormKey,
+                submissionCount = f.SubmissionCount,
+                createdAt = f.CreatedAt,
+                updatedAt = f.UpdatedAt,
+                createdByUserName = "User"
+            })
+            .ToList();
+
+        return Ok(new
+        {
+            items = pagedForms,
+            totalCount,
+            page,
+            pageSize,
+            totalPages = (int)Math.Ceiling(totalCount / (double)pageSize)
+        });
     }
 
     [HttpGet("{id}")]
-    public async Task<IActionResult> GetForm(int id)
+    public IActionResult GetForm(int id)
     {
-        try
+        var organizationId = GetOrganizationId();
+        var form = MockDataService.GetForms().FirstOrDefault(f => f.Id == id && f.OrganizationId == organizationId);
+
+        if (form == null)
+            return NotFound();
+
+        var fields = MockDataService.GetFormFields().Where(f => f.FormId == id).ToList();
+
+        return Ok(new
         {
-            var result = await _mediator.Send(new GetFormByIdQuery(id));
-            if (result.IsSuccess)
-                return Ok(result.Data);
-            return NotFound(result.Errors);
-        }
-        catch (Exception ex)
+            id = form.Id,
+            title = form.Title,
+            description = form.Description,
+            formType = form.FormType,
+            isPublished = form.IsPublished,
+            isActive = form.IsActive,
+            formKey = form.FormKey,
+            fields = fields.Select(f => new
+            {
+                id = f.Id,
+                fieldType = f.FieldType,
+                label = f.Label,
+                name = f.Name,
+                description = f.Description,
+                isRequired = f.IsRequired,
+                sortOrder = f.SortOrder,
+                settings = new { },
+                validationRules = new { },
+                options = new List<object>()
+            })
+        });
+    }
+
+    [HttpGet("public/{formKey}")]
+    [AllowAnonymous]
+    public IActionResult GetPublicForm(string formKey)
+    {
+        var form = MockDataService.GetForms().FirstOrDefault(f => f.FormKey == formKey && f.IsPublished);
+
+        if (form == null)
+            return NotFound();
+
+        var fields = MockDataService.GetFormFields().Where(f => f.FormId == form.Id).ToList();
+
+        return Ok(new
         {
-            _logger.LogError(ex, "Error retrieving form {FormId}", id);
-            return StatusCode(500, new { message = "Internal server error" });
-        }
+            id = form.Id,
+            title = form.Title,
+            description = form.Description,
+            formKey = form.FormKey,
+            settings = new
+            {
+                allowMultipleSubmissions = true,
+                requireAuthentication = false,
+                showProgressBar = true,
+                allowSaveAndContinue = false,
+                showSubmissionNumber = true,
+                successMessage = "Thank you for your submission!"
+            },
+            metadata = new
+            {
+                version = "1.0",
+                estimatedCompletionMinutes = 5
+            },
+            fields = fields.Select(f => new
+            {
+                id = f.Id,
+                fieldType = f.FieldType,
+                label = f.Label,
+                name = f.Name,
+                description = f.Description,
+                isRequired = f.IsRequired,
+                sortOrder = f.SortOrder,
+                settings = new
+                {
+                    placeholder = "",
+                    defaultValue = "",
+                    isReadOnly = false,
+                    isVisible = true,
+                    rows = f.FieldType == FieldType.TextArea ? 4 : (int?)null
+                },
+                validationRules = new
+                {
+                    minLength = (int?)null,
+                    maxLength = (int?)null,
+                    pattern = (string?)null,
+                    allowedFileTypes = new List<string>(),
+                    maxFileSize = (int?)null
+                },
+                options = new List<object>()
+            })
+        });
     }
 
     [HttpPost]
-    [Authorize(Policy = "FormManagement")]
-    public async Task<IActionResult> CreateForm([FromBody] CreateFormCommand command)
+    [Authorize(Policy = "CreateForms")]
+    public IActionResult CreateForm([FromBody] CreateFormRequest request)
     {
-        try
+        var organizationId = GetOrganizationId();
+        var userId = GetUserId();
+
+        var form = new Form(organizationId, userId, request.Title, request.FormType, request.Description);
+        MockDataService.AddForm(form);
+
+        return CreatedAtAction(nameof(GetForm), new { id = form.Id }, new
         {
-            var result = await _mediator.Send(command);
-            if (result.IsSuccess)
-                return CreatedAtAction(nameof(GetForm), new { id = result.Data!.Id }, result.Data);
-            return BadRequest(result.Errors);
-        }
-        catch (Exception ex)
-        {
-            _logger.LogError(ex, "Error creating form");
-            return StatusCode(500, new { message = "Internal server error" });
-        }
+            id = form.Id,
+            title = form.Title,
+            description = form.Description,
+            formType = form.FormType,
+            formKey = form.FormKey,
+            isPublished = form.IsPublished,
+            createdAt = form.CreatedAt
+        });
     }
 
     [HttpPut("{id}")]
-    public async Task<IActionResult> UpdateForm(int id, [FromBody] UpdateFormCommand command)
+    [Authorize(Policy = "EditForms")]
+    public IActionResult UpdateForm(int id, [FromBody] UpdateFormRequest request)
     {
-        try
-        {
-            if (id != command.Id)
-                return BadRequest("Form ID mismatch");
+        var organizationId = GetOrganizationId();
+        var form = MockDataService.GetForms().FirstOrDefault(f => f.Id == id && f.OrganizationId == organizationId);
 
-            var result = await _mediator.Send(command);
-            if (result.IsSuccess)
-                return Ok(result.Data);
-            return BadRequest(result.Errors);
-        }
-        catch (Exception ex)
+        if (form == null)
+            return NotFound();
+
+        form.UpdateDetails(request.Title, request.Description);
+        MockDataService.UpdateForm(form);
+
+        return Ok(new
         {
-            _logger.LogError(ex, "Error updating form {FormId}", id);
-            return StatusCode(500, new { message = "Internal server error" });
-        }
+            id = form.Id,
+            title = form.Title,
+            description = form.Description,
+            updatedAt = form.UpdatedAt
+        });
     }
 
     [HttpPost("{id}/publish")]
-    public async Task<IActionResult> PublishForm(int id)
+    [Authorize(Policy = "EditForms")]
+    public IActionResult PublishForm(int id)
     {
-        try
-        {
-            var result = await _mediator.Send(new PublishFormCommand(id));
-            if (result.IsSuccess)
-                return Ok(new { message = "Form published successfully" });
-            return BadRequest(result.Errors);
-        }
-        catch (Exception ex)
-        {
-            _logger.LogError(ex, "Error publishing form {FormId}", id);
-            return StatusCode(500, new { message = "Internal server error" });
-        }
-    }
+        var organizationId = GetOrganizationId();
+        var form = MockDataService.GetForms().FirstOrDefault(f => f.Id == id && f.OrganizationId == organizationId);
 
-    [HttpPost("{id}/fields")]
-    public async Task<IActionResult> AddFormField(int id, [FromBody] AddFormFieldCommand command)
-    {
-        try
-        {
-            if (id != command.FormId)
-                return BadRequest("Form ID mismatch");
+        if (form == null)
+            return NotFound();
 
-            var result = await _mediator.Send(command);
-            if (result.IsSuccess)
-                return CreatedAtAction(nameof(GetForm), new { id }, new { fieldId = result.Data });
-            return BadRequest(result.Errors);
-        }
-        catch (Exception ex)
-        {
-            _logger.LogError(ex, "Error adding field to form {FormId}", id);
-            return StatusCode(500, new { message = "Internal server error" });
-        }
+        if (form.IsPublished)
+            return BadRequest(new { message = "Form is already published" });
+
+        form.Publish();
+        MockDataService.UpdateForm(form);
+
+        return Ok(new { message = "Form published successfully" });
     }
 
     [HttpDelete("{id}")]
-    public async Task<IActionResult> DeleteForm(int id)
+    [Authorize(Policy = "EditForms")]
+    public IActionResult DeleteForm(int id)
     {
-        try
-        {
-            return Ok(new { message = "Form deleted successfully" });
-        }
-        catch (Exception ex)
-        {
-            _logger.LogError(ex, "Error deleting form {FormId}", id);
-            return StatusCode(500, new { message = "Internal server error" });
-        }
+        var organizationId = GetOrganizationId();
+        var form = MockDataService.GetForms().FirstOrDefault(f => f.Id == id && f.OrganizationId == organizationId);
+
+        if (form == null)
+            return NotFound();
+
+        MockDataService.DeleteForm(id);
+        return NoContent();
     }
 
-    [HttpGet("templates")]
-    public async Task<IActionResult> GetFormTemplates()
+    [HttpPost("submit")]
+    [AllowAnonymous]
+    public IActionResult SubmitForm([FromBody] SubmitFormRequest request)
     {
-        try
+        var form = MockDataService.GetForms().FirstOrDefault(f => f.FormKey == request.FormKey);
+
+        if (form == null)
+            return NotFound();
+
+        var submission = new FormSubmission(form.Id, 1);
+        var trackingNumber = $"F{DateTimeOffset.UtcNow.ToUnixTimeSeconds()}{Random.Shared.Next(1000, 9999)}";
+
+        return Ok(new
         {
-            var templatesQuery = new GetFormsQuery { IsTemplate = true };
-            var result = await _mediator.Send(templatesQuery);
-            if (result.IsSuccess)
-                return Ok(result.Data);
-            return BadRequest(result.Errors);
-        }
-        catch (Exception ex)
-        {
-            _logger.LogError(ex, "Error retrieving form templates");
-            return StatusCode(500, new { message = "Internal server error" });
-        }
+            success = true,
+            trackingNumber,
+            message = "Form submitted successfully!"
+        });
     }
 
     [HttpGet("analytics")]
-    public async Task<IActionResult> GetFormsAnalytics()
+    public IActionResult GetAnalytics()
     {
-        try
-        {
-            var analytics = new
-            {
-                TotalForms = 15,
-                ActiveForms = 12,
-                TotalSubmissions = 247,
-                PendingApprovals = 8,
-                SubmissionTrends = new[]
-                {
-                    new { Date = "2025-05-01", Count = 23 },
-                    new { Date = "2025-05-02", Count = 31 },
-                    new { Date = "2025-05-03", Count = 28 },
-                    new { Date = "2025-05-04", Count = 35 },
-                    new { Date = "2025-05-05", Count = 42 }
-                },
-                TopForms = new[]
-                {
-                    new { Title = "Leave Request Form", Submissions = 89 },
-                    new { Title = "Expense Report", Submissions = 67 },
-                    new { Title = "Employee Feedback", Submissions = 45 }
-                }
-            };
+        var organizationId = GetOrganizationId();
+        var forms = MockDataService.GetForms().Where(f => f.OrganizationId == organizationId).ToList();
+        var submissions = MockDataService.GetSubmissions().ToList();
 
-            return Ok(analytics);
-        }
-        catch (Exception ex)
+        return Ok(new
         {
-            _logger.LogError(ex, "Error retrieving analytics");
-            return StatusCode(500, new { message = "Internal server error" });
-        }
+            totalForms = forms.Count,
+            activeForms = forms.Count(f => f.IsActive),
+            totalSubmissions = submissions.Count,
+            pendingApprovals = 0,
+            topForms = forms.Take(5).Select(f => new
+            {
+                title = f.Title,
+                submissions = submissions.Count(s => s.FormId == f.Id)
+            })
+        });
     }
+
+    private int GetOrganizationId()
+    {
+        var orgId = User.FindFirst("OrganizationId")?.Value;
+        return int.Parse(orgId ?? "1");
+    }
+
+    private int GetUserId()
+    {
+        var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+        return int.Parse(userId ?? "1");
+    }
+
+    public record CreateFormRequest(string Title, string? Description, FormType FormType);
+    public record UpdateFormRequest(string Title, string? Description);
+    public record SubmitFormRequest(string FormKey, Dictionary<string, object> SubmissionData);
 }
