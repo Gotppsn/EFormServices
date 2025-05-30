@@ -3,7 +3,6 @@
 using EFormServices.Application.Common.Interfaces;
 using EFormServices.Domain.Entities;
 using EFormServices.Infrastructure.Services;
-using Microsoft.EntityFrameworkCore;
 
 namespace EFormServices.Infrastructure.Data;
 
@@ -28,24 +27,24 @@ public class MockApplicationDbContext : IApplicationDbContext
     private readonly MockDbSet<ApprovalProcess> _approvalProcesses;
     private readonly MockDbSet<ApprovalAction> _approvalActions;
 
-    public DbSet<Organization> Organizations => _organizations;
-    public DbSet<Department> Departments => _departments;
-    public DbSet<User> Users => _users;
-    public DbSet<Role> Roles => _roles;
-    public DbSet<Permission> Permissions => _permissions;
-    public DbSet<UserRole> UserRoles => _userRoles;
-    public DbSet<RolePermission> RolePermissions => _rolePermissions;
-    public DbSet<Form> Forms => _forms;
-    public DbSet<FormField> FormFields => _formFields;
-    public DbSet<FormFieldOption> FormFieldOptions => _formFieldOptions;
-    public DbSet<ConditionalLogic> ConditionalLogics => _conditionalLogics;
-    public DbSet<FormSubmission> FormSubmissions => _formSubmissions;
-    public DbSet<SubmissionValue> SubmissionValues => _submissionValues;
-    public DbSet<FileAttachment> FileAttachments => _fileAttachments;
-    public DbSet<ApprovalWorkflow> ApprovalWorkflows => _approvalWorkflows;
-    public DbSet<ApprovalStep> ApprovalSteps => _approvalSteps;
-    public DbSet<ApprovalProcess> ApprovalProcesses => _approvalProcesses;
-    public DbSet<ApprovalAction> ApprovalActions => _approvalActions;
+    public Microsoft.EntityFrameworkCore.DbSet<Organization> Organizations => _organizations;
+    public Microsoft.EntityFrameworkCore.DbSet<Department> Departments => _departments;
+    public Microsoft.EntityFrameworkCore.DbSet<User> Users => _users;
+    public Microsoft.EntityFrameworkCore.DbSet<Role> Roles => _roles;
+    public Microsoft.EntityFrameworkCore.DbSet<Permission> Permissions => _permissions;
+    public Microsoft.EntityFrameworkCore.DbSet<UserRole> UserRoles => _userRoles;
+    public Microsoft.EntityFrameworkCore.DbSet<RolePermission> RolePermissions => _rolePermissions;
+    public Microsoft.EntityFrameworkCore.DbSet<Form> Forms => _forms;
+    public Microsoft.EntityFrameworkCore.DbSet<FormField> FormFields => _formFields;
+    public Microsoft.EntityFrameworkCore.DbSet<FormFieldOption> FormFieldOptions => _formFieldOptions;
+    public Microsoft.EntityFrameworkCore.DbSet<ConditionalLogic> ConditionalLogics => _conditionalLogics;
+    public Microsoft.EntityFrameworkCore.DbSet<FormSubmission> FormSubmissions => _formSubmissions;
+    public Microsoft.EntityFrameworkCore.DbSet<SubmissionValue> SubmissionValues => _submissionValues;
+    public Microsoft.EntityFrameworkCore.DbSet<FileAttachment> FileAttachments => _fileAttachments;
+    public Microsoft.EntityFrameworkCore.DbSet<ApprovalWorkflow> ApprovalWorkflows => _approvalWorkflows;
+    public Microsoft.EntityFrameworkCore.DbSet<ApprovalStep> ApprovalSteps => _approvalSteps;
+    public Microsoft.EntityFrameworkCore.DbSet<ApprovalProcess> ApprovalProcesses => _approvalProcesses;
+    public Microsoft.EntityFrameworkCore.DbSet<ApprovalAction> ApprovalActions => _approvalActions;
 
     public MockApplicationDbContext()
     {

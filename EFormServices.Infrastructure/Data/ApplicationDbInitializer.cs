@@ -20,7 +20,7 @@ public static class ApplicationDbInitializer
         {
             await context.Database.MigrateAsync();
 
-            if (!await context.Organizations.AnyAsync())
+            if (!await Microsoft.EntityFrameworkCore.EntityFrameworkQueryableExtensions.AnyAsync(context.Organizations))
             {
                 await SeedDataAsync(context, logger);
             }
@@ -52,7 +52,7 @@ public static class ApplicationDbInitializer
         context.Roles.Add(userRole);
         await context.SaveChangesAsync();
 
-        var permissions = await context.Permissions.ToListAsync();
+        var permissions = await Microsoft.EntityFrameworkCore.EntityFrameworkQueryableExtensions.ToListAsync(context.Permissions);
         foreach (var permission in permissions)
         {
             context.RolePermissions.Add(new RolePermission(adminRole.Id, permission.Id));

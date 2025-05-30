@@ -7,10 +7,12 @@ using System.Linq.Expressions;
 
 namespace EFormServices.Infrastructure.Data;
 
-public class MockDbSet<T> : DbSet<T> where T : class
+public class MockDbSet<T> : DbSet<T>, IQueryable<T>, IEnumerable<T> where T : class
 {
     private readonly List<T> _data;
     private readonly IQueryable<T> _query;
+
+    public override Microsoft.EntityFrameworkCore.Metadata.IEntityType EntityType => throw new NotImplementedException();
 
     public MockDbSet()
     {
@@ -86,10 +88,12 @@ public class MockDbSet<T> : DbSet<T> where T : class
         return null!;
     }
 
-    public override Type ElementType => _query.ElementType;
-    public override Expression Expression => _query.Expression;
-    public override IQueryProvider Provider => _query.Provider;
+    // IQueryable<T> implementation
+    Type IQueryable.ElementType => typeof(T);
+    Expression IQueryable.Expression => _query.Expression;
+    IQueryProvider IQueryable.Provider => _query.Provider;
 
-    public override IEnumerator<T> GetEnumerator() => _data.GetEnumerator();
+    // IEnumerable<T> implementation
+    public IEnumerator<T> GetEnumerator() => _data.GetEnumerator();
     IEnumerator IEnumerable.GetEnumerator() => _data.GetEnumerator();
 }
