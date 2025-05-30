@@ -1,0 +1,11 @@
+C:\Users\panupol\Desktop\EFormServices\EFormServices.Domain\bin\Debug\net9.0\EFormServices.Domain.deps.json
+C:\Users\panupol\Desktop\EFormServices\EFormServices.Domain\bin\Debug\net9.0\EFormServices.Domain.dll
+C:\Users\panupol\Desktop\EFormServices\EFormServices.Domain\bin\Debug\net9.0\EFormServices.Domain.pdb
+C:\Users\panupol\Desktop\EFormServices\EFormServices.Domain\obj\Debug\net9.0\EFormServices.Domain.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\panupol\Desktop\EFormServices\EFormServices.Domain\obj\Debug\net9.0\EFormServices.Domain.AssemblyInfoInputs.cache
+C:\Users\panupol\Desktop\EFormServices\EFormServices.Domain\obj\Debug\net9.0\EFormServices.Domain.AssemblyInfo.cs
+C:\Users\panupol\Desktop\EFormServices\EFormServices.Domain\obj\Debug\net9.0\EFormServices.Domain.csproj.CoreCompileInputs.cache
+C:\Users\panupol\Desktop\EFormServices\EFormServices.Domain\obj\Debug\net9.0\EFormServices.Domain.dll
+C:\Users\panupol\Desktop\EFormServices\EFormServices.Domain\obj\Debug\net9.0\refint\EFormServices.Domain.dll
+C:\Users\panupol\Desktop\EFormServices\EFormServices.Domain\obj\Debug\net9.0\EFormServices.Domain.pdb
+C:\Users\panupol\Desktop\EFormServices\EFormServices.Domain\obj\Debug\net9.0\ref\EFormServices.Domain.dll
