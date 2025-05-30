@@ -13,13 +13,24 @@ public static class DependencyInjection
 {
     public static IServiceCollection AddInfrastructure(this IServiceCollection services, IConfiguration configuration)
     {
-        services.AddDbContext<ApplicationDbContext>(options =>
-            options.UseSqlServer(
-                configuration.GetConnectionString("DefaultConnection"),
-                b => b.MigrationsAssembly(typeof(ApplicationDbContext).Assembly.FullName)));
+        var useInMemoryDatabase = configuration.GetValue<bool>("UseInMemoryDatabase", true);
 
-        services.AddScoped<IApplicationDbContext>(provider => provider.GetRequiredService<ApplicationDbContext>());
-        services.AddScoped<ICurrentUserService, CurrentUserService>();
+        if (useInMemoryDatabase)
+        {
+            services.AddScoped<IApplicationDbContext, MockApplicationDbContext>();
+            services.AddScoped<ICurrentUserService, MockCurrentUserService>();
+        }
+        else
+        {
+            services.AddDbContext<ApplicationDbContext>(options =>
+                options.UseSqlServer(
+                    configuration.GetConnectionString("DefaultConnection"),
+                    b => b.MigrationsAssembly(typeof(ApplicationDbContext).Assembly.FullName)));
+
+            services.AddScoped<IApplicationDbContext>(provider => provider.GetRequiredService<ApplicationDbContext>());
+            services.AddScoped<ICurrentUserService, CurrentUserService>();
+        }
+
         services.AddScoped<IEmailService, EmailService>();
         services.AddScoped<IFileStorageService, LocalFileStorageService>();
 
