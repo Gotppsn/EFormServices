@@ -1,70 +1,239 @@
 // EFormServices.Web/wwwroot/js/admin-users.js
 // Got code 30/05/2025
-class UserManagement {
+
+class UserManager {
     constructor() {
         this.currentPage = 1;
         this.pageSize = 20;
-        this.totalPages = 1;
-        this.filters = {};
-        this.searchDebounce = null;
-        this.selectedUser = null;
-        this.roles = [];
+        this.filters = {
+            searchTerm: '',
+            departmentId: '',
+            roleId: '',
+            isActive: '',
+            sortBy: 'lastName',
+            sortDescending: false
+        };
+        this.selectedUsers = new Set();
         this.departments = [];
+        this.roles = [];
         this.init();
     }
 
-    async init() {
+    init() {
         this.bindEvents();
-        await this.loadDepartments();
-        await this.loadRoles();
-        await this.loadUsers();
+        this.loadUsers();
+        this.loadDepartments();
+        this.loadRoles();
     }
 
     bindEvents() {
-        document.getElementById('search-input').addEventListener('input', (e) => {
-            clearTimeout(this.searchDebounce);
-            this.searchDebounce = setTimeout(() => {
+        const searchInput = document.getElementById('search-input');
+        const departmentFilter = document.getElementById('department-filter');
+        const roleFilter = document.getElementById('role-filter');
+        const statusFilter = document.getElementById('status-filter');
+        const sortFilter = document.getElementById('sort-filter');
+
+        if (searchInput) {
+            searchInput.addEventListener('input', debounce((e) => {
                 this.filters.searchTerm = e.target.value;
-                this.resetPagination();
+                this.currentPage = 1;
                 this.loadUsers();
-            }, 500);
+            }, 500));
+        }
+
+        [departmentFilter, roleFilter, statusFilter, sortFilter].forEach(filter => {
+            if (filter) {
+                filter.addEventListener('change', (e) => {
+                    const filterName = e.target.id.replace('-filter', '');
+                    if (filterName === 'sort') {
+                        const [sortBy, order] = e.target.value.split('_');
+                        this.filters.sortBy = sortBy;
+                        this.filters.sortDescending = order === 'desc';
+                    } else {
+                        this.filters[filterName === 'department' ? 'departmentId' : 
+                                   filterName === 'role' ? 'roleId' : 'isActive'] = e.target.value;
+                    }
+                    this.currentPage = 1;
+                    this.loadUsers();
+                });
+            }
         });
 
-        ['department-filter', 'role-filter', 'status-filter', 'sort-filter'].forEach(id => {
-            document.getElementById(id).addEventListener('change', (e) => {
-                const key = id.replace('-filter', '');
-                this.filters[key === 'department' ? 'departmentId' : key === 'status' ? 'isActive' : key] = e.target.value || null;
-                this.resetPagination();
-                this.loadUsers();
+        document.getElementById('user-form')?.addEventListener('submit', this.handleUserSubmit.bind(this));
+        document.getElementById('generate-password')?.addEventListener('click', this.generatePassword.bind(this));
+        document.getElementById('save-roles')?.addEventListener('click', this.saveUserRoles.bind(this));
+
+        document.addEventListener('click', this.handleClick.bind(this));
+    }
+
+    async loadUsers() {
+        const tableBody = document.getElementById('users-table-body');
+        if (!tableBody) return;
+
+        LoadingManager.show(tableBody.parentElement);
+
+        try {
+            const params = new URLSearchParams({
+                page: this.currentPage,
+                pageSize: this.pageSize,
+                ...Object.fromEntries(Object.entries(this.filters).filter(([_, v]) => v !== ''))
             });
-        });
 
-        document.getElementById('user-form').addEventListener('submit', (e) => this.handleUserSubmit(e));
-        document.getElementById('generate-password').addEventListener('click', () => this.generatePassword());
-        document.getElementById('save-roles').addEventListener('click', () => this.saveUserRoles());
-        document.getElementById('confirm-delete').addEventListener('click', () => this.deleteUser());
-        document.getElementById('deactivate-user').addEventListener('click', () => this.toggleUserStatus(false));
+            const data = await api.get(`/users?${params}`);
+            this.renderUsers(data.items);
+            this.renderPagination(data);
+            this.updateUserCount(data);
+        } catch (error) {
+            NotificationManager.error('Failed to load users');
+            tableBody.innerHTML = '<tr><td colspan="6" class="text-center text-danger">Error loading users</td></tr>';
+        } finally {
+            LoadingManager.hide(tableBody.parentElement);
+        }
+    }
 
-        document.getElementById('user-modal').addEventListener('hidden.bs.modal', () => this.resetUserForm());
+    renderUsers(users) {
+        const tableBody = document.getElementById('users-table-body');
+        if (!tableBody) return;
+
+        if (!users || users.length === 0) {
+            tableBody.innerHTML = '<tr><td colspan="6" class="text-center text-muted">No users found</td></tr>';
+            return;
+        }
+
+        tableBody.innerHTML = users.map(user => `
+            <tr data-user-id="${user.id}">
+                <td>
+                    <div class="d-flex align-items-center">
+                        <input type="checkbox" class="form-check-input me-2" data-user-id="${user.id}">
+                        <div class="user-avatar me-3">
+                            <div class="bg-primary rounded-circle d-flex align-items-center justify-content-center" 
+                                 style="width: 40px; height: 40px; color: white; font-weight: bold;">
+                                ${user.firstName.charAt(0)}${user.lastName.charAt(0)}
+                            </div>
+                        </div>
+                        <div>
+                            <div class="fw-medium">${user.fullName}</div>
+                            <div class="text-muted small">${user.email}</div>
+                            ${!user.emailConfirmed ? '<span class="badge bg-warning">Unverified</span>' : ''}
+                        </div>
+                    </div>
+                </td>
+                <td>${user.departmentName || '<span class="text-muted">No Department</span>'}</td>
+                <td>
+                    ${user.roles.map(role => `<span class="badge bg-secondary me-1">${role}</span>`).join('') || 
+                      '<span class="text-muted">No Roles</span>'}
+                </td>
+                <td>
+                    <span class="badge bg-${user.isActive ? 'success' : 'secondary'}">
+                        ${user.isActive ? 'Active' : 'Inactive'}
+                    </span>
+                </td>
+                <td>
+                    ${user.lastLoginAt ? formatDate(user.lastLoginAt, 'datetime') : 
+                      '<span class="text-muted">Never</span>'}
+                </td>
+                <td>
+                    <div class="btn-group" role="group">
+                        <button type="button" class="btn btn-sm btn-outline-primary" 
+                                onclick="userManager.editUser(${user.id})" title="Edit">
+                            <i class="fas fa-edit"></i>
+                        </button>
+                        <button type="button" class="btn btn-sm btn-outline-info" 
+                                onclick="userManager.editUserRoles(${user.id})" title="Manage Roles">
+                            <i class="fas fa-user-tag"></i>
+                        </button>
+                        <button type="button" class="btn btn-sm btn-outline-warning" 
+                                onclick="userManager.resetPassword(${user.id})" title="Reset Password">
+                            <i class="fas fa-key"></i>
+                        </button>
+                        <button type="button" class="btn btn-sm btn-outline-${user.isActive ? 'secondary' : 'success'}" 
+                                onclick="userManager.toggleUserStatus(${user.id})" 
+                                title="${user.isActive ? 'Deactivate' : 'Activate'}">
+                            <i class="fas fa-${user.isActive ? 'pause' : 'play'}"></i>
+                        </button>
+                        <button type="button" class="btn btn-sm btn-outline-danger" 
+                                onclick="userManager.deleteUser(${user.id})" title="Delete">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                    </div>
+                </td>
+            </tr>
+        `).join('');
+    }
+
+    renderPagination(data) {
+        const pagination = document.getElementById('pagination');
+        if (!pagination) return;
+
+        const totalPages = data.totalPages || 1;
+        const currentPage = data.page || 1;
+
+        if (totalPages <= 1) {
+            pagination.innerHTML = '';
+            return;
+        }
+
+        let paginationHTML = '';
+
+        if (currentPage > 1) {
+            paginationHTML += `
+                <li class="page-item">
+                    <a class="page-link" href="#" onclick="userManager.goToPage(${currentPage - 1})">Previous</a>
+                </li>
+            `;
+        }
+
+        const startPage = Math.max(1, currentPage - 2);
+        const endPage = Math.min(totalPages, currentPage + 2);
+
+        for (let i = startPage; i <= endPage; i++) {
+            paginationHTML += `
+                <li class="page-item ${i === currentPage ? 'active' : ''}">
+                    <a class="page-link" href="#" onclick="userManager.goToPage(${i})">${i}</a>
+                </li>
+            `;
+        }
+
+        if (currentPage < totalPages) {
+            paginationHTML += `
+                <li class="page-item">
+                    <a class="page-link" href="#" onclick="userManager.goToPage(${currentPage + 1})">Next</a>
+                </li>
+            `;
+        }
+
+        pagination.innerHTML = paginationHTML;
+    }
+
+    updateUserCount(data) {
+        const showingCount = document.getElementById('showing-count');
+        const totalCount = document.getElementById('total-count');
+        
+        if (showingCount && totalCount) {
+            const showing = Math.min(data.pageSize, data.totalCount - (data.page - 1) * data.pageSize);
+            showingCount.textContent = showing;
+            totalCount.textContent = data.totalCount;
+        }
     }
 
     async loadDepartments() {
         try {
-            const response = await fetch('/api/departments');
-            this.departments = await response.json();
+            const departments = await api.get('/departments');
+            this.departments = departments || [];
             
-            const selects = document.querySelectorAll('select[name="departmentId"], #department-filter');
-            selects.forEach(select => {
-                if (select.id === 'department-filter') return;
-                this.departments.forEach(dept => {
-                    select.innerHTML += `<option value="${dept.id}">${dept.name}</option>`;
-                });
-            });
-
-            const deptFilter = document.getElementById('department-filter');
-            this.departments.forEach(dept => {
-                deptFilter.innerHTML += `<option value="${dept.id}">${dept.name}</option>`;
-            });
+            const select = document.getElementById('department-filter');
+            const modalSelect = document.querySelector('#user-modal select[name="departmentId"]');
+            
+            const options = this.departments.map(dept => 
+                `<option value="${dept.id}">${dept.name}</option>`
+            ).join('');
+            
+            if (select) {
+                select.innerHTML = `<option value="">All Departments</option>${options}`;
+            }
+            if (modalSelect) {
+                modalSelect.innerHTML = `<option value="">No Department</option>${options}`;
+            }
         } catch (error) {
             console.error('Failed to load departments:', error);
         }
@@ -72,13 +241,16 @@ class UserManagement {
 
     async loadRoles() {
         try {
-            const response = await fetch('/api/roles');
-            this.roles = await response.json();
+            const roles = await api.get('/roles');
+            this.roles = roles || [];
             
-            const roleFilter = document.getElementById('role-filter');
-            this.roles.forEach(role => {
-                roleFilter.innerHTML += `<option value="${role.id}">${role.name}</option>`;
-            });
+            const select = document.getElementById('role-filter');
+            if (select) {
+                const options = this.roles.map(role => 
+                    `<option value="${role.id}">${role.name}</option>`
+                ).join('');
+                select.innerHTML = `<option value="">All Roles</option>${options}`;
+            }
 
             this.renderRolesContainer();
         } catch (error) {
@@ -88,10 +260,12 @@ class UserManagement {
 
     renderRolesContainer() {
         const container = document.getElementById('roles-container');
+        if (!container) return;
+
         container.innerHTML = this.roles.map(role => `
-            <div class="form-check mb-2">
-                <input class="form-check-input" type="checkbox" name="roleIds" value="${role.id}" id="role_${role.id}">
-                <label class="form-check-label" for="role_${role.id}">
+            <div class="form-check">
+                <input type="checkbox" class="form-check-input" name="roleIds" value="${role.id}" id="role-${role.id}">
+                <label class="form-check-label" for="role-${role.id}">
                     <strong>${role.name}</strong>
                     ${role.description ? `<br><small class="text-muted">${role.description}</small>` : ''}
                 </label>
@@ -99,364 +273,41 @@ class UserManagement {
         `).join('');
     }
 
-    async loadUsers() {
-        try {
-            const params = new URLSearchParams({
-                page: this.currentPage,
-                pageSize: this.pageSize,
-                ...this.filters
-            });
-
-            if (this.filters.sort) {
-                const [sortBy, sortDirection] = this.filters.sort.split('_');
-                params.set('sortBy', sortBy);
-                params.set('sortDescending', sortDirection === 'desc');
-            }
-
-            const response = await fetch(`/api/users?${params}`);
-            const result = await response.json();
-            
-            this.renderUsers(result.data.items);
-            this.renderPagination(result.data);
-            this.updateCounts(result.data);
-            
-        } catch (error) {
-            console.error('Failed to load users:', error);
-            this.renderError();
-        }
-    }
-
-    renderUsers(users) {
-        const tbody = document.getElementById('users-table-body');
+    async handleUserSubmit(event) {
+        event.preventDefault();
         
-        if (!users || users.length === 0) {
-            tbody.innerHTML = `
-                <tr>
-                    <td colspan="6" class="text-center py-4 text-muted">
-                        <i class="fas fa-users fa-3x mb-3"></i>
-                        <br>No users found
-                    </td>
-                </tr>
-            `;
-            return;
-        }
-
-        tbody.innerHTML = users.map(user => `
-            <tr class="${!user.isActive ? 'table-secondary' : ''}">
-                <td>
-                    <div class="d-flex align-items-center">
-                        <div class="bg-primary rounded-circle d-flex align-items-center justify-content-center me-3" 
-                             style="width: 40px; height: 40px;">
-                            <i class="fas fa-user text-white"></i>
-                        </div>
-                        <div>
-                            <strong>${this.escapeHtml(user.fullName)}</strong>
-                            <br><small class="text-muted">${this.escapeHtml(user.email)}</small>
-                        </div>
-                    </div>
-                </td>
-                <td>${user.departmentName || '<span class="text-muted">No Department</span>'}</td>
-                <td>
-                    ${user.roles.map(role => `<span class="badge bg-secondary me-1">${role}</span>`).join('')}
-                    ${!user.roles.length ? '<span class="text-muted">No roles</span>' : ''}
-                </td>
-                <td>
-                    <span class="badge bg-${user.isActive ? 'success' : 'secondary'}">
-                        ${user.isActive ? 'Active' : 'Inactive'}
-                    </span>
-                    ${!user.emailConfirmed ? '<br><small class="text-warning">Email not confirmed</small>' : ''}
-                </td>
-                <td>
-                    ${user.lastLoginAt 
-                        ? `<div>${this.formatDateTime(user.lastLoginAt)}</div>` 
-                        : '<span class="text-muted">Never</span>'}
-                </td>
-                <td>
-                    <div class="dropdown">
-                        <button class="btn btn-sm btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown">
-                            <i class="fas fa-ellipsis-v"></i>
-                        </button>
-                        <ul class="dropdown-menu">
-                            <li><button type="button" class="dropdown-item" onclick="userManager.editUser(${user.id})">
-                                <i class="fas fa-edit me-2"></i>Edit User
-                            </button></li>
-                            <li><button type="button" class="dropdown-item" onclick="userManager.editUserRoles(${user.id}, '${this.escapeHtml(user.fullName)}', '${this.escapeHtml(user.email)}')">
-                                <i class="fas fa-user-tag me-2"></i>Edit Roles
-                            </button></li>
-                            <li><hr class="dropdown-divider"></li>
-                            <li><button type="button" class="dropdown-item ${user.isActive ? 'text-warning' : 'text-success'}" 
-                                onclick="userManager.toggleUserStatus(${user.id}, ${!user.isActive})">
-                                <i class="fas fa-${user.isActive ? 'pause' : 'play'} me-2"></i>
-                                ${user.isActive ? 'Deactivate' : 'Activate'}
-                            </button></li>
-                            <li><button type="button" class="dropdown-item text-danger" onclick="userManager.confirmDelete(${user.id}, '${this.escapeHtml(user.fullName)}')">
-                                <i class="fas fa-trash me-2"></i>Delete
-                            </button></li>
-                        </ul>
-                    </div>
-                </td>
-            </tr>
-        `).join('');
-    }
-
-    renderPagination(data) {
-        this.totalPages = data.totalPages;
-        const pagination = document.getElementById('pagination');
-        
-        if (this.totalPages <= 1) {
-            pagination.innerHTML = '';
-            return;
-        }
-
-        let paginationHtml = '';
-        
-        if (this.currentPage > 1) {
-            paginationHtml += `
-                <li class="page-item">
-                    <button class="page-link" onclick="userManager.goToPage(${this.currentPage - 1})">Previous</button>
-                </li>
-            `;
-        }
-
-        const startPage = Math.max(1, this.currentPage - 2);
-        const endPage = Math.min(this.totalPages, this.currentPage + 2);
-
-        for (let i = startPage; i <= endPage; i++) {
-            paginationHtml += `
-                <li class="page-item ${i === this.currentPage ? 'active' : ''}">
-                    <button class="page-link" onclick="userManager.goToPage(${i})">${i}</button>
-                </li>
-            `;
-        }
-
-        if (this.currentPage < this.totalPages) {
-            paginationHtml += `
-                <li class="page-item">
-                    <button class="page-link" onclick="userManager.goToPage(${this.currentPage + 1})">Next</button>
-                </li>
-            `;
-        }
-
-        pagination.innerHTML = paginationHtml;
-    }
-
-    updateCounts(data) {
-        document.getElementById('showing-count').textContent = data.items.length;
-        document.getElementById('total-count').textContent = data.totalCount;
-    }
-
-    goToPage(page) {
-        this.currentPage = page;
-        this.loadUsers();
-    }
-
-    resetPagination() {
-        this.currentPage = 1;
-    }
-
-    async handleUserSubmit(e) {
-        e.preventDefault();
-        
-        const formData = new FormData(e.target);
+        const formData = new FormData(event.target);
         const roleIds = Array.from(formData.getAll('roleIds')).map(id => parseInt(id));
         
         const userData = {
+            email: formData.get('email'),
             firstName: formData.get('firstName'),
             lastName: formData.get('lastName'),
-            email: formData.get('email'),
             password: formData.get('password'),
             departmentId: formData.get('departmentId') ? parseInt(formData.get('departmentId')) : null,
             roleIds: roleIds,
-            externalId: formData.get('externalId') || null
+            externalId: formData.get('externalId')
         };
 
-        if (!this.validateUserData(userData)) return;
-
         try {
-            const url = this.selectedUser ? `/api/users/${this.selectedUser.id}` : '/api/users';
-            const method = this.selectedUser ? 'PUT' : 'POST';
+            LoadingManager.show(event.target);
             
-            const response = await fetch(url, {
-                method,
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(userData)
-            });
-
-            if (!response.ok) {
-                const error = await response.json();
-                throw new Error(error.errors?.join(', ') || 'Failed to save user');
+            if (this.editingUserId) {
+                await api.put(`/users/${this.editingUserId}`, userData);
+                NotificationManager.success('User updated successfully');
+            } else {
+                await api.post('/users', userData);
+                NotificationManager.success('User created successfully');
             }
-
-            this.showToast(`User ${this.selectedUser ? 'updated' : 'created'} successfully`, 'success');
-            bootstrap.Modal.getInstance(document.getElementById('user-modal')).hide();
+            
             this.loadUsers();
-            
+            ModalManager.hide('user-modal');
+            event.target.reset();
+            this.editingUserId = null;
         } catch (error) {
-            console.error('Save user error:', error);
-            this.showToast(error.message || 'Failed to save user', 'error');
-        }
-    }
-
-    validateUserData(data) {
-        if (!data.firstName.trim()) {
-            this.showToast('First name is required', 'error');
-            return false;
-        }
-        if (!data.lastName.trim()) {
-            this.showToast('Last name is required', 'error');
-            return false;
-        }
-        if (!data.email.trim() || !this.isValidEmail(data.email)) {
-            this.showToast('Valid email is required', 'error');
-            return false;
-        }
-        if (!this.selectedUser && (!data.password || data.password.length < 8)) {
-            this.showToast('Password must be at least 8 characters', 'error');
-            return false;
-        }
-        if (!data.roleIds.length) {
-            this.showToast('At least one role must be assigned', 'error');
-            return false;
-        }
-        return true;
-    }
-
-    async editUser(userId) {
-        try {
-            const response = await fetch(`/api/users/${userId}`);
-            const result = await response.json();
-            this.selectedUser = result.data;
-            
-            const form = document.getElementById('user-form');
-            form.firstName.value = this.selectedUser.firstName;
-            form.lastName.value = this.selectedUser.lastName;
-            form.email.value = this.selectedUser.email;
-            form.departmentId.value = this.selectedUser.departmentId || '';
-            form.externalId.value = this.selectedUser.externalId || '';
-            
-            form.password.parentNode.style.display = 'none';
-            
-            this.selectedUser.roles.forEach(roleName => {
-                const role = this.roles.find(r => r.name === roleName);
-                if (role) {
-                    document.getElementById(`role_${role.id}`).checked = true;
-                }
-            });
-
-            document.querySelector('#user-modal .modal-title').textContent = 'Edit User';
-            new bootstrap.Modal(document.getElementById('user-modal')).show();
-            
-        } catch (error) {
-            console.error('Edit user error:', error);
-            this.showToast('Failed to load user data', 'error');
-        }
-    }
-
-    editUserRoles(userId, userName, userEmail) {
-        this.selectedUser = { id: userId };
-        document.getElementById('edit-user-name').textContent = userName;
-        document.getElementById('edit-user-email').textContent = userEmail;
-        
-        this.loadUserRoles(userId);
-        new bootstrap.Modal(document.getElementById('edit-roles-modal')).show();
-    }
-
-    async loadUserRoles(userId) {
-        try {
-            const response = await fetch(`/api/users/${userId}`);
-            const result = await response.json();
-            const user = result.data;
-            
-            const container = document.getElementById('edit-roles-container');
-            container.innerHTML = this.roles.map(role => `
-                <div class="form-check mb-2">
-                    <input class="form-check-input" type="checkbox" name="editRoleIds" value="${role.id}" 
-                           id="edit_role_${role.id}" ${user.roles.includes(role.name) ? 'checked' : ''}>
-                    <label class="form-check-label" for="edit_role_${role.id}">
-                        <strong>${role.name}</strong>
-                        ${role.description ? `<br><small class="text-muted">${role.description}</small>` : ''}
-                    </label>
-                </div>
-            `).join('');
-        } catch (error) {
-            console.error('Load user roles error:', error);
-            this.showToast('Failed to load user roles', 'error');
-        }
-    }
-
-    async saveUserRoles() {
-        const roleIds = Array.from(document.querySelectorAll('input[name="editRoleIds"]:checked'))
-                            .map(cb => parseInt(cb.value));
-        
-        if (!roleIds.length) {
-            this.showToast('At least one role must be assigned', 'error');
-            return;
-        }
-
-        try {
-            const response = await fetch(`/api/users/${this.selectedUser.id}/roles`, {
-                method: 'PUT',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ roleIds })
-            });
-
-            if (!response.ok) throw new Error('Failed to update roles');
-
-            this.showToast('User roles updated successfully', 'success');
-            bootstrap.Modal.getInstance(document.getElementById('edit-roles-modal')).hide();
-            this.loadUsers();
-            
-        } catch (error) {
-            console.error('Save roles error:', error);
-            this.showToast('Failed to update user roles', 'error');
-        }
-    }
-
-    async toggleUserStatus(userId, activate = null) {
-        if (activate === null) {
-            userId = this.selectedUser.id;
-            activate = false;
-        }
-
-        try {
-            const endpoint = activate ? 'activate' : 'deactivate';
-            const response = await fetch(`/api/users/${userId}/${endpoint}`, {
-                method: 'POST'
-            });
-
-            if (!response.ok) throw new Error(`Failed to ${endpoint} user`);
-
-            this.showToast(`User ${activate ? 'activated' : 'deactivated'} successfully`, 'success');
-            bootstrap.Modal.getInstance(document.getElementById('delete-modal'))?.hide();
-            this.loadUsers();
-            
-        } catch (error) {
-            console.error('Toggle status error:', error);
-            this.showToast(`Failed to ${activate ? 'activate' : 'deactivate'} user`, 'error');
-        }
-    }
-
-    confirmDelete(userId, userName) {
-        this.selectedUser = { id: userId, name: userName };
-        document.querySelector('#delete-modal .modal-body p').textContent = `Are you sure you want to delete "${userName}"?`;
-        new bootstrap.Modal(document.getElementById('delete-modal')).show();
-    }
-
-    async deleteUser() {
-        try {
-            const response = await fetch(`/api/users/${this.selectedUser.id}`, {
-                method: 'DELETE'
-            });
-
-            if (!response.ok) throw new Error('Failed to delete user');
-
-            this.showToast('User deleted successfully', 'success');
-            bootstrap.Modal.getInstance(document.getElementById('delete-modal')).hide();
-            this.loadUsers();
-            
-        } catch (error) {
-            console.error('Delete user error:', error);
-            this.showToast('Failed to delete user', 'error');
+            NotificationManager.error('Failed to save user');
+        } finally {
+            LoadingManager.hide(event.target);
         }
     }
 
@@ -469,64 +320,150 @@ class UserManagement {
             password += charset.charAt(Math.floor(Math.random() * charset.length));
         }
         
-        document.querySelector('input[name="password"]').value = password;
-        this.showToast('Password generated', 'info', 2000);
+        const passwordInput = document.querySelector('#user-modal input[name="password"]');
+        if (passwordInput) {
+            passwordInput.value = password;
+            passwordInput.type = 'text';
+            
+            setTimeout(() => {
+                passwordInput.type = 'password';
+            }, 3000);
+            
+            NotificationManager.info('Generated password will be hidden in 3 seconds');
+        }
     }
 
-    resetUserForm() {
-        this.selectedUser = null;
-        document.getElementById('user-form').reset();
-        document.querySelectorAll('input[name="roleIds"]').forEach(cb => cb.checked = false);
-        document.querySelector('input[name="password"]').parentNode.style.display = 'block';
-        document.querySelector('#user-modal .modal-title').textContent = 'Add User';
-    }
-
-    renderError() {
-        document.getElementById('users-table-body').innerHTML = `
-            <tr>
-                <td colspan="6" class="text-center py-4 text-danger">
-                    <i class="fas fa-exclamation-triangle fa-2x mb-3"></i>
-                    <br>Failed to load users. Please try again.
-                </td>
-            </tr>
-        `;
-    }
-
-    formatDateTime(dateString) {
-        return new Date(dateString).toLocaleDateString('en-US', {
-            year: 'numeric',
-            month: 'short',
-            day: 'numeric',
-            hour: '2-digit',
-            minute: '2-digit'
+    editUser(userId) {
+        this.editingUserId = userId;
+        const modal = ModalManager.show('user-modal');
+        
+        api.get(`/users/${userId}`).then(user => {
+            document.querySelector('#user-modal input[name="firstName"]').value = user.firstName;
+            document.querySelector('#user-modal input[name="lastName"]').value = user.lastName;
+            document.querySelector('#user-modal input[name="email"]').value = user.email;
+            document.querySelector('#user-modal select[name="departmentId"]').value = user.departmentId || '';
+            document.querySelector('#user-modal input[name="externalId"]').value = user.externalId || '';
+            
+            const passwordField = document.querySelector('#user-modal input[name="password"]');
+            passwordField.required = false;
+            passwordField.placeholder = 'Leave blank to keep current password';
+            
+            document.querySelector('#user-modal .modal-title').textContent = 'Edit User';
         });
     }
 
-    isValidEmail(email) {
-        return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+    async editUserRoles(userId) {
+        try {
+            const user = await api.get(`/users/${userId}`);
+            
+            document.getElementById('edit-user-name').textContent = user.fullName;
+            document.getElementById('edit-user-email').textContent = user.email;
+            
+            const container = document.getElementById('edit-roles-container');
+            container.innerHTML = this.roles.map(role => `
+                <div class="form-check">
+                    <input type="checkbox" class="form-check-input" name="editRoleIds" 
+                           value="${role.id}" id="edit-role-${role.id}"
+                           ${user.roles.includes(role.name) ? 'checked' : ''}>
+                    <label class="form-check-label" for="edit-role-${role.id}">
+                        <strong>${role.name}</strong>
+                        ${role.description ? `<br><small class="text-muted">${role.description}</small>` : ''}
+                    </label>
+                </div>
+            `).join('');
+            
+            this.editingRolesUserId = userId;
+            ModalManager.show('edit-roles-modal');
+        } catch (error) {
+            NotificationManager.error('Failed to load user roles');
+        }
     }
 
-    escapeHtml(text) {
-        const div = document.createElement('div');
-        div.textContent = text;
-        return div.innerHTML;
+    async saveUserRoles() {
+        if (!this.editingRolesUserId) return;
+
+        const formData = new FormData();
+        const checkboxes = document.querySelectorAll('input[name="editRoleIds"]:checked');
+        const roleIds = Array.from(checkboxes).map(cb => parseInt(cb.value));
+
+        try {
+            await api.put(`/users/${this.editingRolesUserId}/roles`, { roleIds });
+            NotificationManager.success('User roles updated successfully');
+            this.loadUsers();
+            ModalManager.hide('edit-roles-modal');
+        } catch (error) {
+            NotificationManager.error('Failed to update user roles');
+        }
     }
 
-    showToast(message, type, duration = 5000) {
-        const toast = document.createElement('div');
-        toast.className = `toast align-items-center text-white bg-${type === 'success' ? 'success' : type === 'error' ? 'danger' : type === 'info' ? 'info' : 'warning'} border-0 position-fixed top-0 end-0 m-3`;
-        toast.innerHTML = `
-            <div class="d-flex">
-                <div class="toast-body">${message}</div>
-                <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"></button>
-            </div>
-        `;
-        document.body.appendChild(toast);
-        new bootstrap.Toast(toast, { delay: duration }).show();
+    async toggleUserStatus(userId) {
+        try {
+            await api.post(`/users/${userId}/toggle-status`);
+            NotificationManager.success('User status updated successfully');
+            this.loadUsers();
+        } catch (error) {
+            NotificationManager.error('Failed to update user status');
+        }
+    }
+
+    async resetPassword(userId) {
+        if (!confirm('Are you sure you want to reset this user\'s password?')) return;
+
+        try {
+            const result = await api.post(`/users/${userId}/reset-password`);
+            NotificationManager.success(`Password reset. New password: ${result.newPassword}`);
+        } catch (error) {
+            NotificationManager.error('Failed to reset password');
+        }
+    }
+
+    deleteUser(userId) {
+        this.selectedUserId = userId;
+        ModalManager.show('delete-modal');
+    }
+
+    async confirmDelete() {
+        if (!this.selectedUserId) return;
+
+        try {
+            await api.delete(`/users/${this.selectedUserId}`);
+            NotificationManager.success('User deleted successfully');
+            this.loadUsers();
+            ModalManager.hide('delete-modal');
+        } catch (error) {
+            NotificationManager.error('Failed to delete user');
+        }
+    }
+
+    async deactivateUser() {
+        if (!this.selectedUserId) return;
+
+        try {
+            await api.post(`/users/${this.selectedUserId}/deactivate`);
+            NotificationManager.success('User deactivated successfully');
+            this.loadUsers();
+            ModalManager.hide('delete-modal');
+        } catch (error) {
+            NotificationManager.error('Failed to deactivate user');
+        }
+    }
+
+    goToPage(page) {
+        this.currentPage = page;
+        this.loadUsers();
+    }
+
+    handleClick(event) {
+        if (event.target.id === 'confirm-delete') {
+            this.confirmDelete();
+        } else if (event.target.id === 'deactivate-user') {
+            this.deactivateUser();
+        }
     }
 }
 
 let userManager;
+
 document.addEventListener('DOMContentLoaded', () => {
-    userManager = new UserManagement();
+    userManager = new UserManager();
 });

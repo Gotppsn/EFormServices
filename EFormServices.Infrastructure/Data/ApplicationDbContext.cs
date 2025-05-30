@@ -2,6 +2,7 @@
 // Got code 30/05/2025
 using EFormServices.Application.Common.Interfaces;
 using EFormServices.Domain.Entities;
+using EFormServices.Infrastructure.Data.Configurations;
 using Microsoft.EntityFrameworkCore;
 
 namespace EFormServices.Infrastructure.Data;
@@ -51,10 +52,50 @@ public class ApplicationDbContext : DbContext, IApplicationDbContext
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);
+
+        modelBuilder.ApplyConfiguration(new OrganizationConfiguration());
+        modelBuilder.ApplyConfiguration(new DepartmentConfiguration());
+        modelBuilder.ApplyConfiguration(new UserConfiguration());
+        modelBuilder.ApplyConfiguration(new RoleConfiguration());
+        modelBuilder.ApplyConfiguration(new PermissionConfiguration());
+        modelBuilder.ApplyConfiguration(new UserRoleConfiguration());
+        modelBuilder.ApplyConfiguration(new RolePermissionConfiguration());
+        modelBuilder.ApplyConfiguration(new FormConfiguration());
+        modelBuilder.ApplyConfiguration(new FormFieldConfiguration());
+        modelBuilder.ApplyConfiguration(new FormFieldOptionConfiguration());
+        modelBuilder.ApplyConfiguration(new ConditionalLogicConfiguration());
+        modelBuilder.ApplyConfiguration(new FormSubmissionConfiguration());
+        modelBuilder.ApplyConfiguration(new SubmissionValueConfiguration());
+        modelBuilder.ApplyConfiguration(new FileAttachmentConfiguration());
+        modelBuilder.ApplyConfiguration(new ApprovalWorkflowConfiguration());
+        modelBuilder.ApplyConfiguration(new ApprovalStepConfiguration());
+        modelBuilder.ApplyConfiguration(new ApprovalProcessConfiguration());
+        modelBuilder.ApplyConfiguration(new ApprovalActionConfiguration());
     }
 
     public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
     {
-        return await base.SaveChangesAsync(cancellationToken);
+        foreach (var entry in ChangeTracker.Entries<BaseEntity>())
+        {
+            switch (entry.State)
+            {
+                case EntityState.Added:
+                    entry.Entity.CreatedAt = DateTime.UtcNow;
+                    entry.Entity.UpdatedAt = DateTime.UtcNow;
+                    break;
+                case EntityState.Modified:
+                    entry.Entity.UpdatedAt = DateTime.UtcNow;
+                    break;
+            }
+        }
+
+        var result = await base.SaveChangesAsync(cancellationToken);
+
+        foreach (var entry in ChangeTracker.Entries<BaseEntity>())
+        {
+            entry.Entity.ClearDomainEvents();
+        }
+
+        return result;
     }
 }

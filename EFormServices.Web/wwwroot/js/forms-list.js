@@ -1,144 +1,154 @@
 // EFormServices.Web/wwwroot/js/forms-list.js
 // Got code 30/05/2025
-class FormsList {
+
+class FormsManager {
     constructor() {
         this.currentPage = 1;
         this.pageSize = 20;
-        this.totalPages = 1;
-        this.filters = {};
-        this.searchDebounce = null;
-        this.deleteFormId = null;
+        this.filters = {
+            searchTerm: '',
+            formType: '',
+            status: '',
+            department: '',
+            sortBy: 'createdAt',
+            sortDescending: true
+        };
+        this.selectedForms = new Set();
         this.init();
     }
 
     init() {
         this.bindEvents();
-        this.loadDepartments();
         this.loadForms();
+        this.loadDepartments();
+        this.initQRCode();
     }
 
     bindEvents() {
-        document.getElementById('search-input').addEventListener('input', (e) => {
-            clearTimeout(this.searchDebounce);
-            this.searchDebounce = setTimeout(() => {
+        const searchInput = document.getElementById('search-input');
+        const typeFilter = document.getElementById('type-filter');
+        const statusFilter = document.getElementById('status-filter');
+        const departmentFilter = document.getElementById('department-filter');
+        const sortFilter = document.getElementById('sort-filter');
+
+        if (searchInput) {
+            searchInput.addEventListener('input', debounce((e) => {
                 this.filters.searchTerm = e.target.value;
-                this.resetPagination();
+                this.currentPage = 1;
                 this.loadForms();
-            }, 500);
-        });
-
-        ['type-filter', 'status-filter', 'department-filter', 'sort-filter'].forEach(id => {
-            document.getElementById(id).addEventListener('change', (e) => {
-                const key = id.replace('-filter', '');
-                this.filters[key === 'type' ? 'formType' : key === 'status' ? 'isPublished' : key === 'department' ? 'departmentId' : 'sort'] = e.target.value || null;
-                this.resetPagination();
-                this.loadForms();
-            });
-        });
-
-        document.getElementById('confirm-delete').addEventListener('click', () => this.deleteForm());
-        document.getElementById('copy-url').addEventListener('click', () => this.copyUrl());
-    }
-
-    async loadDepartments() {
-        try {
-            const response = await fetch('/api/departments');
-            const departments = await response.json();
-            const select = document.getElementById('department-filter');
-            departments.forEach(dept => {
-                select.innerHTML += `<option value="${dept.id}">${dept.name}</option>`;
-            });
-        } catch (error) {
-            console.error('Failed to load departments:', error);
+            }, 500));
         }
+
+        [typeFilter, statusFilter, departmentFilter, sortFilter].forEach(filter => {
+            if (filter) {
+                filter.addEventListener('change', (e) => {
+                    const filterName = e.target.id.replace('-filter', '').replace('-', '');
+                    if (filterName === 'sort') {
+                        const [sortBy, order] = e.target.value.split('_');
+                        this.filters.sortBy = sortBy;
+                        this.filters.sortDescending = order === 'desc';
+                    } else {
+                        this.filters[filterName === 'type' ? 'formType' : filterName] = e.target.value;
+                    }
+                    this.currentPage = 1;
+                    this.loadForms();
+                });
+            }
+        });
+
+        document.addEventListener('click', this.handleClick.bind(this));
     }
 
     async loadForms() {
+        const tableBody = document.getElementById('forms-table-body');
+        if (!tableBody) return;
+
+        LoadingManager.show(tableBody.parentElement);
+
         try {
             const params = new URLSearchParams({
                 page: this.currentPage,
                 pageSize: this.pageSize,
-                ...this.filters
+                ...Object.fromEntries(Object.entries(this.filters).filter(([_, v]) => v !== ''))
             });
 
-            const [sortBy, sortDirection] = (this.filters.sort || 'createdAt_desc').split('_');
-            params.set('sortBy', sortBy);
-            params.set('sortDescending', sortDirection === 'desc');
-
-            const response = await fetch(`/api/forms?${params}`);
-            const result = await response.json();
-            
-            this.renderForms(result.data.items);
-            this.renderPagination(result.data);
-            
+            const data = await api.get(`/forms?${params}`);
+            this.renderForms(data.items);
+            this.renderPagination(data);
         } catch (error) {
-            console.error('Failed to load forms:', error);
-            this.renderError();
+            NotificationManager.error('Failed to load forms');
+            tableBody.innerHTML = '<tr><td colspan="7" class="text-center text-danger">Error loading forms</td></tr>';
+        } finally {
+            LoadingManager.hide(tableBody.parentElement);
         }
     }
 
     renderForms(forms) {
-        const tbody = document.getElementById('forms-table-body');
-        
+        const tableBody = document.getElementById('forms-table-body');
+        if (!tableBody) return;
+
         if (!forms || forms.length === 0) {
-            tbody.innerHTML = `
-                <tr>
-                    <td colspan="7" class="text-center py-4 text-muted">
-                        <i class="fas fa-file-alt fa-3x mb-3"></i>
-                        <br>No forms found
-                    </td>
-                </tr>
-            `;
+            tableBody.innerHTML = '<tr><td colspan="7" class="text-center text-muted">No forms found</td></tr>';
             return;
         }
 
-        tbody.innerHTML = forms.map(form => `
-            <tr>
+        tableBody.innerHTML = forms.map(form => `
+            <tr data-form-id="${form.id}">
                 <td>
-                    <div>
-                        <strong>${this.escapeHtml(form.title)}</strong>
-                        ${form.description ? `<br><small class="text-muted">${this.escapeHtml(form.description.substring(0, 80))}${form.description.length > 80 ? '...' : ''}</small>` : ''}
+                    <div class="d-flex align-items-center">
+                        <input type="checkbox" class="form-check-input me-2" data-form-id="${form.id}">
+                        <div>
+                            <div class="fw-medium">${form.title}</div>
+                            <small class="text-muted">${form.description || 'No description'}</small>
+                        </div>
                     </div>
                 </td>
                 <td>
-                    <span class="badge bg-secondary">${this.getFormTypeLabel(form.formType)}</span>
+                    <span class="badge bg-secondary">${this.getFormTypeName(form.formType)}</span>
                 </td>
                 <td>${form.departmentName || 'All Departments'}</td>
                 <td>
                     ${form.isPublished 
                         ? '<span class="badge bg-success">Published</span>' 
-                        : '<span class="badge bg-warning">Draft</span>'}
-                    ${!form.isActive ? '<span class="badge bg-danger ms-1">Inactive</span>' : ''}
+                        : '<span class="badge bg-warning">Draft</span>'
+                    }
+                    ${form.isActive 
+                        ? '<span class="badge bg-primary ms-1">Active</span>' 
+                        : '<span class="badge bg-secondary ms-1">Inactive</span>'
+                    }
                 </td>
                 <td>
-                    <span class="fw-bold">${form.submissionCount}</span>
-                    ${form.submissionCount > 0 ? `<br><a href="/forms/${form.id}/submissions" class="small">View submissions</a>` : ''}
+                    <span class="fw-medium">${form.submissionCount}</span>
+                    ${form.submissionCount > 0 ? `<br><small class="text-muted">Last: ${formatDate(form.updatedAt)}</small>` : ''}
                 </td>
                 <td>
-                    <div>${this.formatDate(form.createdAt)}</div>
-                    <small class="text-muted">by ${this.escapeHtml(form.createdByUserName)}</small>
+                    <div>${formatDate(form.createdAt)}</div>
+                    <small class="text-muted">by ${form.createdByUserName}</small>
                 </td>
                 <td>
-                    <div class="dropdown">
-                        <button class="btn btn-sm btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown">
-                            <i class="fas fa-ellipsis-v"></i>
+                    <div class="btn-group" role="group">
+                        <button type="button" class="btn btn-sm btn-outline-primary" 
+                                onclick="formsManager.editForm(${form.id})" title="Edit">
+                            <i class="fas fa-edit"></i>
                         </button>
-                        <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="/forms/${form.id}"><i class="fas fa-eye me-2"></i>View</a></li>
-                            <li><a class="dropdown-item" href="/forms/builder/${form.id}"><i class="fas fa-edit me-2"></i>Edit</a></li>
-                            ${form.isPublished ? `
-                                <li><button type="button" class="dropdown-item" onclick="formsList.shareForm(${form.id}, '${form.title}')">
-                                    <i class="fas fa-share me-2"></i>Share
-                                </button></li>
-                                <li><button type="button" class="dropdown-item" onclick="formsList.duplicateForm(${form.id})">
-                                    <i class="fas fa-copy me-2"></i>Duplicate
-                                </button></li>
-                            ` : ''}
-                            <li><hr class="dropdown-divider"></li>
-                            <li><button type="button" class="dropdown-item text-danger" onclick="formsList.confirmDelete(${form.id}, '${this.escapeHtml(form.title)}')">
-                                <i class="fas fa-trash me-2"></i>Delete
-                            </button></li>
-                        </ul>
+                        <button type="button" class="btn btn-sm btn-outline-info" 
+                                onclick="formsManager.viewForm(${form.id})" title="View">
+                            <i class="fas fa-eye"></i>
+                        </button>
+                        <button type="button" class="btn btn-sm btn-outline-success" 
+                                onclick="formsManager.shareForm(${form.id}, '${form.formKey}')" title="Share">
+                            <i class="fas fa-share"></i>
+                        </button>
+                        ${!form.isPublished ? `
+                            <button type="button" class="btn btn-sm btn-outline-warning" 
+                                    onclick="formsManager.publishForm(${form.id})" title="Publish">
+                                <i class="fas fa-paper-plane"></i>
+                            </button>
+                        ` : ''}
+                        <button type="button" class="btn btn-sm btn-outline-danger" 
+                                onclick="formsManager.deleteForm(${form.id})" title="Delete">
+                            <i class="fas fa-trash"></i>
+                        </button>
                     </div>
                 </td>
             </tr>
@@ -146,58 +156,62 @@ class FormsList {
     }
 
     renderPagination(data) {
-        this.totalPages = data.totalPages;
         const pagination = document.getElementById('pagination');
-        
-        if (this.totalPages <= 1) {
+        if (!pagination) return;
+
+        const totalPages = data.totalPages || 1;
+        const currentPage = data.page || 1;
+
+        if (totalPages <= 1) {
             pagination.innerHTML = '';
             return;
         }
 
-        let paginationHtml = '';
-        
-        if (this.currentPage > 1) {
-            paginationHtml += `
+        let paginationHTML = '';
+
+        if (currentPage > 1) {
+            paginationHTML += `
                 <li class="page-item">
-                    <button class="page-link" onclick="formsList.goToPage(${this.currentPage - 1})">Previous</button>
+                    <a class="page-link" href="#" onclick="formsManager.goToPage(${currentPage - 1})">Previous</a>
                 </li>
             `;
         }
 
-        const startPage = Math.max(1, this.currentPage - 2);
-        const endPage = Math.min(this.totalPages, this.currentPage + 2);
-
-        if (startPage > 1) {
-            paginationHtml += `<li class="page-item"><button class="page-link" onclick="formsList.goToPage(1)">1</button></li>`;
-            if (startPage > 2) {
-                paginationHtml += `<li class="page-item disabled"><span class="page-link">...</span></li>`;
-            }
-        }
+        const startPage = Math.max(1, currentPage - 2);
+        const endPage = Math.min(totalPages, currentPage + 2);
 
         for (let i = startPage; i <= endPage; i++) {
-            paginationHtml += `
-                <li class="page-item ${i === this.currentPage ? 'active' : ''}">
-                    <button class="page-link" onclick="formsList.goToPage(${i})">${i}</button>
+            paginationHTML += `
+                <li class="page-item ${i === currentPage ? 'active' : ''}">
+                    <a class="page-link" href="#" onclick="formsManager.goToPage(${i})">${i}</a>
                 </li>
             `;
         }
 
-        if (endPage < this.totalPages) {
-            if (endPage < this.totalPages - 1) {
-                paginationHtml += `<li class="page-item disabled"><span class="page-link">...</span></li>`;
-            }
-            paginationHtml += `<li class="page-item"><button class="page-link" onclick="formsList.goToPage(${this.totalPages})">${this.totalPages}</button></li>`;
-        }
-
-        if (this.currentPage < this.totalPages) {
-            paginationHtml += `
+        if (currentPage < totalPages) {
+            paginationHTML += `
                 <li class="page-item">
-                    <button class="page-link" onclick="formsList.goToPage(${this.currentPage + 1})">Next</button>
+                    <a class="page-link" href="#" onclick="formsManager.goToPage(${currentPage + 1})">Next</a>
                 </li>
             `;
         }
 
-        pagination.innerHTML = paginationHtml;
+        pagination.innerHTML = paginationHTML;
+    }
+
+    async loadDepartments() {
+        try {
+            const departments = await api.get('/departments');
+            const select = document.getElementById('department-filter');
+            if (select && departments) {
+                const options = departments.map(dept => 
+                    `<option value="${dept.id}">${dept.name}</option>`
+                ).join('');
+                select.innerHTML = `<option value="">All Departments</option>${options}`;
+            }
+        } catch (error) {
+            console.error('Failed to load departments:', error);
+        }
     }
 
     goToPage(page) {
@@ -205,127 +219,99 @@ class FormsList {
         this.loadForms();
     }
 
-    resetPagination() {
-        this.currentPage = 1;
+    editForm(formId) {
+        window.location.href = `/forms/builder/${formId}`;
     }
 
-    confirmDelete(formId, formTitle) {
-        this.deleteFormId = formId;
-        document.querySelector('#delete-modal .modal-body p').textContent = `Are you sure you want to delete "${formTitle}"?`;
-        new bootstrap.Modal(document.getElementById('delete-modal')).show();
+    viewForm(formId) {
+        window.open(`/forms/${formId}`, '_blank');
     }
 
-    async deleteForm() {
-        try {
-            const response = await fetch(`/api/forms/${this.deleteFormId}`, {
-                method: 'DELETE'
+    shareForm(formId, formKey) {
+        const url = `${window.location.origin}/submit/${formKey}`;
+        document.getElementById('form-url').value = url;
+        
+        if (window.QRCode) {
+            const qrContainer = document.getElementById('qr-code');
+            qrContainer.innerHTML = '';
+            QRCode.toCanvas(qrContainer, url, { width: 200 }, (error) => {
+                if (error) console.error(error);
             });
+        }
 
-            if (!response.ok) throw new Error('Failed to delete form');
+        ModalManager.show('share-modal');
+    }
 
-            this.showToast('Form deleted successfully', 'success');
-            bootstrap.Modal.getInstance(document.getElementById('delete-modal')).hide();
+    async publishForm(formId) {
+        try {
+            await api.post(`/forms/${formId}/publish`);
+            NotificationManager.success('Form published successfully');
             this.loadForms();
-            
         } catch (error) {
-            console.error('Delete error:', error);
-            this.showToast('Failed to delete form', 'error');
+            NotificationManager.error('Failed to publish form');
         }
     }
 
-    async duplicateForm(formId) {
+    deleteForm(formId) {
+        this.selectedFormId = formId;
+        ModalManager.show('delete-modal');
+    }
+
+    async confirmDelete() {
+        if (!this.selectedFormId) return;
+
         try {
-            const response = await fetch(`/api/forms/${formId}/duplicate`, {
-                method: 'POST'
-            });
-
-            if (!response.ok) throw new Error('Failed to duplicate form');
-
-            const result = await response.json();
-            this.showToast('Form duplicated successfully', 'success');
-            window.location.href = `/forms/builder/${result.data.id}`;
-            
+            await api.delete(`/forms/${this.selectedFormId}`);
+            NotificationManager.success('Form deleted successfully');
+            this.loadForms();
+            ModalManager.hide('delete-modal');
         } catch (error) {
-            console.error('Duplicate error:', error);
-            this.showToast('Failed to duplicate form', 'error');
+            NotificationManager.error('Failed to delete form');
         }
     }
 
-    shareForm(formId, formTitle) {
-        const baseUrl = window.location.origin;
-        const formUrl = `${baseUrl}/submit/${formId}`;
-        
-        document.getElementById('form-url').value = formUrl;
-        document.querySelector('#share-modal .modal-title').textContent = `Share: ${formTitle}`;
-        
-        QRCode.toCanvas(document.getElementById('qr-code'), formUrl, {
-            width: 200,
-            margin: 2
-        });
-
-        new bootstrap.Modal(document.getElementById('share-modal')).show();
+    handleClick(event) {
+        if (event.target.id === 'confirm-delete') {
+            this.confirmDelete();
+        } else if (event.target.id === 'copy-url') {
+            this.copyFormUrl();
+        }
     }
 
-    async copyUrl() {
+    copyFormUrl() {
         const urlInput = document.getElementById('form-url');
-        try {
-            await navigator.clipboard.writeText(urlInput.value);
-            this.showToast('URL copied to clipboard', 'success');
-        } catch (error) {
+        if (urlInput) {
             urlInput.select();
             document.execCommand('copy');
-            this.showToast('URL copied to clipboard', 'success');
+            NotificationManager.success('URL copied to clipboard');
         }
     }
 
-    renderError() {
-        document.getElementById('forms-table-body').innerHTML = `
-            <tr>
-                <td colspan="7" class="text-center py-4 text-danger">
-                    <i class="fas fa-exclamation-triangle fa-2x mb-3"></i>
-                    <br>Failed to load forms. Please try again.
-                </td>
-            </tr>
-        `;
+    initQRCode() {
+        if (typeof QRCode === 'undefined') {
+            const script = document.createElement('script');
+            script.src = 'https://cdn.jsdelivr.net/npm/qrcode@1.5.3/build/qrcode.min.js';
+            document.head.appendChild(script);
+        }
     }
 
-    getFormTypeLabel(type) {
+    getFormTypeName(type) {
         const types = {
-            1: 'Survey', 2: 'Application', 3: 'Request', 4: 'Feedback',
-            5: 'Registration', 6: 'Assessment', 7: 'Report', 8: 'Custom'
+            1: 'Survey',
+            2: 'Application', 
+            3: 'Request',
+            4: 'Feedback',
+            5: 'Registration',
+            6: 'Assessment',
+            7: 'Report',
+            8: 'Custom'
         };
         return types[type] || 'Unknown';
     }
-
-    formatDate(dateString) {
-        return new Date(dateString).toLocaleDateString('en-US', {
-            year: 'numeric',
-            month: 'short',
-            day: 'numeric'
-        });
-    }
-
-    escapeHtml(text) {
-        const div = document.createElement('div');
-        div.textContent = text;
-        return div.innerHTML;
-    }
-
-    showToast(message, type) {
-        const toast = document.createElement('div');
-        toast.className = `toast align-items-center text-white bg-${type === 'success' ? 'success' : 'danger'} border-0 position-fixed top-0 end-0 m-3`;
-        toast.innerHTML = `
-            <div class="d-flex">
-                <div class="toast-body">${message}</div>
-                <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"></button>
-            </div>
-        `;
-        document.body.appendChild(toast);
-        new bootstrap.Toast(toast).show();
-    }
 }
 
-let formsList;
+let formsManager;
+
 document.addEventListener('DOMContentLoaded', () => {
-    formsList = new FormsList();
+    formsManager = new FormsManager();
 });

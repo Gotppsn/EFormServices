@@ -1,88 +1,39 @@
 ﻿// EFormServices.Web/wwwroot/js/site.js
 // Got code 30/05/2025
-class ApiClient {
+
+class EFormAPI {
     constructor() {
-        this.baseUrl = '';
-        this.defaultHeaders = {
-            'Content-Type': 'application/json'
-        };
-        this.requestInterceptors = [];
-        this.responseInterceptors = [];
-        this.setupInterceptors();
-    }
-
-    setupInterceptors() {
-        this.addRequestInterceptor((config) => {
-            const token = localStorage.getItem('accessToken');
-            if (token) {
-                config.headers['Authorization'] = `Bearer ${token}`;
-            }
-            return config;
-        });
-
-        this.addResponseInterceptor(
-            (response) => response,
-            async (error) => {
-                if (error.status === 401) {
-                    await this.handleTokenRefresh();
-                    return this.retryRequest(error.config);
-                }
-                throw error;
-            }
-        );
-    }
-
-    addRequestInterceptor(interceptor) {
-        this.requestInterceptors.push(interceptor);
-    }
-
-    addResponseInterceptor(onSuccess, onError) {
-        this.responseInterceptors.push({ onSuccess, onError });
+        this.baseUrl = '/api';
+        this.token = localStorage.getItem('accessToken');
     }
 
     async request(url, options = {}) {
         const config = {
-            url: `${this.baseUrl}${url}`,
-            method: 'GET',
-            headers: { ...this.defaultHeaders },
+            headers: {
+                'Content-Type': 'application/json',
+                ...(this.token && { 'Authorization': `Bearer ${this.token}` }),
+                ...options.headers
+            },
             ...options
         };
 
-        for (const interceptor of this.requestInterceptors) {
-            Object.assign(config, interceptor(config));
-        }
-
         try {
-            const response = await fetch(config.url, {
-                method: config.method,
-                headers: config.headers,
-                body: config.body
-            });
-
-            const result = { ...response, config };
-
-            for (const { onSuccess } of this.responseInterceptors) {
-                if (onSuccess) await onSuccess(result);
-            }
-
-            return result;
-        } catch (error) {
-            const enrichedError = { ...error, config };
+            const response = await fetch(`${this.baseUrl}${url}`, config);
             
-            for (const { onError } of this.responseInterceptors) {
-                if (onError) {
-                    try {
-                        return await onError(enrichedError);
-                    } catch (interceptorError) {
-                        throw interceptorError;
-                    }
-                }
+            if (response.status === 401) {
+                await this.refreshToken();
+                config.headers['Authorization'] = `Bearer ${this.token}`;
+                return fetch(`${this.baseUrl}${url}`, config);
             }
-            throw enrichedError;
+
+            return response;
+        } catch (error) {
+            console.error('API request failed:', error);
+            throw error;
         }
     }
 
-    async handleTokenRefresh() {
+    async refreshToken() {
         const refreshToken = localStorage.getItem('refreshToken');
         if (!refreshToken) {
             this.redirectToLogin();
@@ -90,23 +41,24 @@ class ApiClient {
         }
 
         try {
-            const response = await fetch('/api/auth/refresh', {
+            const response = await fetch(`${this.baseUrl}/auth/refresh`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ 
-                    accessToken: localStorage.getItem('accessToken'),
+                    accessToken: this.token, 
                     refreshToken 
                 })
             });
 
             if (response.ok) {
                 const data = await response.json();
+                this.token = data.accessToken;
                 localStorage.setItem('accessToken', data.accessToken);
                 localStorage.setItem('refreshToken', data.refreshToken);
             } else {
                 this.redirectToLogin();
             }
-        } catch {
+        } catch (error) {
             this.redirectToLogin();
         }
     }
@@ -117,455 +69,237 @@ class ApiClient {
         window.location.href = '/login';
     }
 
-    async retryRequest(config) {
-        return this.request(config.url, config);
+    async get(url) {
+        const response = await this.request(url);
+        return response.json();
     }
 
-    get(url, options = {}) {
-        return this.request(url, { ...options, method: 'GET' });
-    }
-
-    post(url, data, options = {}) {
-        return this.request(url, {
-            ...options,
+    async post(url, data) {
+        const response = await this.request(url, {
             method: 'POST',
             body: JSON.stringify(data)
         });
+        return response.json();
     }
 
-    put(url, data, options = {}) {
-        return this.request(url, {
-            ...options,
+    async put(url, data) {
+        const response = await this.request(url, {
             method: 'PUT',
             body: JSON.stringify(data)
         });
+        return response.json();
     }
 
-    delete(url, options = {}) {
-        return this.request(url, { ...options, method: 'DELETE' });
-    }
-
-    upload(url, formData, options = {}) {
-        const uploadHeaders = { ...this.defaultHeaders };
-        delete uploadHeaders['Content-Type'];
-        
-        return this.request(url, {
-            ...options,
-            method: 'POST',
-            headers: uploadHeaders,
-            body: formData
-        });
+    async delete(url) {
+        const response = await this.request(url, { method: 'DELETE' });
+        return response.ok;
     }
 }
 
 class ValidationEngine {
-    constructor() {
-        this.rules = new Map();
-        this.customValidators = new Map();
-        this.messages = {
+    static rules = {
+        required: (value) => value?.trim() !== '',
+        email: (value) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value),
+        minLength: (value, min) => value?.length >= min,
+        maxLength: (value, max) => value?.length <= max,
+        pattern: (value, regex) => new RegExp(regex).test(value),
+        number: (value) => !isNaN(value) && isFinite(value)
+    };
+
+    static validate(value, rules) {
+        const errors = [];
+        
+        for (const rule of rules) {
+            const [ruleName, ...params] = rule.split(':');
+            const validator = this.rules[ruleName];
+            
+            if (validator && !validator(value, ...params)) {
+                errors.push(this.getErrorMessage(ruleName, params));
+            }
+        }
+        
+        return errors;
+    }
+
+    static getErrorMessage(rule, params) {
+        const messages = {
             required: 'This field is required',
             email: 'Please enter a valid email address',
-            minLength: 'Minimum length is {0} characters',
-            maxLength: 'Maximum length is {0} characters',
-            pattern: 'Please enter a valid format',
-            number: 'Please enter a valid number',
-            url: 'Please enter a valid URL',
-            date: 'Please enter a valid date'
+            minLength: `Minimum length is ${params[0]} characters`,
+            maxLength: `Maximum length is ${params[0]} characters`,
+            pattern: 'Invalid format',
+            number: 'Please enter a valid number'
         };
-    }
-
-    addRule(fieldName, validators) {
-        this.rules.set(fieldName, validators);
-    }
-
-    addCustomValidator(name, validator) {
-        this.customValidators.set(name, validator);
-    }
-
-    validateField(element) {
-        const fieldName = element.name || element.id;
-        const validators = this.rules.get(fieldName) || [];
-        const value = element.value;
-        
-        for (const validator of validators) {
-            const result = this.runValidator(validator, value, element);
-            if (!result.isValid) {
-                this.showFieldError(element, result.message);
-                return false;
-            }
-        }
-        
-        this.clearFieldError(element);
-        return true;
-    }
-
-    validateForm(form) {
-        const elements = form.querySelectorAll('input, select, textarea');
-        let isValid = true;
-        
-        elements.forEach(element => {
-            if (!this.validateField(element)) {
-                isValid = false;
-            }
-        });
-        
-        return isValid;
-    }
-
-    runValidator(validator, value, element) {
-        if (typeof validator === 'string') {
-            return this.runBuiltInValidator(validator, value);
-        }
-        
-        if (typeof validator === 'object') {
-            const { type, params = [], message } = validator;
-            const result = this.runBuiltInValidator(type, value, ...params);
-            if (!result.isValid && message) {
-                result.message = this.formatMessage(message, params);
-            }
-            return result;
-        }
-        
-        if (typeof validator === 'function') {
-            return validator(value, element);
-        }
-        
-        return { isValid: true };
-    }
-
-    runBuiltInValidator(type, value, ...params) {
-        switch (type) {
-            case 'required':
-                return {
-                    isValid: value.trim() !== '',
-                    message: this.messages.required
-                };
-            case 'email':
-                return {
-                    isValid: !value || /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value),
-                    message: this.messages.email
-                };
-            case 'minLength':
-                return {
-                    isValid: !value || value.length >= params[0],
-                    message: this.formatMessage(this.messages.minLength, params)
-                };
-            case 'maxLength':
-                return {
-                    isValid: !value || value.length <= params[0],
-                    message: this.formatMessage(this.messages.maxLength, params)
-                };
-            case 'pattern':
-                return {
-                    isValid: !value || new RegExp(params[0]).test(value),
-                    message: this.messages.pattern
-                };
-            case 'number':
-                return {
-                    isValid: !value || !isNaN(value),
-                    message: this.messages.number
-                };
-            case 'url':
-                try {
-                    if (value) new URL(value);
-                    return { isValid: true };
-                } catch {
-                    return { isValid: false, message: this.messages.url };
-                }
-            default:
-                const customValidator = this.customValidators.get(type);
-                if (customValidator) {
-                    return customValidator(value, ...params);
-                }
-                return { isValid: true };
-        }
-    }
-
-    formatMessage(message, params) {
-        return message.replace(/\{(\d+)\}/g, (match, index) => params[index] || match);
-    }
-
-    showFieldError(element, message) {
-        element.classList.add('is-invalid');
-        
-        let feedback = element.parentNode.querySelector('.invalid-feedback');
-        if (!feedback) {
-            feedback = document.createElement('div');
-            feedback.className = 'invalid-feedback';
-            element.parentNode.appendChild(feedback);
-        }
-        feedback.textContent = message;
-    }
-
-    clearFieldError(element) {
-        element.classList.remove('is-invalid');
-        const feedback = element.parentNode.querySelector('.invalid-feedback');
-        if (feedback) {
-            feedback.textContent = '';
-        }
+        return messages[rule] || 'Invalid value';
     }
 }
 
 class StorageManager {
-    constructor() {
-        this.prefix = 'eformservices_';
-        this.encrypted = true;
-    }
-
-    set(key, value, options = {}) {
-        const { expiry, encrypt = this.encrypted } = options;
-        const data = {
+    static set(key, value, expiry = null) {
+        const item = {
             value,
-            timestamp: Date.now(),
             expiry: expiry ? Date.now() + expiry : null
         };
-        
-        const serialized = JSON.stringify(data);
-        const stored = encrypt ? this.encrypt(serialized) : serialized;
-        
-        try {
-            localStorage.setItem(this.prefix + key, stored);
-            return true;
-        } catch (error) {
-            console.warn('Storage failed:', error);
-            return false;
+        localStorage.setItem(key, JSON.stringify(item));
+    }
+
+    static get(key) {
+        const item = localStorage.getItem(key);
+        if (!item) return null;
+
+        const parsed = JSON.parse(item);
+        if (parsed.expiry && Date.now() > parsed.expiry) {
+            localStorage.removeItem(key);
+            return null;
         }
+
+        return parsed.value;
     }
 
-    get(key, defaultValue = null) {
-        try {
-            const stored = localStorage.getItem(this.prefix + key);
-            if (!stored) return defaultValue;
-            
-            const decrypted = this.encrypted ? this.decrypt(stored) : stored;
-            const data = JSON.parse(decrypted);
-            
-            if (data.expiry && Date.now() > data.expiry) {
-                this.remove(key);
-                return defaultValue;
-            }
-            
-            return data.value;
-        } catch (error) {
-            console.warn('Storage retrieval failed:', error);
-            return defaultValue;
-        }
+    static remove(key) {
+        localStorage.removeItem(key);
     }
 
-    remove(key) {
-        localStorage.removeItem(this.prefix + key);
-    }
-
-    clear() {
-        Object.keys(localStorage)
-            .filter(key => key.startsWith(this.prefix))
-            .forEach(key => localStorage.removeItem(key));
-    }
-
-    encrypt(data) {
-        return btoa(data);
-    }
-
-    decrypt(data) {
-        return atob(data);
+    static clear() {
+        localStorage.clear();
     }
 }
 
-class UtilityFunctions {
-    static debounce(func, wait) {
-        let timeout;
-        return function executedFunction(...args) {
-            const later = () => {
-                clearTimeout(timeout);
-                func(...args);
-            };
+class NotificationManager {
+    static show(message, type = 'info', duration = 5000) {
+        const notification = document.createElement('div');
+        notification.className = `alert alert-${type} alert-dismissible fade show position-fixed`;
+        notification.style.cssText = 'top: 20px; right: 20px; z-index: 9999; min-width: 300px;';
+        
+        notification.innerHTML = `
+            ${message}
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        `;
+
+        document.body.appendChild(notification);
+
+        setTimeout(() => {
+            if (notification.parentNode) {
+                notification.remove();
+            }
+        }, duration);
+    }
+
+    static success(message) {
+        this.show(message, 'success');
+    }
+
+    static error(message) {
+        this.show(message, 'danger');
+    }
+
+    static warning(message) {
+        this.show(message, 'warning');
+    }
+
+    static info(message) {
+        this.show(message, 'info');
+    }
+}
+
+class LoadingManager {
+    static show(element = document.body) {
+        const spinner = document.createElement('div');
+        spinner.className = 'loading-overlay';
+        spinner.innerHTML = `
+            <div class="d-flex align-items-center justify-content-center h-100">
+                <div class="spinner-border text-primary" role="status">
+                    <span class="visually-hidden">Loading...</span>
+                </div>
+            </div>
+        `;
+        
+        const style = document.createElement('style');
+        style.textContent = `
+            .loading-overlay {
+                position: absolute;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                background: rgba(255,255,255,0.8);
+                z-index: 1000;
+            }
+        `;
+        
+        if (!document.querySelector('style[data-loading]')) {
+            style.setAttribute('data-loading', 'true');
+            document.head.appendChild(style);
+        }
+
+        element.style.position = 'relative';
+        element.appendChild(spinner);
+        return spinner;
+    }
+
+    static hide(element) {
+        const overlay = element.querySelector('.loading-overlay');
+        if (overlay) overlay.remove();
+    }
+}
+
+class ModalManager {
+    static show(id) {
+        const modal = document.getElementById(id);
+        if (modal) {
+            const bsModal = new bootstrap.Modal(modal);
+            bsModal.show();
+            return bsModal;
+        }
+    }
+
+    static hide(id) {
+        const modal = document.getElementById(id);
+        if (modal) {
+            const bsModal = bootstrap.Modal.getInstance(modal);
+            if (bsModal) bsModal.hide();
+        }
+    }
+}
+
+const debounce = (func, wait) => {
+    let timeout;
+    return function executedFunction(...args) {
+        const later = () => {
             clearTimeout(timeout);
-            timeout = setTimeout(later, wait);
+            func(...args);
         };
-    }
-
-    static throttle(func, limit) {
-        let inThrottle;
-        return function(...args) {
-            if (!inThrottle) {
-                func.apply(this, args);
-                inThrottle = true;
-                setTimeout(() => inThrottle = false, limit);
-            }
-        };
-    }
-
-    static formatFileSize(bytes) {
-        if (bytes === 0) return '0 Bytes';
-        const k = 1024;
-        const sizes = ['Bytes', 'KB', 'MB', 'GB'];
-        const i = Math.floor(Math.log(bytes) / Math.log(k));
-        return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
-    }
-
-    static formatDate(date, format = 'short') {
-        const d = new Date(date);
-        const formats = {
-            short: { month: 'short', day: 'numeric', year: 'numeric' },
-            long: { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' },
-            time: { hour: '2-digit', minute: '2-digit' },
-            datetime: { month: 'short', day: 'numeric', year: 'numeric', hour: '2-digit', minute: '2-digit' }
-        };
-        return d.toLocaleDateString('en-US', formats[format] || formats.short);
-    }
-
-    static generateId(prefix = '') {
-        return prefix + Date.now().toString(36) + Math.random().toString(36).substr(2);
-    }
-
-    static escapeHtml(text) {
-        const div = document.createElement('div');
-        div.textContent = text;
-        return div.innerHTML;
-    }
-
-    static copyToClipboard(text) {
-        return navigator.clipboard ? 
-            navigator.clipboard.writeText(text) :
-            this.fallbackCopyToClipboard(text);
-    }
-
-    static fallbackCopyToClipboard(text) {
-        const textArea = document.createElement('textarea');
-        textArea.value = text;
-        textArea.style.position = 'fixed';
-        textArea.style.left = '-999999px';
-        textArea.style.top = '-999999px';
-        document.body.appendChild(textArea);
-        textArea.focus();
-        textArea.select();
-        
-        return new Promise((resolve, reject) => {
-            try {
-                document.execCommand('copy');
-                resolve();
-            } catch (err) {
-                reject(err);
-            } finally {
-                document.body.removeChild(textArea);
-            }
-        });
-    }
-
-    static downloadFile(data, filename, type = 'application/octet-stream') {
-        const blob = new Blob([data], { type });
-        const url = window.URL.createObjectURL(blob);
-        const a = document.createElement('a');
-        a.href = url;
-        a.download = filename;
-        document.body.appendChild(a);
-        a.click();
-        window.URL.revokeObjectURL(url);
-        document.body.removeChild(a);
-    }
-
-    static observeElement(element, callback, options = {}) {
-        const observer = new IntersectionObserver(callback, {
-            threshold: 0.1,
-            ...options
-        });
-        observer.observe(element);
-        return observer;
-    }
-
-    static lazyLoad(selector, callback) {
-        const elements = document.querySelectorAll(selector);
-        elements.forEach(element => {
-            this.observeElement(element, (entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        callback(entry.target);
-                        entry.target.observer?.unobserve(entry.target);
-                    }
-                });
-            });
-        });
-    }
-}
-
-class ComponentRegistry {
-    constructor() {
-        this.components = new Map();
-        this.autoInit = true;
-    }
-
-    register(name, componentClass, autoInit = true) {
-        this.components.set(name, { componentClass, autoInit });
-        
-        if (autoInit && document.readyState === 'loading') {
-            document.addEventListener('DOMContentLoaded', () => this.initComponent(name));
-        } else if (autoInit) {
-            this.initComponent(name);
-        }
-    }
-
-    initComponent(name) {
-        const component = this.components.get(name);
-        if (!component) return;
-
-        const elements = document.querySelectorAll(`[data-component="${name}"]`);
-        elements.forEach(element => {
-            if (!element._componentInstance) {
-                element._componentInstance = new component.componentClass(element);
-            }
-        });
-    }
-
-    get(name) {
-        return this.components.get(name);
-    }
-
-    initAll() {
-        this.components.forEach((component, name) => {
-            if (component.autoInit) {
-                this.initComponent(name);
-            }
-        });
-    }
-}
-
-const api = new ApiClient();
-const validator = new ValidationEngine();
-const storage = new StorageManager();
-const utils = UtilityFunctions;
-const components = new ComponentRegistry();
-
-window.EFormServices = {
-    api,
-    validator,
-    storage,
-    utils,
-    components
+        clearTimeout(timeout);
+        timeout = setTimeout(later, wait);
+    };
 };
 
-document.addEventListener('DOMContentLoaded', () => {
-    components.initAll();
-    
-    document.querySelectorAll('form[data-validate]').forEach(form => {
-        form.addEventListener('submit', (e) => {
-            if (!validator.validateForm(form)) {
-                e.preventDefault();
-            }
-        });
-        
-        form.querySelectorAll('input, select, textarea').forEach(field => {
-            field.addEventListener('blur', () => validator.validateField(field));
-        });
-    });
-
-    document.addEventListener('click', (e) => {
-        if (e.target.matches('[data-copy]')) {
-            const text = e.target.dataset.copy || e.target.textContent;
-            utils.copyToClipboard(text).then(() => {
-                const originalText = e.target.textContent;
-                e.target.textContent = 'Copied!';
-                setTimeout(() => e.target.textContent = originalText, 2000);
-            });
+const formatDate = (date, format = 'short') => {
+    const options = {
+        short: { year: 'numeric', month: 'short', day: 'numeric' },
+        long: { year: 'numeric', month: 'long', day: 'numeric', weekday: 'long' },
+        time: { hour: '2-digit', minute: '2-digit' },
+        datetime: { 
+            year: 'numeric', month: 'short', day: 'numeric',
+            hour: '2-digit', minute: '2-digit'
         }
-    });
-});
+    };
+    
+    return new Intl.DateTimeFormat('en-US', options[format]).format(new Date(date));
+};
+
+const formatNumber = (number, options = {}) => {
+    return new Intl.NumberFormat('en-US', options).format(number);
+};
+
+window.EFormAPI = EFormAPI;
+window.ValidationEngine = ValidationEngine;
+window.StorageManager = StorageManager;
+window.NotificationManager = NotificationManager;
+window.LoadingManager = LoadingManager;
+window.ModalManager = ModalManager;
+window.debounce = debounce;
+window.formatDate = formatDate;
+window.formatNumber = formatNumber;
+
+window.api = new EFormAPI();
