@@ -1936,7 +1936,10 @@
           "AutoMapper": "14.0.0",
           "EFormServices.Domain": "1.0.0",
           "FluentValidation": "12.0.0",
-          "MediatR": "12.5.0"
+          "MediatR": "12.5.0",
+          "Microsoft.EntityFrameworkCore.Abstractions": "9.0.5",
+          "Microsoft.Extensions.DependencyInjection.Abstractions": "9.0.5",
+          "Microsoft.Extensions.Logging.Abstractions": "9.0.5"
         },
         "compile": {
           "bin/placeholder/EFormServices.Application.dll": {}
@@ -5511,8 +5514,12 @@
   "projectFileDependencyGroups": {
     "net9.0": [
       "EFormServices.Application >= 1.0.0",
+      "Microsoft.EntityFrameworkCore.Design >= 9.0.5",
       "Microsoft.EntityFrameworkCore.SqlServer >= 9.0.5",
       "Microsoft.EntityFrameworkCore.Tools >= 9.0.5",
+      "Microsoft.Extensions.Configuration.Abstractions >= 9.0.5",
+      "Microsoft.Extensions.DependencyInjection.Abstractions >= 9.0.5",
+      "Microsoft.Extensions.Logging.Abstractions >= 9.0.5",
       "Serilog.AspNetCore >= 9.0.0",
       "StackExchange.Redis >= 2.8.37"
     ]
@@ -5571,6 +5578,12 @@
       "net9.0": {
         "targetAlias": "net9.0",
         "dependencies": {
+          "Microsoft.EntityFrameworkCore.Design": {
+            "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+            "suppressParent": "All",
+            "target": "Package",
+            "version": "[9.0.5, )"
+          },
           "Microsoft.EntityFrameworkCore.SqlServer": {
             "target": "Package",
             "version": "[9.0.5, )"
@@ -5578,6 +5591,18 @@
           "Microsoft.EntityFrameworkCore.Tools": {
             "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
             "suppressParent": "All",
+            "target": "Package",
+            "version": "[9.0.5, )"
+          },
+          "Microsoft.Extensions.Configuration.Abstractions": {
+            "target": "Package",
+            "version": "[9.0.5, )"
+          },
+          "Microsoft.Extensions.DependencyInjection.Abstractions": {
+            "target": "Package",
+            "version": "[9.0.5, )"
+          },
+          "Microsoft.Extensions.Logging.Abstractions": {
             "target": "Package",
             "version": "[9.0.5, )"
           },

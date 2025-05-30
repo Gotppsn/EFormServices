@@ -2345,7 +2345,10 @@
           "AutoMapper": "14.0.0",
           "EFormServices.Domain": "1.0.0",
           "FluentValidation": "12.0.0",
-          "MediatR": "12.5.0"
+          "MediatR": "12.5.0",
+          "Microsoft.EntityFrameworkCore.Abstractions": "9.0.5",
+          "Microsoft.Extensions.DependencyInjection.Abstractions": "9.0.5",
+          "Microsoft.Extensions.Logging.Abstractions": "9.0.5"
         },
         "compile": {
           "bin/placeholder/EFormServices.Application.dll": {}
@@ -2370,6 +2373,9 @@
         "dependencies": {
           "EFormServices.Application": "1.0.0",
           "Microsoft.EntityFrameworkCore.SqlServer": "9.0.5",
+          "Microsoft.Extensions.Configuration.Abstractions": "9.0.5",
+          "Microsoft.Extensions.DependencyInjection.Abstractions": "9.0.5",
+          "Microsoft.Extensions.Logging.Abstractions": "9.0.5",
           "Serilog.AspNetCore": "9.0.0",
           "StackExchange.Redis": "2.8.37"
         },

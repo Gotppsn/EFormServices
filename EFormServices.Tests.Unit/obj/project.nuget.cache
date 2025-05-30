@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "6JYQQX2aPrQ=",
+  "dgSpecHash": "f7w3D0jZSDM=",
   "success": true,
   "projectFilePath": "C:\\Users\\panupol\\Desktop\\EFormServices\\EFormServices.Tests.Unit\\EFormServices.Tests.Unit.csproj",
   "expectedPackageFiles": [
@@ -12,7 +12,9 @@
     "C:\\Users\\panupol\\.nuget\\packages\\mediatr\\12.5.0\\mediatr.12.5.0.nupkg.sha512",
     "C:\\Users\\panupol\\.nuget\\packages\\mediatr.contracts\\2.0.1\\mediatr.contracts.2.0.1.nupkg.sha512",
     "C:\\Users\\panupol\\.nuget\\packages\\microsoft.codecoverage\\17.12.0\\microsoft.codecoverage.17.12.0.nupkg.sha512",
-    "C:\\Users\\panupol\\.nuget\\packages\\microsoft.extensions.dependencyinjection.abstractions\\8.0.0\\microsoft.extensions.dependencyinjection.abstractions.8.0.0.nupkg.sha512",
+    "C:\\Users\\panupol\\.nuget\\packages\\microsoft.entityframeworkcore.abstractions\\9.0.5\\microsoft.entityframeworkcore.abstractions.9.0.5.nupkg.sha512",
+    "C:\\Users\\panupol\\.nuget\\packages\\microsoft.extensions.dependencyinjection.abstractions\\9.0.5\\microsoft.extensions.dependencyinjection.abstractions.9.0.5.nupkg.sha512",
+    "C:\\Users\\panupol\\.nuget\\packages\\microsoft.extensions.logging.abstractions\\9.0.5\\microsoft.extensions.logging.abstractions.9.0.5.nupkg.sha512",
     "C:\\Users\\panupol\\.nuget\\packages\\microsoft.extensions.options\\8.0.0\\microsoft.extensions.options.8.0.0.nupkg.sha512",
     "C:\\Users\\panupol\\.nuget\\packages\\microsoft.extensions.primitives\\8.0.0\\microsoft.extensions.primitives.8.0.0.nupkg.sha512",
     "C:\\Users\\panupol\\.nuget\\packages\\microsoft.net.test.sdk\\17.12.0\\microsoft.net.test.sdk.17.12.0.nupkg.sha512",

@@ -1,4 +1,5 @@
-// Got code 27/05/2025
+// EFormServices.Domain/Entities/organization_entity.cs
+// Got code 30/05/2025
 using EFormServices.Domain.ValueObjects;
 
 namespace EFormServices.Domain.Entities;
@@ -19,7 +20,13 @@ public class Organization : BaseEntity
     public IReadOnlyCollection<User> Users => _users.AsReadOnly();
     public IReadOnlyCollection<Form> Forms => _forms.AsReadOnly();
 
-    private Organization() { }
+    private Organization()
+    {
+        Name = string.Empty;
+        Subdomain = string.Empty;
+        TenantKey = string.Empty;
+        Settings = OrganizationSettings.Default();
+    }
 
     public Organization(string name, string subdomain, OrganizationSettings settings)
     {
