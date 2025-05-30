@@ -12,7 +12,11 @@ public class Permission : BaseEntity
     private readonly List<RolePermission> _rolePermissions = new();
     public IReadOnlyCollection<RolePermission> RolePermissions => _rolePermissions.AsReadOnly();
 
-    private Permission() { }
+    private Permission() 
+    {
+        Name = string.Empty;
+        Category = string.Empty;
+    }
 
     public Permission(string name, string category, string? description = null, bool isSystemPermission = false)
     {

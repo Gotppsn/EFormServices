@@ -1,10 +1,11 @@
-// Got code 27/05/2025
+// EFormServices.Domain/Entities/role_entity.cs
+// Got code 30/05/2025
 namespace EFormServices.Domain.Entities;
 
 public class Role : BaseEntity
 {
     public int OrganizationId { get; private set; }
-    public string Name { get; private set; }
+    public string Name { get; private set; } = string.Empty;
     public string? Description { get; private set; }
     public bool IsSystemRole { get; private set; }
 
@@ -16,7 +17,10 @@ public class Role : BaseEntity
     public IReadOnlyCollection<UserRole> UserRoles => _userRoles.AsReadOnly();
     public IReadOnlyCollection<RolePermission> RolePermissions => _rolePermissions.AsReadOnly();
 
-    private Role() { }
+    private Role() 
+    {
+        Name = string.Empty;
+    }
 
     public Role(int organizationId, string name, string? description = null, bool isSystemRole = false)
     {

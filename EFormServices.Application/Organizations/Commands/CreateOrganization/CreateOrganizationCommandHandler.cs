@@ -40,13 +40,7 @@ public class CreateOrganizationCommandHandler : IRequestHandler<CreateOrganizati
 
         var organization = new Organization(request.Name, request.Subdomain, settings);
         
-        if (_context is EFormServices.Infrastructure.Data.MockApplicationDbContext mockContext)
-        {
-            var orgs = (EFormServices.Infrastructure.Data.MockDbSet<Organization>)mockContext.Organizations;
-            organization.Id = _context.Organizations.Count() + 1;
-            orgs.Add(organization);
-        }
-
+        _context.Organizations.Add(organization);
         await _context.SaveChangesAsync(cancellationToken);
 
         var organizationDto = new OrganizationDto
